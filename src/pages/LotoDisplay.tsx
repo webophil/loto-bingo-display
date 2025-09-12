@@ -54,7 +54,7 @@ const LotoDisplay = () => {
   return (
     <div className="min-h-screen p-8 flex flex-col items-center justify-center space-y-8">
       <header className="text-center space-y-4">
-        <h1 className="text-6xl font-bold gradient-primary bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">
           🎯 LOTO ASSOCIATIF 🎯
         </h1>
         {displayState.currentGame && (

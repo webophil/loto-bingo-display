@@ -22,7 +22,7 @@ export const NumberBall = ({ number, isDrawn, isLatest }: NumberBallProps) => {
         'number-ball',
         getNumberColor(number),
         isDrawn && 'drawn',
-        isLatest && 'animate-bounce-soft animate-pulse-glow',
+        isLatest && 'animate-bounce-soft animate-pulse-glow animate-blink',
         !isDrawn && 'opacity-40 scale-75'
       )}
     >

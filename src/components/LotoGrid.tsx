@@ -10,7 +10,7 @@ export const LotoGrid = ({ drawnNumbers, isDrawing }: LotoGridProps) => {
   const latestNumber = drawnNumbers[drawnNumbers.length - 1];
 
   return (
-    <div className="grid grid-cols-10 gap-3 p-8 bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50">
+    <div className="grid grid-cols-15 gap-2 p-8 bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50">
       {numbers.map((number) => (
         <NumberBall
           key={number}
