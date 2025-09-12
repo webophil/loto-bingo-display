@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 export type GameType = 'quine' | 'double-quine' | 'carton-plein';
 
@@ -16,6 +16,26 @@ export const useLoto = () => {
     isDrawing: false,
     gameHistory: [],
   });
+
+  // Save state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('loto-state', JSON.stringify(state));
+    // Dispatch custom event to notify other tabs/windows
+    window.dispatchEvent(new CustomEvent('loto-state-changed', { detail: state }));
+  }, [state]);
+
+  // Load state from localStorage on mount
+  useEffect(() => {
+    const savedState = localStorage.getItem('loto-state');
+    if (savedState) {
+      try {
+        const parsedState = JSON.parse(savedState);
+        setState(parsedState);
+      } catch (error) {
+        console.error('Error loading saved state:', error);
+      }
+    }
+  }, []);
 
   const startGame = useCallback((gameType: GameType) => {
     setState(prev => ({

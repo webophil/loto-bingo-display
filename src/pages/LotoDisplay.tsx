@@ -1,19 +1,54 @@
 import { useLoto } from '@/hooks/useLoto';
 import { LotoGrid } from '@/components/LotoGrid';
 import { Badge } from '@/components/ui/badge';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const LotoDisplay = () => {
-  const { drawnNumbers, currentGame, isDrawing } = useLoto();
-  const latestNumber = drawnNumbers[drawnNumbers.length - 1];
+  const [displayState, setDisplayState] = useState({
+    drawnNumbers: [] as number[],
+    currentGame: null as any,
+    isDrawing: false,
+  });
   
-  // Load state from localStorage on mount
+  const latestNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
+  
+  // Listen for real-time updates from dashboard
   useEffect(() => {
-    const savedState = localStorage.getItem('loto-state');
-    if (savedState) {
-      // In a real app, you'd want to sync this state properly
-      console.log('State should be synced from localStorage');
-    }
+    const handleStateChange = (event: any) => {
+      setDisplayState({
+        drawnNumbers: event.detail.drawnNumbers,
+        currentGame: event.detail.currentGame,
+        isDrawing: event.detail.isDrawing,
+      });
+    };
+
+    const handleStorageChange = () => {
+      const savedState = localStorage.getItem('loto-state');
+      if (savedState) {
+        try {
+          const parsedState = JSON.parse(savedState);
+          setDisplayState({
+            drawnNumbers: parsedState.drawnNumbers,
+            currentGame: parsedState.currentGame,
+            isDrawing: parsedState.isDrawing,
+          });
+        } catch (error) {
+          console.error('Error loading state:', error);
+        }
+      }
+    };
+
+    // Load initial state
+    handleStorageChange();
+
+    // Listen for changes
+    window.addEventListener('loto-state-changed', handleStateChange);
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('loto-state-changed', handleStateChange);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   return (
@@ -22,11 +57,11 @@ const LotoDisplay = () => {
         <h1 className="text-6xl font-bold gradient-primary bg-clip-text text-transparent">
           🎯 LOTO ASSOCIATIF 🎯
         </h1>
-        {currentGame && (
+        {displayState.currentGame && (
           <Badge className="gradient-secondary text-white text-2xl px-8 py-3 font-bold animate-pulse-glow">
-            {currentGame === 'quine' && 'QUINE'}
-            {currentGame === 'double-quine' && 'DOUBLE QUINE'}
-            {currentGame === 'carton-plein' && 'CARTON PLEIN'}
+            {displayState.currentGame === 'quine' && '🎯 QUINE'}
+            {displayState.currentGame === 'double-quine' && '🎯🎯 DOUBLE QUINE'}
+            {displayState.currentGame === 'carton-plein' && '🏆 CARTON PLEIN'}
           </Badge>
         )}
       </header>
@@ -46,13 +81,13 @@ const LotoDisplay = () => {
         </div>
       )}
 
-      <LotoGrid drawnNumbers={drawnNumbers} isDrawing={isDrawing} />
+      <LotoGrid drawnNumbers={displayState.drawnNumbers} isDrawing={displayState.isDrawing} />
       
       <footer className="text-center space-y-2">
         <p className="text-xl text-muted-foreground">
-          {drawnNumbers.length} / 90 numéros tirés
+          {displayState.drawnNumbers.length} / 90 numéros tirés
         </p>
-        {!currentGame && drawnNumbers.length === 0 && (
+        {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
           <p className="text-lg text-muted-foreground italic">
             En attente du prochain tirage...
           </p>
