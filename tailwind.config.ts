@@ -47,6 +47,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        loto: {
+          red: "hsl(var(--loto-red))",
+          blue: "hsl(var(--loto-blue))",
+          yellow: "hsl(var(--loto-yellow))",
+          green: "hsl(var(--loto-green))",
+          purple: "hsl(var(--loto-purple))",
+          orange: "hsl(var(--loto-orange))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
