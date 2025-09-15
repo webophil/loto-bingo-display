@@ -22,43 +22,84 @@ const LotoDisplay = () => {
   
   // Listen for real-time updates from dashboard
   useEffect(() => {
-    const loadInitialState = () => {
+    let lastTimestamp = 0;
+    
+    const loadStateFromStorage = () => {
       const savedState = localStorage.getItem('loto-state');
       if (savedState) {
         try {
           const parsedState = JSON.parse(savedState);
-          setDisplayState({
-            drawnNumbers: parsedState.drawnNumbers,
-            currentGame: parsedState.currentGame,
-            isDrawing: parsedState.isDrawing,
-          });
+          
+          // Only update if this is newer data
+          if (parsedState.timestamp && parsedState.timestamp > lastTimestamp) {
+            lastTimestamp = parsedState.timestamp;
+            setDisplayState({
+              drawnNumbers: parsedState.drawnNumbers || [],
+              currentGame: parsedState.currentGame || null,
+              isDrawing: parsedState.isDrawing || false,
+            });
+            console.log('📺 Display updated from localStorage:', parsedState);
+          }
         } catch (error) {
-          console.error('Error loading state:', error);
+          console.error('❌ Error loading state:', error);
         }
       }
     };
 
     // Load initial state
-    loadInitialState();
+    loadStateFromStorage();
+    console.log('📺 Display window initialized and listening...');
 
-    // Use BroadcastChannel for real-time updates between windows
+    // Method 1: BroadcastChannel
     const channel = new BroadcastChannel('loto-updates');
-    
-    const handleMessage = (event: MessageEvent) => {
-      console.log('📺 Display received update:', event.data);
+    const handleBroadcast = (event: MessageEvent) => {
+      console.log('📺 BroadcastChannel received:', event.data);
       const newState = event.data;
-      setDisplayState({
-        drawnNumbers: newState.drawnNumbers,
-        currentGame: newState.currentGame,
-        isDrawing: newState.isDrawing,
-      });
+      if (newState.timestamp && newState.timestamp > lastTimestamp) {
+        lastTimestamp = newState.timestamp;
+        setDisplayState({
+          drawnNumbers: newState.drawnNumbers || [],
+          currentGame: newState.currentGame || null,
+          isDrawing: newState.isDrawing || false,
+        });
+      }
     };
-    
-    channel.addEventListener('message', handleMessage);
-    console.log('📺 Display window listening for updates...');
+    channel.addEventListener('message', handleBroadcast);
+
+    // Method 2: Storage event listener
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'loto-state' || event.key === 'loto-sync-trigger') {
+        console.log('📺 Storage event detected');
+        loadStateFromStorage();
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+
+    // Method 3: Custom event listener
+    const handleCustomEvent = (event: any) => {
+      console.log('📺 Custom event received:', event.detail);
+      const newState = event.detail;
+      if (newState.timestamp && newState.timestamp > lastTimestamp) {
+        lastTimestamp = newState.timestamp;
+        setDisplayState({
+          drawnNumbers: newState.drawnNumbers || [],
+          currentGame: newState.currentGame || null,
+          isDrawing: newState.isDrawing || false,
+        });
+      }
+    };
+    window.addEventListener('loto-update', handleCustomEvent);
+
+    // Method 4: Polling fallback (every 500ms)
+    const pollingInterval = setInterval(() => {
+      loadStateFromStorage();
+    }, 500);
 
     return () => {
       channel.close();
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('loto-update', handleCustomEvent);
+      clearInterval(pollingInterval);
     };
   }, []);
 

@@ -32,13 +32,32 @@ export const useLoto = () => {
 
   // Save state to localStorage and broadcast changes
   useEffect(() => {
-    localStorage.setItem('loto-state', JSON.stringify(state));
+    const stateData = {
+      ...state,
+      timestamp: Date.now()
+    };
     
-    // Broadcast state changes to other windows
-    const channel = (window as any).lotoBroadcastChannel;
-    if (channel) {
-      console.log('📡 Broadcasting state update:', state);
-      channel.postMessage(state);
+    localStorage.setItem('loto-state', JSON.stringify(stateData));
+    
+    // Multiple broadcasting methods for reliability
+    try {
+      // Method 1: BroadcastChannel
+      const channel = (window as any).lotoBroadcastChannel;
+      if (channel) {
+        console.log('📡 Broadcasting via BroadcastChannel:', stateData);
+        channel.postMessage(stateData);
+      }
+      
+      // Method 2: Storage event trigger
+      localStorage.setItem('loto-sync-trigger', Date.now().toString());
+      
+      // Method 3: Custom event
+      window.dispatchEvent(new CustomEvent('loto-update', { 
+        detail: stateData 
+      }));
+      
+    } catch (error) {
+      console.error('❌ Broadcasting error:', error);
     }
   }, [state]);
 
