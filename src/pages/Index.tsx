@@ -8,35 +8,25 @@ const Index = () => {
     // Obtenir l'URL complète pour l'affichage
     const displayUrl = `${window.location.origin}/display`;
     
-    // Paramètres pour ouvrir sur l'écran externe
+    // Paramètres pour maximiser la fenêtre sur l'écran externe
     const features = [
-      'fullscreen=yes',
       'width=' + screen.availWidth,
       'height=' + screen.availHeight,
-      'left=' + screen.availWidth, // Positionner sur l'écran externe
+      'left=' + (screen.availWidth + 100), // Positionner sur l'écran externe
       'top=0',
       'scrollbars=no',
       'toolbar=no',
       'menubar=no',
       'status=no',
-      'location=no'
+      'location=no',
+      'resizable=yes'
     ].join(',');
     
-    // Ouvrir la fenêtre
+    // Ouvrir la fenêtre maximisée
     const newWindow = window.open(displayUrl, 'LotoDisplay', features);
     
-    // Essayer de mettre en plein écran après un court délai
     if (newWindow) {
-      setTimeout(() => {
-        try {
-          newWindow.focus();
-          if (newWindow.document?.documentElement?.requestFullscreen) {
-            newWindow.document.documentElement.requestFullscreen();
-          }
-        } catch (error) {
-          console.log('Impossible de mettre en plein écran automatiquement');
-        }
-      }, 1000);
+      newWindow.focus();
     }
   };
 

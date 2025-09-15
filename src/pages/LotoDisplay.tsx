@@ -1,7 +1,9 @@
 import { useLoto } from '@/hooks/useLoto';
 import { LotoGrid } from '@/components/LotoGrid';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
+import { Maximize } from 'lucide-react';
 
 const LotoDisplay = () => {
   const [displayState, setDisplayState] = useState({
@@ -11,6 +13,12 @@ const LotoDisplay = () => {
   });
   
   const latestNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
+  
+  const enterFullscreen = () => {
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    }
+  };
   
   // Listen for real-time updates from dashboard
   useEffect(() => {
@@ -52,7 +60,15 @@ const LotoDisplay = () => {
   }, []);
 
   return (
-    <div className="min-h-screen p-8 flex flex-col items-center justify-center space-y-8">
+    <div className="min-h-screen p-8 flex flex-col items-center justify-center space-y-8 relative">
+      <Button 
+        onClick={enterFullscreen}
+        className="absolute top-4 right-4 gradient-primary"
+        size="sm"
+      >
+        <Maximize className="w-4 h-4 mr-2" />
+        Plein écran
+      </Button>
       <header className="text-center space-y-6">
         <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">
           🎯 LOTO CORAIL'S REMOISES 🎯
