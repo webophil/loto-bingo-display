@@ -44,14 +44,18 @@ const LotoDisplay = () => {
     // Use BroadcastChannel for real-time updates between windows
     const channel = new BroadcastChannel('loto-updates');
     
-    channel.addEventListener('message', (event) => {
+    const handleMessage = (event: MessageEvent) => {
+      console.log('📺 Display received update:', event.data);
       const newState = event.data;
       setDisplayState({
         drawnNumbers: newState.drawnNumbers,
         currentGame: newState.currentGame,
         isDrawing: newState.isDrawing,
       });
-    });
+    };
+    
+    channel.addEventListener('message', handleMessage);
+    console.log('📺 Display window listening for updates...');
 
     return () => {
       channel.close();

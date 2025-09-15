@@ -17,14 +17,29 @@ export const useLoto = () => {
     gameHistory: [],
   });
 
-  // Save state to localStorage whenever it changes
+  // Create a persistent BroadcastChannel
+  useEffect(() => {
+    const channel = new BroadcastChannel('loto-updates');
+    
+    // Store channel reference for broadcasting updates
+    (window as any).lotoBroadcastChannel = channel;
+    
+    return () => {
+      channel.close();
+      delete (window as any).lotoBroadcastChannel;
+    };
+  }, []);
+
+  // Save state to localStorage and broadcast changes
   useEffect(() => {
     localStorage.setItem('loto-state', JSON.stringify(state));
     
-    // Use BroadcastChannel for cross-window communication
-    const channel = new BroadcastChannel('loto-updates');
-    channel.postMessage(state);
-    channel.close();
+    // Broadcast state changes to other windows
+    const channel = (window as any).lotoBroadcastChannel;
+    if (channel) {
+      console.log('📡 Broadcasting state update:', state);
+      channel.postMessage(state);
+    }
   }, [state]);
 
   // Load state from localStorage on mount
