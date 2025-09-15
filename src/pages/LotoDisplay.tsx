@@ -22,15 +22,9 @@ const LotoDisplay = () => {
   
   // Listen for real-time updates from dashboard
   useEffect(() => {
-    const handleStateChange = (event: any) => {
-      setDisplayState({
-        drawnNumbers: event.detail.drawnNumbers,
-        currentGame: event.detail.currentGame,
-        isDrawing: event.detail.isDrawing,
-      });
-    };
-
-    const handleStorageChange = () => {
+    const handleStorageChange = (event?: StorageEvent) => {
+      // L'événement storage ne se déclenche que pour les changements d'autres fenêtres
+      // Pour la même fenêtre, on doit vérifier manuellement
       const savedState = localStorage.getItem('loto-state');
       if (savedState) {
         try {
@@ -46,16 +40,23 @@ const LotoDisplay = () => {
       }
     };
 
+    // Polling pour vérifier les changements (fallback)
+    const pollForChanges = () => {
+      handleStorageChange();
+    };
+
     // Load initial state
     handleStorageChange();
 
-    // Listen for changes
-    window.addEventListener('loto-state-changed', handleStateChange);
+    // Listen for storage changes (fonctionne entre fenêtres)
     window.addEventListener('storage', handleStorageChange);
+    
+    // Polling de sécurité toutes les 500ms
+    const interval = setInterval(pollForChanges, 500);
 
     return () => {
-      window.removeEventListener('loto-state-changed', handleStateChange);
       window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
     };
   }, []);
 
