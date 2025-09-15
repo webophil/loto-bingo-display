@@ -4,6 +4,42 @@ import { Monitor, Settings, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Index = () => {
+  const openDisplayOnExternalScreen = () => {
+    // Obtenir l'URL complète pour l'affichage
+    const displayUrl = `${window.location.origin}/display`;
+    
+    // Paramètres pour ouvrir sur l'écran externe
+    const features = [
+      'fullscreen=yes',
+      'width=' + screen.availWidth,
+      'height=' + screen.availHeight,
+      'left=' + screen.availWidth, // Positionner sur l'écran externe
+      'top=0',
+      'scrollbars=no',
+      'toolbar=no',
+      'menubar=no',
+      'status=no',
+      'location=no'
+    ].join(',');
+    
+    // Ouvrir la fenêtre
+    const newWindow = window.open(displayUrl, 'LotoDisplay', features);
+    
+    // Essayer de mettre en plein écran après un court délai
+    if (newWindow) {
+      setTimeout(() => {
+        try {
+          newWindow.focus();
+          if (newWindow.document?.documentElement?.requestFullscreen) {
+            newWindow.document.documentElement.requestFullscreen();
+          }
+        } catch (error) {
+          console.log('Impossible de mettre en plein écran automatiquement');
+        }
+      }, 1000);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
       <div className="max-w-4xl w-full space-y-8">
@@ -29,11 +65,12 @@ const Index = () => {
                 Vue dédiée pour l'affichage public avec grille des 90 numéros, 
                 animations et derniers tirages visibles de loin.
               </p>
-              <Link to="/display">
-                <Button className="w-full gradient-primary text-white font-semibold text-lg py-3">
-                  Ouvrir l'Affichage
-                </Button>
-              </Link>
+              <Button 
+                onClick={openDisplayOnExternalScreen}
+                className="w-full gradient-primary text-white font-semibold text-lg py-3"
+              >
+                Ouvrir l'Affichage
+              </Button>
             </CardContent>
           </Card>
 
