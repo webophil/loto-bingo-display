@@ -20,8 +20,11 @@ export const useLoto = () => {
   // Save state to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('loto-state', JSON.stringify(state));
-    // Dispatch custom event to notify other tabs/windows
-    window.dispatchEvent(new CustomEvent('loto-state-changed', { detail: state }));
+    
+    // Use BroadcastChannel for cross-window communication
+    const channel = new BroadcastChannel('loto-updates');
+    channel.postMessage(state);
+    channel.close();
   }, [state]);
 
   // Load state from localStorage on mount
