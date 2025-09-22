@@ -73,7 +73,7 @@ const Index = () => {
                 </p>
               </div>
               <div className="space-y-2">
-                <div className="w-12 h-12 rounded-full bg-loto-red mx-auto flex items-center justify-center text-white font-bold text-xl">
+                <div className="w-12 h-12 rounded-full bg-loto-red mx-auto flex items-center justify-center text-white font-bold text-2xl ">
                   90
                 </div>
                 <h3 className="text-xl font-semibold">Boules</h3>
