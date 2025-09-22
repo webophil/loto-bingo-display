@@ -8,6 +8,8 @@ export interface LotoState {
   isDrawing: boolean;
   gameHistory: { type: GameType; numbers: number[] }[];
   isManualMode: boolean;
+  withDemarque: boolean;
+  prizeDescription: string;
 }
 
 export const useLoto = () => {
@@ -17,6 +19,8 @@ export const useLoto = () => {
     isDrawing: false,
     gameHistory: [],
     isManualMode: false,
+    withDemarque: true,
+    prizeDescription: '',
   });
 
   // Create a persistent BroadcastChannel
@@ -146,6 +150,20 @@ export const useLoto = () => {
     }, 1000);
   }, []);
 
+  const toggleDemarque = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      withDemarque: !prev.withDemarque,
+    }));
+  }, []);
+
+  const setPrizeDescription = useCallback((description: string) => {
+    setState(prev => ({
+      ...prev,
+      prizeDescription: description,
+    }));
+  }, []);
+
   const resetAll = useCallback(() => {
     setState({
       drawnNumbers: [],
@@ -153,6 +171,8 @@ export const useLoto = () => {
       isDrawing: false,
       gameHistory: [],
       isManualMode: false,
+      withDemarque: true,
+      prizeDescription: '',
     });
   }, []);
 
@@ -164,5 +184,7 @@ export const useLoto = () => {
     endGame,
     resetAll,
     toggleMode,
+    toggleDemarque,
+    setPrizeDescription,
   };
 };

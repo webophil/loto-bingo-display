@@ -39,12 +39,16 @@ const Dashboard = () => {
             drawnNumbers={loto.drawnNumbers} 
             isDrawing={loto.isDrawing} 
             isManualMode={loto.isManualMode}
+            withDemarque={loto.withDemarque}
+            prizeDescription={loto.prizeDescription}
             onStartGame={loto.startGame} 
             onDrawNumber={loto.drawNumber} 
             onDrawManualNumber={loto.drawManualNumber}
             onEndGame={loto.endGame} 
             onReset={loto.resetAll}
             onToggleMode={loto.toggleMode}
+            onToggleDemarque={loto.toggleDemarque}
+            onSetPrizeDescription={loto.setPrizeDescription}
           />
           
           <DrawnHistory drawnNumbers={loto.drawnNumbers} />

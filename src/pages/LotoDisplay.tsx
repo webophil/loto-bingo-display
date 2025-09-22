@@ -4,12 +4,23 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { Maximize } from 'lucide-react';
+import { GameType } from '@/hooks/useLoto';
+
+interface DisplayState {
+  drawnNumbers: number[];
+  currentGame: GameType | null;
+  isDrawing: boolean;
+  withDemarque: boolean;
+  prizeDescription: string;
+}
 
 const LotoDisplay = () => {
-  const [displayState, setDisplayState] = useState({
-    drawnNumbers: [] as number[],
-    currentGame: null as any,
+  const [displayState, setDisplayState] = useState<DisplayState>({
+    drawnNumbers: [],
+    currentGame: null,
     isDrawing: false,
+    withDemarque: true,
+    prizeDescription: '',
   });
   
   const latestNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
@@ -37,6 +48,8 @@ const LotoDisplay = () => {
               drawnNumbers: parsedState.drawnNumbers || [],
               currentGame: parsedState.currentGame || null,
               isDrawing: parsedState.isDrawing || false,
+              withDemarque: parsedState.withDemarque ?? true,
+              prizeDescription: parsedState.prizeDescription || '',
             });
             console.log('📺 Display updated from localStorage:', parsedState);
           }
@@ -61,6 +74,8 @@ const LotoDisplay = () => {
           drawnNumbers: newState.drawnNumbers || [],
           currentGame: newState.currentGame || null,
           isDrawing: newState.isDrawing || false,
+          withDemarque: newState.withDemarque ?? true,
+          prizeDescription: newState.prizeDescription || '',
         });
       }
     };
@@ -85,6 +100,8 @@ const LotoDisplay = () => {
           drawnNumbers: newState.drawnNumbers || [],
           currentGame: newState.currentGame || null,
           isDrawing: newState.isDrawing || false,
+          withDemarque: newState.withDemarque ?? true,
+          prizeDescription: newState.prizeDescription || '',
         });
       }
     };
@@ -120,11 +137,26 @@ const LotoDisplay = () => {
         
         <div className="flex items-center justify-center gap-8 flex-wrap">
           {displayState.currentGame && (
-            <Badge className="gradient-secondary text-white text-2xl px-8 py-3 font-bold animate-pulse-glow">
-              {displayState.currentGame === 'quine' && '🎯 QUINE'}
-              {displayState.currentGame === 'double-quine' && '🎯🎯 DOUBLE QUINE'}
-              {displayState.currentGame === 'carton-plein' && '🏆 CARTON PLEIN'}
-            </Badge>
+            <div className="text-center space-y-4">
+              <Badge className="gradient-secondary text-white text-2xl px-8 py-3 font-bold animate-pulse-glow">
+                {displayState.currentGame === 'quine' && '🎯 QUINE'}
+                {displayState.currentGame === 'double-quine' && '🎯🎯 DOUBLE QUINE'}
+                {displayState.currentGame === 'carton-plein' && '🏆 CARTON PLEIN'}
+              </Badge>
+              
+              {displayState.prizeDescription && (
+                <div className="text-center">
+                  <p className="text-2xl text-white font-semibold">
+                    🎁 Lot à gagner : {displayState.prizeDescription}
+                  </p>
+                  {!displayState.withDemarque && (
+                    <p className="text-loto-red text-xl font-bold mt-2 animate-pulse">
+                      ⚠️ NE DÉMARQUEZ PAS ⚠️
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
           )}
           
           {latestNumber && (

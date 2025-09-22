@@ -3,9 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { GameType } from '@/hooks/useLoto';
-import { Play, Square, RotateCcw, Dice1 } from 'lucide-react';
+import { Play, Square, RotateCcw, Dice1, Gift } from 'lucide-react';
 import { ManualGrid } from './ManualGrid';
 
 interface GameControlsProps {
@@ -13,12 +14,16 @@ interface GameControlsProps {
   drawnNumbers: number[];
   isDrawing: boolean;
   isManualMode: boolean;
+  withDemarque: boolean;
+  prizeDescription: string;
   onStartGame: (type: GameType) => void;
   onDrawNumber: () => void;
   onDrawManualNumber: (number: number) => void;
   onEndGame: () => void;
   onReset: () => void;
   onToggleMode: () => void;
+  onToggleDemarque: () => void;
+  onSetPrizeDescription: (description: string) => void;
 }
 
 const gameLabels: Record<GameType, string> = {
@@ -32,12 +37,16 @@ export const GameControls = ({
   drawnNumbers,
   isDrawing,
   isManualMode,
+  withDemarque,
+  prizeDescription,
   onStartGame,
   onDrawNumber,
   onDrawManualNumber,
   onEndGame,
   onReset,
   onToggleMode,
+  onToggleDemarque,
+  onSetPrizeDescription,
 }: GameControlsProps) => {
   return (
     <Card className="gradient-secondary border-border/50">
@@ -61,6 +70,40 @@ export const GameControls = ({
             id="mode-toggle"
             checked={isManualMode}
             onCheckedChange={onToggleMode}
+            disabled={!!currentGame}
+          />
+        </div>
+
+        {/* Démarque Toggle */}
+        <div className="flex items-center justify-between p-4 bg-white/10 rounded-lg">
+          <div className="space-y-1">
+            <Label htmlFor="demarque-toggle" className="text-white font-medium">
+              Démarque des grilles
+            </Label>
+            <p className="text-xs text-white/70">
+              {withDemarque ? 'Les joueurs démarquent leurs grilles' : 'Les joueurs ne démarquent pas'}
+            </p>
+          </div>
+          <Switch
+            id="demarque-toggle"
+            checked={withDemarque}
+            onCheckedChange={onToggleDemarque}
+            disabled={!!currentGame}
+          />
+        </div>
+
+        {/* Prize Description */}
+        <div className="space-y-2">
+          <Label htmlFor="prize-input" className="text-white font-medium">
+            <Gift className="w-4 h-4 inline mr-2" />
+            Lot à gagner
+          </Label>
+          <Input
+            id="prize-input"
+            value={prizeDescription}
+            onChange={(e) => onSetPrizeDescription(e.target.value)}
+            placeholder="Ex: Panier garni, Voyage, Bon d'achat..."
+            className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
             disabled={!!currentGame}
           />
         </div>
@@ -91,8 +134,13 @@ export const GameControls = ({
                 {gameLabels[currentGame]}
               </Badge>
               <p className="text-white/80 mt-2">
-                {drawnNumbers.length} numéro{drawnNumbers.length > 1 ? 's' : ''} tiré{drawnNumbers.length > 1 ? 's' : ''} • Mode {isManualMode ? 'Manuel' : 'Auto'}
+                {drawnNumbers.length} numéro{drawnNumbers.length > 1 ? 's' : ''} tiré{drawnNumbers.length > 1 ? 's' : ''} • Mode {isManualMode ? 'Manuel' : 'Auto'} • {withDemarque ? 'Avec' : 'Sans'} démarque
               </p>
+              {prizeDescription && (
+                <p className="text-loto-yellow mt-1 font-medium">
+                  🎁 {prizeDescription}
+                </p>
+              )}
             </div>
 
             {isManualMode ? (
