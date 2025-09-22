@@ -34,10 +34,7 @@ const Index = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-white/80 mb-6">
-                Vue dédiée pour l'affichage public avec grille des 90 numéros, 
-                animations et derniers tirages visibles de loin.
-              </p>
+              <p className="text-white/80 mb-6">Affichage public avec grille des 90 numéros, animations et derniers tirages visibles de loin.</p>
               <Button onClick={openDisplayOnExternalScreen} className="w-full gradient-primary text-white font-semibold text-lg py-3">
                 Ouvrir l'Affichage
               </Button>
