@@ -34,7 +34,18 @@ const Dashboard = () => {
 
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-6">
-          <GameControls currentGame={loto.currentGame} drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} onStartGame={loto.startGame} onDrawNumber={loto.drawNumber} onEndGame={loto.endGame} onReset={loto.resetAll} />
+          <GameControls 
+            currentGame={loto.currentGame} 
+            drawnNumbers={loto.drawnNumbers} 
+            isDrawing={loto.isDrawing} 
+            isManualMode={loto.isManualMode}
+            onStartGame={loto.startGame} 
+            onDrawNumber={loto.drawNumber} 
+            onDrawManualNumber={loto.drawManualNumber}
+            onEndGame={loto.endGame} 
+            onReset={loto.resetAll}
+            onToggleMode={loto.toggleMode}
+          />
           
           <DrawnHistory drawnNumbers={loto.drawnNumbers} />
         </div>

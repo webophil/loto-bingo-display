@@ -7,6 +7,7 @@ export interface LotoState {
   currentGame: GameType | null;
   isDrawing: boolean;
   gameHistory: { type: GameType; numbers: number[] }[];
+  isManualMode: boolean;
 }
 
 export const useLoto = () => {
@@ -15,6 +16,7 @@ export const useLoto = () => {
     currentGame: null,
     isDrawing: false,
     gameHistory: [],
+    isManualMode: false,
   });
 
   // Create a persistent BroadcastChannel
@@ -120,12 +122,37 @@ export const useLoto = () => {
     }));
   }, []);
 
+  const toggleMode = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      isManualMode: !prev.isManualMode,
+    }));
+  }, []);
+
+  const drawManualNumber = useCallback((number: number) => {
+    setState(prev => {
+      if (prev.drawnNumbers.includes(number)) return prev;
+      
+      return {
+        ...prev,
+        drawnNumbers: [...prev.drawnNumbers, number],
+        isDrawing: true,
+      };
+    });
+
+    // Reset drawing state after animation
+    setTimeout(() => {
+      setState(prev => ({ ...prev, isDrawing: false }));
+    }, 1000);
+  }, []);
+
   const resetAll = useCallback(() => {
     setState({
       drawnNumbers: [],
       currentGame: null,
       isDrawing: false,
       gameHistory: [],
+      isManualMode: false,
     });
   }, []);
 
@@ -133,7 +160,9 @@ export const useLoto = () => {
     ...state,
     startGame,
     drawNumber,
+    drawManualNumber,
     endGame,
     resetAll,
+    toggleMode,
   };
 };
