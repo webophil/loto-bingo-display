@@ -41,11 +41,7 @@ const Dashboard = () => {
 
         <div className="lg:col-span-2">
           <Card className="bg-card/20 backdrop-blur-sm border-border/50">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold text-center">
-                🎲 Grille de Contrôle
-              </CardTitle>
-            </CardHeader>
+            
             <CardContent>
               <LotoGrid drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} />
             </CardContent>
