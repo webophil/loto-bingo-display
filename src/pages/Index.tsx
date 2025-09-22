@@ -2,44 +2,27 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Monitor, Settings, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 const Index = () => {
   const openDisplayOnExternalScreen = () => {
     // Obtenir l'URL complète pour l'affichage
     const displayUrl = `${window.location.origin}/display`;
-    
+
     // Paramètres pour maximiser la fenêtre sur l'écran externe
-    const features = [
-      'width=' + screen.availWidth,
-      'height=' + screen.availHeight,
-      'left=' + (screen.availWidth + 100), // Positionner sur l'écran externe
-      'top=0',
-      'scrollbars=no',
-      'toolbar=no',
-      'menubar=no',
-      'status=no',
-      'location=no',
-      'resizable=yes'
-    ].join(',');
-    
+    const features = ['width=' + screen.availWidth, 'height=' + screen.availHeight, 'left=' + (screen.availWidth + 100),
+    // Positionner sur l'écran externe
+    'top=0', 'scrollbars=no', 'toolbar=no', 'menubar=no', 'status=no', 'location=no', 'resizable=yes'].join(',');
+
     // Ouvrir la fenêtre maximisée
     const newWindow = window.open(displayUrl, 'LotoDisplay', features);
-    
     if (newWindow) {
       newWindow.focus();
     }
   };
-
-  return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+  return <div className="min-h-screen flex items-center justify-center p-6">
       <div className="max-w-4xl w-full space-y-8">
         <header className="text-center space-y-4">
-          <h1 className="text-6xl font-bold gradient-primary bg-clip-text text-transparent">
-            🎯 LOTO ASSOCIATIF 🎯
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            Système de gestion professionnel pour vos événements loto
-          </p>
+          <h1 className="text-6xl font-bold gradient-primary bg-clip-text text-transparent">🎯 LOTO Corail's Rémoises🎯</h1>
+          <p className="text-xl text-muted-foreground">Système de gestion professionnel loto par Fifi</p>
         </header>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -55,10 +38,7 @@ const Index = () => {
                 Vue dédiée pour l'affichage public avec grille des 90 numéros, 
                 animations et derniers tirages visibles de loin.
               </p>
-              <Button 
-                onClick={openDisplayOnExternalScreen}
-                className="w-full gradient-primary text-white font-semibold text-lg py-3"
-              >
+              <Button onClick={openDisplayOnExternalScreen} className="w-full gradient-primary text-white font-semibold text-lg py-3">
                 Ouvrir l'Affichage
               </Button>
             </CardContent>
@@ -117,8 +97,6 @@ const Index = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
