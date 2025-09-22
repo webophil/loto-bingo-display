@@ -22,7 +22,7 @@ const Index = () => {
       <div className="max-w-4xl w-full space-y-8">
         <header className="text-center space-y-4">
           <h1 className="text-6xl font-bold gradient-primary bg-clip-text text-transparent">🎯 LOTO Corail's Rémoises🎯</h1>
-          <p className="text-xl text-muted-foreground">Système de gestion professionnel loto par Fifi</p>
+          <p className="text-xl text-muted-foreground">Système de gestion de lotos, bingos et roue de la fortune par Fifi</p>
         </header>
 
         <div className="grid md:grid-cols-2 gap-6">
