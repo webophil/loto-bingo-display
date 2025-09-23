@@ -201,15 +201,34 @@ export const useLoto = () => {
 
   const resumeGame = useCallback(() => {
     setState(prev => {
-      // En mode Quines du Sud, on repart sur une Quine après une victoire
-      const nextGame = prev.isQuinesDuSudMode ? 'quine' : prev.currentGame;
+      let nextGame: GameType | null;
+      
+      if (prev.isQuinesDuSudMode) {
+        // En mode Quines du Sud, on repart toujours sur une Quine
+        nextGame = 'quine';
+      } else {
+        // Progression automatique : Quine → Double Quine → Carton plein → fin
+        switch (prev.currentGame) {
+          case 'quine':
+            nextGame = 'double-quine';
+            break;
+          case 'double-quine':
+            nextGame = 'carton-plein';
+            break;
+          case 'carton-plein':
+          default:
+            nextGame = null; // Fin de partie
+            break;
+        }
+      }
       
       return {
         ...prev,
         isWinning: false,
         currentGame: nextGame,
-        // En mode Quines du Sud, on garde les numéros tirés, sinon on les reset
-        drawnNumbers: prev.isQuinesDuSudMode ? prev.drawnNumbers : [],
+        // En mode sans démarque, on garde toujours les numéros tirés
+        // En mode avec démarque, on les reset sauf en Quines du Sud
+        drawnNumbers: !prev.withDemarque || prev.isQuinesDuSudMode ? prev.drawnNumbers : [],
       };
     });
   }, []);
