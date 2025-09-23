@@ -12,6 +12,13 @@ interface DisplayState {
   isDrawing: boolean;
   withDemarque: boolean;
   prizeDescription: string;
+  isQuinesDuSudMode: boolean;
+  prizeDescriptions: {
+    quine: string;
+    'double-quine': string;
+    'carton-plein': string;
+  };
+  isWinning: boolean;
 }
 
 const LotoDisplay = () => {
@@ -21,6 +28,13 @@ const LotoDisplay = () => {
     isDrawing: false,
     withDemarque: true,
     prizeDescription: '',
+    isQuinesDuSudMode: false,
+    prizeDescriptions: {
+      quine: '',
+      'double-quine': '',
+      'carton-plein': '',
+    },
+    isWinning: false,
   });
   
   const latestNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
@@ -50,6 +64,9 @@ const LotoDisplay = () => {
               isDrawing: parsedState.isDrawing || false,
               withDemarque: parsedState.withDemarque ?? true,
               prizeDescription: parsedState.prizeDescription || '',
+              isQuinesDuSudMode: parsedState.isQuinesDuSudMode || false,
+              prizeDescriptions: parsedState.prizeDescriptions || { quine: '', 'double-quine': '', 'carton-plein': '' },
+              isWinning: parsedState.isWinning || false,
             });
             console.log('📺 Display updated from localStorage:', parsedState);
           }
@@ -76,6 +93,9 @@ const LotoDisplay = () => {
           isDrawing: newState.isDrawing || false,
           withDemarque: newState.withDemarque ?? true,
           prizeDescription: newState.prizeDescription || '',
+          isQuinesDuSudMode: newState.isQuinesDuSudMode || false,
+          prizeDescriptions: newState.prizeDescriptions || { quine: '', 'double-quine': '', 'carton-plein': '' },
+          isWinning: newState.isWinning || false,
         });
       }
     };
@@ -102,6 +122,9 @@ const LotoDisplay = () => {
           isDrawing: newState.isDrawing || false,
           withDemarque: newState.withDemarque ?? true,
           prizeDescription: newState.prizeDescription || '',
+          isQuinesDuSudMode: newState.isQuinesDuSudMode || false,
+          prizeDescriptions: newState.prizeDescriptions || { quine: '', 'double-quine': '', 'carton-plein': '' },
+          isWinning: newState.isWinning || false,
         });
       }
     };
@@ -120,6 +143,8 @@ const LotoDisplay = () => {
     };
   }, []);
 
+  const currentPrize = displayState.currentGame ? displayState.prizeDescriptions[displayState.currentGame] : '';
+
   return (
     <div className="min-h-screen p-8 flex flex-col items-center justify-center space-y-8 relative">
       <Button 
@@ -130,6 +155,29 @@ const LotoDisplay = () => {
         <Maximize className="w-4 h-4 mr-2" />
         Plein écran
       </Button>
+
+      {/* Winning Banner */}
+      {displayState.isWinning && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
+          <div className="bg-white p-12 rounded-3xl shadow-2xl text-center animate-bounce-soft animate-pulse-glow border-8 border-loto-blue">
+            <div className="text-8xl mb-6 text-loto-blue">🏆</div>
+            <h2 className="text-6xl font-bold text-loto-red animate-blink mb-4">
+              C'EST GAGNÉ !!!
+            </h2>
+            <p className="text-2xl text-gray-700 font-semibold">
+              {displayState.currentGame === 'quine' && '🎯 QUINE'}
+              {displayState.currentGame === 'double-quine' && '🎯🎯 DOUBLE QUINE'}
+              {displayState.currentGame === 'carton-plein' && '🏆 CARTON PLEIN'}
+            </p>
+            {currentPrize && (
+              <p className="text-xl text-gray-600 mt-2">
+                🎁 {currentPrize}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
       <header className="text-center space-y-6">
         <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">
           🎯 LOTO CORAIL'S REMOISES 🎯
@@ -142,24 +190,25 @@ const LotoDisplay = () => {
                 {displayState.currentGame === 'quine' && '🎯 QUINE'}
                 {displayState.currentGame === 'double-quine' && '🎯🎯 DOUBLE QUINE'}
                 {displayState.currentGame === 'carton-plein' && '🏆 CARTON PLEIN'}
+                {displayState.isQuinesDuSudMode && ' (QUINES DU SUD)'}
               </Badge>
               
-              {displayState.prizeDescription && (
-                <div className="text-center">
-                  <p className="text-2xl text-white font-semibold">
-                    🎁 Lot à gagner : {displayState.prizeDescription}
+              <div className="text-center">
+                {!displayState.withDemarque && (
+                  <p className="text-loto-red text-2xl font-bold animate-pulse mb-2">
+                    ⚠️ ON NE DEMARQUE PAS ⚠️
                   </p>
-                  {!displayState.withDemarque && (
-                    <p className="text-loto-red text-xl font-bold mt-2 animate-pulse">
-                      ⚠️ NE DÉMARQUEZ PAS ⚠️
-                    </p>
-                  )}
-                </div>
-              )}
+                )}
+                {currentPrize && (
+                  <p className="text-2xl text-white font-semibold">
+                    🎁 Lot : {currentPrize}
+                  </p>
+                )}
+              </div>
             </div>
           )}
           
-          {latestNumber && (
+          {latestNumber && !displayState.isWinning && (
             <div className="flex items-center gap-4">
               <p className="text-2xl font-semibold text-foreground">Dernier numéro :</p>
               <div className={`w-24 h-24 rounded-full flex items-center justify-center text-4xl font-bold text-white animate-bounce-soft animate-blink ${
@@ -176,18 +225,22 @@ const LotoDisplay = () => {
         </div>
       </header>
 
-      <LotoGrid drawnNumbers={displayState.drawnNumbers} isDrawing={displayState.isDrawing} />
+      {!displayState.isWinning && (
+        <LotoGrid drawnNumbers={displayState.drawnNumbers} isDrawing={displayState.isDrawing} />
+      )}
       
-      <footer className="text-center space-y-2">
-        <p className="text-xl text-muted-foreground">
-          {displayState.drawnNumbers.length} / 90 numéros tirés
-        </p>
-        {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
-          <p className="text-lg text-muted-foreground italic">
-            En attente du prochain tirage...
+      {!displayState.isWinning && (
+        <footer className="text-center space-y-2">
+          <p className="text-xl text-muted-foreground">
+            {displayState.drawnNumbers.length} / 90 numéros tirés
           </p>
-        )}
-      </footer>
+          {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
+            <p className="text-lg text-muted-foreground italic">
+              En attente du prochain tirage...
+            </p>
+          )}
+        </footer>
+      )}
     </div>
   );
 };

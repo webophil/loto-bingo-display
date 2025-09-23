@@ -10,6 +10,13 @@ export interface LotoState {
   isManualMode: boolean;
   withDemarque: boolean;
   prizeDescription: string;
+  isQuinesDuSudMode: boolean;
+  prizeDescriptions: {
+    quine: string;
+    'double-quine': string;
+    'carton-plein': string;
+  };
+  isWinning: boolean;
 }
 
 export const useLoto = () => {
@@ -21,6 +28,13 @@ export const useLoto = () => {
     isManualMode: false,
     withDemarque: true,
     prizeDescription: '',
+    isQuinesDuSudMode: false,
+    prizeDescriptions: {
+      quine: '',
+      'double-quine': '',
+      'carton-plein': '',
+    },
+    isWinning: false,
   });
 
   // Create a persistent BroadcastChannel
@@ -164,6 +178,42 @@ export const useLoto = () => {
     }));
   }, []);
 
+  const toggleQuinesDuSud = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      isQuinesDuSudMode: !prev.isQuinesDuSudMode,
+    }));
+  }, []);
+
+  const setPrizeDescriptions = useCallback((prizes: { quine: string; 'double-quine': string; 'carton-plein': string }) => {
+    setState(prev => ({
+      ...prev,
+      prizeDescriptions: prizes,
+    }));
+  }, []);
+
+  const setWinning = useCallback((isWinning: boolean) => {
+    setState(prev => ({
+      ...prev,
+      isWinning,
+    }));
+  }, []);
+
+  const resumeGame = useCallback(() => {
+    setState(prev => {
+      // En mode Quines du Sud, on repart sur une Quine après une victoire
+      const nextGame = prev.isQuinesDuSudMode ? 'quine' : prev.currentGame;
+      
+      return {
+        ...prev,
+        isWinning: false,
+        currentGame: nextGame,
+        // En mode Quines du Sud, on garde les numéros tirés, sinon on les reset
+        drawnNumbers: prev.isQuinesDuSudMode ? prev.drawnNumbers : [],
+      };
+    });
+  }, []);
+
   const resetAll = useCallback(() => {
     setState({
       drawnNumbers: [],
@@ -173,6 +223,13 @@ export const useLoto = () => {
       isManualMode: false,
       withDemarque: true,
       prizeDescription: '',
+      isQuinesDuSudMode: false,
+      prizeDescriptions: {
+        quine: '',
+        'double-quine': '',
+        'carton-plein': '',
+      },
+      isWinning: false,
     });
   }, []);
 
@@ -186,5 +243,9 @@ export const useLoto = () => {
     toggleMode,
     toggleDemarque,
     setPrizeDescription,
+    toggleQuinesDuSud,
+    setPrizeDescriptions,
+    setWinning,
+    resumeGame,
   };
 };

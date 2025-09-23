@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { GameType } from '@/hooks/useLoto';
-import { Play, Square, RotateCcw, Dice1, Gift } from 'lucide-react';
+import { Play, Square, RotateCcw, Dice1, Gift, Trophy, RefreshCw } from 'lucide-react';
 import { ManualGrid } from './ManualGrid';
 
 interface GameControlsProps {
@@ -16,6 +16,13 @@ interface GameControlsProps {
   isManualMode: boolean;
   withDemarque: boolean;
   prizeDescription: string;
+  isQuinesDuSudMode: boolean;
+  prizeDescriptions: {
+    quine: string;
+    'double-quine': string;
+    'carton-plein': string;
+  };
+  isWinning: boolean;
   onStartGame: (type: GameType) => void;
   onDrawNumber: () => void;
   onDrawManualNumber: (number: number) => void;
@@ -24,6 +31,10 @@ interface GameControlsProps {
   onToggleMode: () => void;
   onToggleDemarque: () => void;
   onSetPrizeDescription: (description: string) => void;
+  onToggleQuinesDuSud: () => void;
+  onSetPrizeDescriptions: (prizes: { quine: string; 'double-quine': string; 'carton-plein': string }) => void;
+  onSetWinning: (isWinning: boolean) => void;
+  onResumeGame: () => void;
 }
 
 const gameLabels: Record<GameType, string> = {
@@ -39,6 +50,9 @@ export const GameControls = ({
   isManualMode,
   withDemarque,
   prizeDescription,
+  isQuinesDuSudMode,
+  prizeDescriptions,
+  isWinning,
   onStartGame,
   onDrawNumber,
   onDrawManualNumber,
@@ -47,6 +61,10 @@ export const GameControls = ({
   onToggleMode,
   onToggleDemarque,
   onSetPrizeDescription,
+  onToggleQuinesDuSud,
+  onSetPrizeDescriptions,
+  onSetWinning,
+  onResumeGame,
 }: GameControlsProps) => {
   return (
     <Card className="gradient-secondary border-border/50">
@@ -92,20 +110,80 @@ export const GameControls = ({
           />
         </div>
 
-        {/* Prize Description */}
-        <div className="space-y-2">
-          <Label htmlFor="prize-input" className="text-white font-medium">
-            <Gift className="w-4 h-4 inline mr-2" />
-            Lot à gagner
-          </Label>
-          <Input
-            id="prize-input"
-            value={prizeDescription}
-            onChange={(e) => onSetPrizeDescription(e.target.value)}
-            placeholder="Ex: Panier garni, Voyage, Bon d'achat..."
-            className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+        {/* Quines du Sud Mode */}
+        <div className="flex items-center justify-between p-4 bg-white/10 rounded-lg">
+          <div className="space-y-1">
+            <Label htmlFor="quines-sud-toggle" className="text-white font-medium">
+              Mode Quines du Sud
+            </Label>
+            <p className="text-xs text-white/70">
+              {isQuinesDuSudMode ? 'Après chaque victoire, reprise automatique sur Quine' : 'Mode classique'}
+            </p>
+          </div>
+          <Switch
+            id="quines-sud-toggle"
+            checked={isQuinesDuSudMode}
+            onCheckedChange={onToggleQuinesDuSud}
             disabled={!!currentGame}
           />
+        </div>
+
+        {/* Prize Descriptions by Game Type */}
+        <div className="space-y-4">
+          <Label className="text-white font-medium">
+            <Gift className="w-4 h-4 inline mr-2" />
+            Lots à gagner par étape
+          </Label>
+          
+          <div className="space-y-3">
+            <div>
+              <Label htmlFor="prize-quine" className="text-white/80 text-sm">
+                🎯 Quine (1 ligne)
+              </Label>
+              <Input
+                id="prize-quine"
+                value={prizeDescriptions.quine}
+                onChange={(e) => onSetPrizeDescriptions({
+                  ...prizeDescriptions,
+                  quine: e.target.value
+                })}
+                placeholder="Ex: Panier garni..."
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="prize-double-quine" className="text-white/80 text-sm">
+                🎯🎯 Double Quine (2 lignes)
+              </Label>
+              <Input
+                id="prize-double-quine"
+                value={prizeDescriptions['double-quine']}
+                onChange={(e) => onSetPrizeDescriptions({
+                  ...prizeDescriptions,
+                  'double-quine': e.target.value
+                })}
+                placeholder="Ex: Voyage..."
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="prize-carton-plein" className="text-white/80 text-sm">
+                🏆 Carton Plein
+              </Label>
+              <Input
+                id="prize-carton-plein"
+                value={prizeDescriptions['carton-plein']}
+                onChange={(e) => onSetPrizeDescriptions({
+                  ...prizeDescriptions,
+                  'carton-plein': e.target.value
+                })}
+                placeholder="Ex: Gros lot..."
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+              />
+            </div>
+          </div>
         </div>
 
         <Separator className="bg-white/20" />
@@ -135,10 +213,11 @@ export const GameControls = ({
               </Badge>
               <p className="text-white/80 mt-2">
                 {drawnNumbers.length} numéro{drawnNumbers.length > 1 ? 's' : ''} tiré{drawnNumbers.length > 1 ? 's' : ''} • Mode {isManualMode ? 'Manuel' : 'Auto'} • {withDemarque ? 'Avec' : 'Sans'} démarque
+                {isQuinesDuSudMode && ' • Quines du Sud'}
               </p>
-              {prizeDescription && (
+              {currentGame && prizeDescriptions[currentGame] && (
                 <p className="text-loto-yellow mt-1 font-medium">
-                  🎁 {prizeDescription}
+                  🎁 {prizeDescriptions[currentGame]}
                 </p>
               )}
             </div>
@@ -163,23 +242,47 @@ export const GameControls = ({
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-3">
-              <Button
-                onClick={onEndGame}
-                variant="outline"
-                className="border-loto-yellow text-loto-yellow hover:bg-loto-yellow hover:text-gray-900"
-              >
-                <Square className="w-4 h-4 mr-2" />
-                Terminer
-              </Button>
-              <Button
-                onClick={onReset}
-                variant="outline"
-                className="border-loto-red text-loto-red hover:bg-loto-red hover:text-white"
-              >
-                <RotateCcw className="w-4 h-4 mr-2" />
-                Reset
-              </Button>
+            <div className="space-y-3">
+              {/* Winning Control Buttons */}
+              <div className="grid grid-cols-2 gap-3">
+                <Button
+                  onClick={() => onSetWinning(true)}
+                  className="bg-loto-blue text-white font-bold py-3"
+                  disabled={isWinning}
+                >
+                  <Trophy className="w-4 h-4 mr-2" />
+                  C'est gagné !
+                </Button>
+                <Button
+                  onClick={onResumeGame}
+                  variant="outline"
+                  className="border-loto-green text-loto-green hover:bg-loto-green hover:text-white"
+                  disabled={!isWinning}
+                >
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                  Reprise du jeu
+                </Button>
+              </div>
+
+              {/* Game Control Buttons */}
+              <div className="grid grid-cols-2 gap-3">
+                <Button
+                  onClick={onEndGame}
+                  variant="outline"
+                  className="border-loto-yellow text-loto-yellow hover:bg-loto-yellow hover:text-gray-900"
+                >
+                  <Square className="w-4 h-4 mr-2" />
+                  Terminer
+                </Button>
+                <Button
+                  onClick={onReset}
+                  variant="outline"
+                  className="border-loto-red text-loto-red hover:bg-loto-red hover:text-white"
+                >
+                  <RotateCcw className="w-4 h-4 mr-2" />
+                  Reset
+                </Button>
+              </div>
             </div>
           </div>
         )}

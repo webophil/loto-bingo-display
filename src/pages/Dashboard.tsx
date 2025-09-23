@@ -41,6 +41,9 @@ const Dashboard = () => {
             isManualMode={loto.isManualMode}
             withDemarque={loto.withDemarque}
             prizeDescription={loto.prizeDescription}
+            isQuinesDuSudMode={loto.isQuinesDuSudMode}
+            prizeDescriptions={loto.prizeDescriptions}
+            isWinning={loto.isWinning}
             onStartGame={loto.startGame} 
             onDrawNumber={loto.drawNumber} 
             onDrawManualNumber={loto.drawManualNumber}
@@ -49,6 +52,10 @@ const Dashboard = () => {
             onToggleMode={loto.toggleMode}
             onToggleDemarque={loto.toggleDemarque}
             onSetPrizeDescription={loto.setPrizeDescription}
+            onToggleQuinesDuSud={loto.toggleQuinesDuSud}
+            onSetPrizeDescriptions={loto.setPrizeDescriptions}
+            onSetWinning={loto.setWinning}
+            onResumeGame={loto.resumeGame}
           />
           
           <DrawnHistory drawnNumbers={loto.drawnNumbers} />
