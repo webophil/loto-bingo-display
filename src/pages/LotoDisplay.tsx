@@ -21,6 +21,16 @@ interface DisplayState {
   isWinning: boolean;
 }
 
+// Function to get the same color system as NumberBall component
+const getNumberDisplayColor = (number: number) => {
+  if (number <= 15) return 'bg-blue-700 border-blue-700';
+  if (number <= 30) return 'bg-red-600 border-red-600';
+  if (number <= 45) return 'bg-gray-600 border-gray-600';
+  if (number <= 60) return 'bg-green-600 border-green-600';
+  if (number <= 75) return 'bg-yellow-400 border-yellow-400 text-black';
+  return 'bg-pink-600 border-pink-600';
+};
+
 const LotoDisplay = () => {
   const [displayState, setDisplayState] = useState<DisplayState>({
     drawnNumbers: [],
@@ -183,9 +193,10 @@ const LotoDisplay = () => {
           🎯 LOTO CORAIL'S REMOISES 🎯
         </h1>
         
-        <div className="flex items-center justify-center gap-8 flex-wrap">
-          {displayState.currentGame && (
-            <div className="text-center space-y-4">
+        {displayState.currentGame && (
+          <div className="space-y-6">
+            {/* Information row: Game type, Prize, Demarque info */}
+            <div className="flex items-center justify-center gap-8 flex-wrap">
               <Badge className="gradient-secondary text-white text-2xl px-8 py-3 font-bold animate-pulse-glow">
                 {displayState.currentGame === 'quine' && '🎯 QUINE'}
                 {displayState.currentGame === 'double-quine' && '🎯🎯 DOUBLE QUINE'}
@@ -193,36 +204,32 @@ const LotoDisplay = () => {
                 {displayState.isQuinesDuSudMode && ' (QUINES DU SUD)'}
               </Badge>
               
-              <div className="text-center">
-                {!displayState.withDemarque && (
-                  <p className="text-loto-red text-2xl font-bold animate-pulse mb-2">
-                    ⚠️ ON NE DEMARQUE PAS ⚠️
-                  </p>
-                )}
-                {currentPrize && (
-                  <p className="text-2xl text-white font-semibold">
-                    🎁 Lot : {currentPrize}
-                  </p>
-                )}
-              </div>
+              {currentPrize && (
+                <div className="text-2xl text-white font-semibold bg-white/10 px-6 py-2 rounded-full">
+                  🎁 Lot : {currentPrize}
+                </div>
+              )}
+              
+              {!displayState.withDemarque && (
+                <div className="text-loto-red text-2xl font-bold animate-pulse bg-white/10 px-6 py-2 rounded-full">
+                  ⚠️ ON NE DEMARQUE PAS ⚠️
+                </div>
+              )}
             </div>
-          )}
-          
-          {latestNumber && !displayState.isWinning && (
-            <div className="flex items-center gap-4">
-              <p className="text-2xl font-semibold text-foreground">Dernier numéro :</p>
-              <div className={`w-24 h-24 rounded-full flex items-center justify-center text-4xl font-bold text-white animate-bounce-soft animate-blink ${
-                latestNumber <= 15 ? 'bg-loto-red' :
-                latestNumber <= 30 ? 'bg-loto-blue' :
-                latestNumber <= 45 ? 'bg-loto-yellow text-gray-900' :
-                latestNumber <= 60 ? 'bg-loto-green' :
-                latestNumber <= 75 ? 'bg-loto-purple' : 'bg-loto-orange'
-              }`} style={{ boxShadow: 'var(--shadow-glow)' }}>
-                {latestNumber}
+            
+            {/* Latest number centered below */}
+            {latestNumber && !displayState.isWinning && (
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-2xl font-semibold text-foreground">Dernier numéro :</p>
+                <div className={`w-32 h-32 rounded-full flex items-center justify-center text-5xl font-bold text-white animate-bounce-soft animate-blink ${
+                  getNumberDisplayColor(latestNumber)
+                }`} style={{ boxShadow: 'var(--shadow-glow)' }}>
+                  {latestNumber}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </header>
 
       {!displayState.isWinning && (
