@@ -194,34 +194,30 @@ const LotoDisplay = () => {
         </h1>
         
         {displayState.currentGame && (
-          <div className="space-y-6">
-            {/* Information row: Game type, Prize, Demarque info */}
-            <div className="flex items-center justify-center gap-8 flex-wrap">
-              <Badge className="gradient-secondary text-white text-2xl px-8 py-3 font-bold animate-pulse-glow">
-                {displayState.currentGame === 'quine' && '🎯 QUINE'}
-                {displayState.currentGame === 'double-quine' && '🎯🎯 DOUBLE QUINE'}
-                {displayState.currentGame === 'carton-plein' && '🏆 CARTON PLEIN'}
-                {displayState.isQuinesDuSudMode && ' (QUINES DU SUD)'}
-              </Badge>
-              
-              {currentPrize && (
-                <div className="text-2xl text-white font-semibold bg-white/10 px-6 py-2 rounded-full">
-                  🎁 Lot : {currentPrize}
-                </div>
-              )}
-              
-              {!displayState.withDemarque && (
-                <div className="text-loto-red text-2xl font-bold animate-pulse bg-white/10 px-6 py-2 rounded-full">
-                  ⚠️ ON NE DEMARQUE PAS ⚠️
-                </div>
-              )}
-            </div>
+          <div className="flex items-center justify-center gap-8 flex-wrap">
+            <Badge className="gradient-secondary text-white text-2xl px-8 py-3 font-bold animate-pulse-glow">
+              {displayState.currentGame === 'quine' && '🎯 QUINE'}
+              {displayState.currentGame === 'double-quine' && '🎯🎯 DOUBLE QUINE'}
+              {displayState.currentGame === 'carton-plein' && '🏆 CARTON PLEIN'}
+              {displayState.isQuinesDuSudMode && ' (QUINES DU SUD)'}
+            </Badge>
             
-            {/* Latest number centered below */}
+            {currentPrize && (
+              <div className="text-2xl text-white font-semibold bg-white/10 px-6 py-2 rounded-full">
+                🎁 Lot : {currentPrize}
+              </div>
+            )}
+            
+            {!displayState.withDemarque && (
+              <div className="text-loto-red text-2xl font-bold animate-pulse bg-white/10 px-6 py-2 rounded-full">
+                ⚠️ ON NE DEMARQUE PAS ⚠️
+              </div>
+            )}
+            
             {latestNumber && !displayState.isWinning && (
-              <div className="flex flex-col items-center gap-4">
+              <div className="flex items-center gap-4">
                 <p className="text-2xl font-semibold text-foreground">Dernier numéro :</p>
-                <div className={`w-32 h-32 rounded-full flex items-center justify-center text-5xl font-bold text-white animate-bounce-soft animate-blink ${
+                <div className={`w-24 h-24 rounded-full flex items-center justify-center text-4xl font-bold text-white animate-bounce-soft animate-blink ${
                   getNumberDisplayColor(latestNumber)
                 }`} style={{ boxShadow: 'var(--shadow-glow)' }}>
                   {latestNumber}
