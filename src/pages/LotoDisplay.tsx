@@ -1,5 +1,6 @@
 import { useLoto } from '@/hooks/useLoto';
 import { LotoGrid } from '@/components/LotoGrid';
+import { WheelOfFortune } from '@/components/WheelOfFortune';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
@@ -19,6 +20,11 @@ interface DisplayState {
     'carton-plein': string;
   };
   isWinning: boolean;
+  isWheelMode: boolean;
+  wheelNumberCount: number;
+  wheelPrize: string;
+  wheelWinningNumber: number | null;
+  isWheelSpinning: boolean;
 }
 
 // Function to get the same color system as NumberBall component
@@ -45,6 +51,11 @@ const LotoDisplay = () => {
       'carton-plein': '',
     },
     isWinning: false,
+    isWheelMode: false,
+    wheelNumberCount: 20,
+    wheelPrize: '',
+    wheelWinningNumber: null,
+    isWheelSpinning: false,
   });
   
   const latestNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
@@ -77,6 +88,11 @@ const LotoDisplay = () => {
               isQuinesDuSudMode: parsedState.isQuinesDuSudMode || false,
               prizeDescriptions: parsedState.prizeDescriptions || { quine: '', 'double-quine': '', 'carton-plein': '' },
               isWinning: parsedState.isWinning || false,
+              isWheelMode: parsedState.isWheelMode || false,
+              wheelNumberCount: parsedState.wheelNumberCount || 20,
+              wheelPrize: parsedState.wheelPrize || '',
+              wheelWinningNumber: parsedState.wheelWinningNumber || null,
+              isWheelSpinning: parsedState.isWheelSpinning || false,
             });
             console.log('📺 Display updated from localStorage:', parsedState);
           }
@@ -106,6 +122,11 @@ const LotoDisplay = () => {
           isQuinesDuSudMode: newState.isQuinesDuSudMode || false,
           prizeDescriptions: newState.prizeDescriptions || { quine: '', 'double-quine': '', 'carton-plein': '' },
           isWinning: newState.isWinning || false,
+          isWheelMode: newState.isWheelMode || false,
+          wheelNumberCount: newState.wheelNumberCount || 20,
+          wheelPrize: newState.wheelPrize || '',
+          wheelWinningNumber: newState.wheelWinningNumber || null,
+          isWheelSpinning: newState.isWheelSpinning || false,
         });
       }
     };
@@ -135,6 +156,11 @@ const LotoDisplay = () => {
           isQuinesDuSudMode: newState.isQuinesDuSudMode || false,
           prizeDescriptions: newState.prizeDescriptions || { quine: '', 'double-quine': '', 'carton-plein': '' },
           isWinning: newState.isWinning || false,
+          isWheelMode: newState.isWheelMode || false,
+          wheelNumberCount: newState.wheelNumberCount || 20,
+          wheelPrize: newState.wheelPrize || '',
+          wheelWinningNumber: newState.wheelWinningNumber || null,
+          isWheelSpinning: newState.isWheelSpinning || false,
         });
       }
     };
@@ -155,6 +181,30 @@ const LotoDisplay = () => {
 
   const currentPrize = displayState.currentGame ? displayState.prizeDescriptions[displayState.currentGame] : '';
 
+  // Render Wheel of Fortune mode
+  if (displayState.isWheelMode) {
+    return (
+      <div className="min-h-screen relative">
+        <Button 
+          onClick={enterFullscreen}
+          className="absolute top-4 right-4 gradient-primary z-10"
+          size="sm"
+        >
+          <Maximize className="w-4 h-4 mr-2" />
+          Plein écran
+        </Button>
+        
+        <WheelOfFortune
+          numberOfSegments={displayState.wheelNumberCount}
+          winningNumber={displayState.wheelWinningNumber}
+          isSpinning={displayState.isWheelSpinning}
+          prize={displayState.wheelPrize}
+        />
+      </div>
+    );
+  }
+
+  // Render normal Loto mode
   return (
     <div className="min-h-screen p-8 flex flex-col items-center justify-center space-y-8 relative">
       <Button 

@@ -17,6 +17,12 @@ export interface LotoState {
     'carton-plein': string;
   };
   isWinning: boolean;
+  // Wheel of Fortune mode
+  isWheelMode: boolean;
+  wheelNumberCount: number;
+  wheelPrize: string;
+  wheelWinningNumber: number | null;
+  isWheelSpinning: boolean;
 }
 
 export const useLoto = () => {
@@ -35,6 +41,11 @@ export const useLoto = () => {
       'carton-plein': '',
     },
     isWinning: false,
+    isWheelMode: false,
+    wheelNumberCount: 20,
+    wheelPrize: '',
+    wheelWinningNumber: null,
+    isWheelSpinning: false,
   });
 
   // Create a persistent BroadcastChannel
@@ -249,7 +260,58 @@ export const useLoto = () => {
         'carton-plein': '',
       },
       isWinning: false,
+      isWheelMode: false,
+      wheelNumberCount: 20,
+      wheelPrize: '',
+      wheelWinningNumber: null,
+      isWheelSpinning: false,
     });
+  }, []);
+
+  const toggleWheelMode = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      isWheelMode: !prev.isWheelMode,
+      wheelWinningNumber: null,
+      isWheelSpinning: false,
+    }));
+  }, []);
+
+  const setWheelNumberCount = useCallback((count: number) => {
+    setState(prev => ({
+      ...prev,
+      wheelNumberCount: Math.max(10, Math.min(50, count)),
+      wheelWinningNumber: null,
+    }));
+  }, []);
+
+  const setWheelPrize = useCallback((prize: string) => {
+    setState(prev => ({
+      ...prev,
+      wheelPrize: prize,
+    }));
+  }, []);
+
+  const spinWheel = useCallback(() => {
+    setState(prev => {
+      if (prev.isWheelSpinning) return prev;
+      
+      const winningNumber = Math.floor(Math.random() * prev.wheelNumberCount) + 1;
+      
+      return {
+        ...prev,
+        isWheelSpinning: true,
+        wheelWinningNumber: winningNumber,
+      };
+    });
+
+    // Stop spinning after animation (3 seconds)
+    setTimeout(() => {
+      setState(prev => ({
+        ...prev,
+        isWheelSpinning: false,
+      }));
+    }, 3000);
   }, []);
 
   return {
@@ -266,5 +328,9 @@ export const useLoto = () => {
     setPrizeDescriptions,
     setWinning,
     resumeGame,
+    toggleWheelMode,
+    setWheelNumberCount,
+    setWheelPrize,
+    spinWheel,
   };
 };
