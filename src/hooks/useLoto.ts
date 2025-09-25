@@ -23,6 +23,7 @@ export interface LotoState {
   wheelPrize: string;
   wheelWinningNumber: number | null;
   isWheelSpinning: boolean;
+  wheelDrawHistory: Array<{ number: number; prize: string }>;
 }
 
 export const useLoto = () => {
@@ -46,6 +47,7 @@ export const useLoto = () => {
     wheelPrize: '',
     wheelWinningNumber: null,
     isWheelSpinning: false,
+    wheelDrawHistory: [],
   });
 
   // Create a persistent BroadcastChannel
@@ -265,6 +267,7 @@ export const useLoto = () => {
       wheelPrize: '',
       wheelWinningNumber: null,
       isWheelSpinning: false,
+      wheelDrawHistory: [],
     });
   }, []);
 
@@ -298,10 +301,16 @@ export const useLoto = () => {
       
       const winningNumber = Math.floor(Math.random() * prev.wheelNumberCount) + 1;
       
+      // Add previous result to history if exists
+      const newHistory = prev.wheelWinningNumber ? 
+        [...prev.wheelDrawHistory, { number: prev.wheelWinningNumber, prize: prev.wheelPrize }] : 
+        prev.wheelDrawHistory;
+      
       return {
         ...prev,
         isWheelSpinning: true,
         wheelWinningNumber: winningNumber,
+        wheelDrawHistory: newHistory,
       };
     });
 

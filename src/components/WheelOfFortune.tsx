@@ -5,9 +5,10 @@ interface WheelOfFortuneProps {
   winningNumber: number | null;
   isSpinning: boolean;
   prize: string;
+  drawHistory: Array<{ number: number; prize: string }>;
 }
 
-export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, prize }: WheelOfFortuneProps) => {
+export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, prize, drawHistory }: WheelOfFortuneProps) => {
   const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
@@ -38,13 +39,25 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
   const segmentAngle = 360 / numberOfSegments;
   
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-8 relative">
-      {/* Pointer */}
-      <div className="absolute top-8 z-20 w-0 h-0 border-l-[20px] border-r-[20px] border-b-[40px] border-l-transparent border-r-transparent border-b-white shadow-lg">
-      </div>
+    <div className="flex items-center justify-center min-h-screen p-8 relative">
+      {/* Current winning number display - Left side */}
+      {winningNumber !== null && !isSpinning && (
+        <div className="absolute left-8 top-1/2 transform -translate-y-1/2 z-30">
+          <div className="bg-white p-8 rounded-2xl shadow-2xl text-center border-4 border-primary">
+            <div className="text-6xl mb-2">🎯</div>
+            <h3 className="text-4xl font-bold text-primary">
+              N° {winningNumber}
+            </h3>
+          </div>
+        </div>
+      )}
 
       {/* Wheel Container */}
       <div className="relative">
+        {/* Pointer - Now pointing down */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 z-20 w-0 h-0 border-l-[20px] border-r-[20px] border-t-[40px] border-l-transparent border-r-transparent border-t-white shadow-lg">
+        </div>
+        
         <svg
           width="600"
           height="600"
@@ -119,22 +132,40 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
         </svg>
       </div>
 
-      {/* Result Display */}
-      {winningNumber !== null && !isSpinning && (
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-30">
-          <div className="bg-white p-12 rounded-3xl shadow-2xl text-center animate-bounce-soft border-8 border-primary">
-            <div className="text-8xl mb-6">🎉</div>
-            <h2 className="text-6xl font-bold text-primary mb-4">
-              NUMÉRO {winningNumber}
-            </h2>
-            {prize && (
-              <p className="text-2xl text-gray-700 font-semibold">
-                🎁 {prize}
-              </p>
+      {/* Draw History - Right side */}
+      <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-30 max-w-xs">
+        <div className="bg-white p-6 rounded-2xl shadow-2xl border-4 border-primary">
+          <h3 className="text-2xl font-bold text-primary mb-4 text-center">
+            📋 Historique
+          </h3>
+          <div className="space-y-3 max-h-96 overflow-y-auto">
+            {drawHistory.map((draw, index) => (
+              <div key={index} className="bg-gray-50 p-3 rounded-lg border">
+                <div className="text-xl font-bold text-primary">
+                  N° {draw.number}
+                </div>
+                {draw.prize && (
+                  <div className="text-sm text-gray-600 mt-1">
+                    🎁 {draw.prize}
+                  </div>
+                )}
+              </div>
+            ))}
+            {winningNumber !== null && !isSpinning && (
+              <div className="bg-primary/10 p-3 rounded-lg border-2 border-primary">
+                <div className="text-xl font-bold text-primary">
+                  N° {winningNumber}
+                </div>
+                {prize && (
+                  <div className="text-sm text-gray-600 mt-1">
+                    🎁 {prize}
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>
-      )}
+      </div>
 
       {/* Spinning indicator */}
       {isSpinning && (
