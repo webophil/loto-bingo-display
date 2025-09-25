@@ -11,9 +11,7 @@ const Dashboard = () => {
   return <div className="min-h-screen p-6 space-y-6">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">
-            Dashboard Animateur
-          </h1>
+          <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">Espace Animation</h1>
           
         </div>
         <div className="flex gap-3">
@@ -34,29 +32,7 @@ const Dashboard = () => {
 
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-6">
-          <GameControls 
-            currentGame={loto.currentGame} 
-            drawnNumbers={loto.drawnNumbers} 
-            isDrawing={loto.isDrawing} 
-            isManualMode={loto.isManualMode}
-            withDemarque={loto.withDemarque}
-            prizeDescription={loto.prizeDescription}
-            isQuinesDuSudMode={loto.isQuinesDuSudMode}
-            prizeDescriptions={loto.prizeDescriptions}
-            isWinning={loto.isWinning}
-            onStartGame={loto.startGame} 
-            onDrawNumber={loto.drawNumber} 
-            onDrawManualNumber={loto.drawManualNumber}
-            onEndGame={loto.endGame} 
-            onReset={loto.resetAll}
-            onToggleMode={loto.toggleMode}
-            onToggleDemarque={loto.toggleDemarque}
-            onSetPrizeDescription={loto.setPrizeDescription}
-            onToggleQuinesDuSud={loto.toggleQuinesDuSud}
-            onSetPrizeDescriptions={loto.setPrizeDescriptions}
-            onSetWinning={loto.setWinning}
-            onResumeGame={loto.resumeGame}
-          />
+          <GameControls currentGame={loto.currentGame} drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} isManualMode={loto.isManualMode} withDemarque={loto.withDemarque} prizeDescription={loto.prizeDescription} isQuinesDuSudMode={loto.isQuinesDuSudMode} prizeDescriptions={loto.prizeDescriptions} isWinning={loto.isWinning} onStartGame={loto.startGame} onDrawNumber={loto.drawNumber} onDrawManualNumber={loto.drawManualNumber} onEndGame={loto.endGame} onReset={loto.resetAll} onToggleMode={loto.toggleMode} onToggleDemarque={loto.toggleDemarque} onSetPrizeDescription={loto.setPrizeDescription} onToggleQuinesDuSud={loto.toggleQuinesDuSud} onSetPrizeDescriptions={loto.setPrizeDescriptions} onSetWinning={loto.setWinning} onResumeGame={loto.resumeGame} />
           
           <DrawnHistory drawnNumbers={loto.drawnNumbers} />
         </div>
