@@ -34,7 +34,7 @@ const Index = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-white/80 mb-6">Affichage public avec rack des 90 (ou Bingo 75) bouless, et &quot;dernier sorti&quot; en évidence. Lots, démarque (ou non) et type de jeu.</p>
+              <p className="text-white/80 mb-6">Affichage public avec rack des 90 (ou Bingo 75) boules, et &quot;dernier sorti&quot; en évidence. Lots, démarque (ou non) et type de jeu. Roue de la Chance et tirage.</p>
               <Button onClick={openDisplayOnExternalScreen} className="w-full gradient-primary text-white font-semibold text-lg py-3">
                 Ouvrir l'Affichage
               </Button>
@@ -49,10 +49,7 @@ const Index = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-800 mb-6">
-                Interface de contrôle complète pour gérer les tirages, 
-                lancer les différents types de jeux et suivre l'historique.
-              </p>
+              <p className="text-gray-800 mb-6">Interface de contrôle complète pour gérer les tirages (manuels ou par l'ordi), lancer les différents types de jeux et suivre l'ensemble du déroulement.</p>
               <Link to="/dashboard">
                 <Button className="w-full gradient-secondary text-white font-semibold text-lg py-3">
                   Accéder au Dashboard
