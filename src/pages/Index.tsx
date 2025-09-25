@@ -34,7 +34,7 @@ const Index = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-white/80 mb-6">Affichage public avec grille des 90 (ou Bingo 75) numéros, et dernier tirage en évidence.</p>
+              <p className="text-white/80 mb-6">Affichage public avec rack des 90 (ou Bingo 75) bouless, et &quot;dernier sorti&quot; en évidence. Lots, démarque (ou non) et type de jeu.</p>
               <Button onClick={openDisplayOnExternalScreen} className="w-full gradient-primary text-white font-semibold text-lg py-3">
                 Ouvrir l'Affichage
               </Button>
