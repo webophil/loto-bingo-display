@@ -323,6 +323,13 @@ export const useLoto = () => {
     }, 3000);
   }, []);
 
+  const clearWheelHistory = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      wheelDrawHistory: [],
+    }));
+  }, []);
+
   return {
     ...state,
     startGame,
@@ -341,5 +348,6 @@ export const useLoto = () => {
     setWheelNumberCount,
     setWheelPrize,
     spinWheel,
+    clearWheelHistory,
   };
 };

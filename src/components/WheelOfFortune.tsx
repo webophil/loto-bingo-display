@@ -14,9 +14,10 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
   useEffect(() => {
     if (isSpinning && winningNumber !== null) {
       const segmentAngle = 360 / numberOfSegments;
-      const winningAngle = (winningNumber - 1) * segmentAngle;
+      // Center the winning number under the pointer (at top = 0 degrees)
+      const winningAngle = (winningNumber - 1) * segmentAngle + (segmentAngle / 2);
       // Add multiple rotations for dramatic effect + final position
-      const finalRotation = 1440 + (360 - winningAngle); // 4 full rotations + stop at winning position
+      const finalRotation = 1440 + (360 - winningAngle); // 4 full rotations + stop at winning position centered
       setRotation(finalRotation);
     }
   }, [isSpinning, winningNumber, numberOfSegments]);

@@ -56,14 +56,18 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="wheelNumbers">Nombre de numéros (10-50)</Label>
+                  <Label htmlFor="wheelNumbers">Nombre de numéros</Label>
                   <Input
                     id="wheelNumbers"
-                    type="number"
-                    min="10"
-                    max="50"
+                    type="text"
+                    placeholder="Ex: 20"
                     value={loto.wheelNumberCount}
-                    onChange={(e) => loto.setWheelNumberCount(parseInt(e.target.value) || 10)}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 10;
+                      if (value >= 10 && value <= 50) {
+                        loto.setWheelNumberCount(value);
+                      }
+                    }}
                     className="mt-2"
                   />
                 </div>
@@ -80,14 +84,25 @@ const Dashboard = () => {
                   />
                 </div>
 
-                <Button
-                  onClick={loto.spinWheel}
-                  disabled={loto.isWheelSpinning}
-                  className="gradient-primary w-full"
-                  size="lg"
-                >
-                  {loto.isWheelSpinning ? "🎯 Tirage en cours..." : "🎯 Tourner la roue"}
-                </Button>
+                <div className="space-y-2">
+                  <Button
+                    onClick={loto.spinWheel}
+                    disabled={loto.isWheelSpinning}
+                    className="gradient-primary w-full"
+                    size="lg"
+                  >
+                    {loto.isWheelSpinning ? "🎯 Tirage en cours..." : "🎯 Tourner la roue"}
+                  </Button>
+                  
+                  <Button
+                    onClick={loto.clearWheelHistory}
+                    variant="outline"
+                    className="w-full"
+                    size="sm"
+                  >
+                    🗑️ Remise à zéro
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ) : (
