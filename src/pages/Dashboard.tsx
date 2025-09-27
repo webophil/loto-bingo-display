@@ -20,7 +20,7 @@ const Dashboard = () => {
           <Link to="/display">
             <Button className="gradient-secondary text-white">
               <Monitor className="w-4 h-4 mr-2" />
-              Affichage Grand Écran
+              Affichage Écran Externe
             </Button>
           </Link>
           <Link to="/">
@@ -58,18 +58,15 @@ const Dashboard = () => {
                 <div>
                   <Label htmlFor="wheelNumbers">Nombre de numéros</Label>
                   <Input
-                    id="wheelNumbers"
-                    type="text"
-                    placeholder="Ex: 20"
-                    value={loto.wheelNumberCount}
-                    onChange={(e) => {
-                      const value = parseInt(e.target.value) || 10;
-                      if (value >= 10 && value <= 50) {
-                        loto.setWheelNumberCount(value);
-                      }
-                    }}
-                    className="mt-2"
-                  />
+  id="wheelNumbers"
+  type="number"
+  placeholder="Ex: 20"
+  value={loto.wheelNumberCount}
+  onChange={(e) => {
+    loto.setWheelNumberCount(parseInt(e.target.value) || 0);
+  }}
+  className="mt-2"
+/>
                 </div>
                 
                 <div>
