@@ -52,7 +52,7 @@ const Dashboard = () => {
             /* Wheel of Fortune Controls */
             <Card className="bg-card/20 backdrop-blur-sm border-border/50">
               <CardHeader>
-                <CardTitle>🎯 Configuration de la Roue</CardTitle>
+                <CardTitle>🎯 Config de la Roue</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
