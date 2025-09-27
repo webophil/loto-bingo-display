@@ -43,7 +43,7 @@ const Dashboard = () => {
                 size="lg"
               >
                 <CircleDot className="w-5 h-5 mr-2" />
-                {loto.isWheelMode ? "Retour au Loto" : "Roue de la Chance"}
+                {loto.isWheelMode ? "Retour Loto" : "Roue de la Chance"}
               </Button>
             </CardContent>
           </Card>
