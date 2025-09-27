@@ -60,7 +60,7 @@ const Dashboard = () => {
                   <Input
   id="wheelNumbers"
   type="number"
-  placeholder="Ex: 20"
+  placeholder="Ex: 36"
   value={loto.wheelNumberCount}
   onChange={(e) => {
     loto.setWheelNumberCount(parseInt(e.target.value) || 0);
