@@ -2,6 +2,7 @@ import { useLoto } from '@/hooks/useLoto';
 import { GameControls } from '@/components/GameControls';
 import { DrawnHistory } from '@/components/DrawnHistory';
 import { LotoGrid } from '@/components/LotoGrid';
+import { WheelOfFortune } from '@/components/WheelOfFortune';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -111,7 +112,21 @@ const Dashboard = () => {
           )}
         </div>
 
-        {!loto.isWheelMode && (
+        {loto.isWheelMode ? (
+          <div className="lg:col-span-2">
+            <Card className="bg-card/20 backdrop-blur-sm border-border/50">
+              <CardContent className="p-2">
+                <WheelOfFortune 
+                  numberOfSegments={loto.wheelNumberCount}
+                  winningNumber={loto.wheelWinningNumber}
+                  isSpinning={loto.isWheelSpinning}
+                  prize={loto.wheelPrize}
+                  drawHistory={loto.wheelDrawHistory}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
           <div className="lg:col-span-2">
             <Card className="bg-card/20 backdrop-blur-sm border-border/50">
               <CardContent>
