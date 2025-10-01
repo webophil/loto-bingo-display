@@ -22,9 +22,13 @@ const Index = () => {
   return <div className="min-h-screen flex items-center justify-center p-6">
       <div className="max-w-4xl w-full space-y-8">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
-          <div className="flex flex-col items-center lg:items-start gap-6 lg:w-1/3">
-            <img src={logoImage} alt="Corail's Rémoises" className="w-48 h-48 object-contain" />
-            <p className="text-xl text-muted-foreground text-center lg:text-left">Gestion Loto, Bingo et Roue de la Chance par Fifi</p>
+          <div className="flex flex-col items-center gap-4 lg:w-1/3">
+            <img src={logoImage} alt="Corail's Rémoises" className="w-[307px] h-[307px] object-contain" />
+            <div className="text-center text-base text-muted-foreground leading-relaxed">
+              <p>Gestion Loto, Bingo,</p>
+              <p>Roue de la Chance,</p>
+              <p>par Fifi</p>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 lg:w-2/3">
