@@ -21,43 +21,45 @@ const Index = () => {
   };
   return <div className="min-h-screen flex items-center justify-center p-6">
       <div className="max-w-4xl w-full space-y-8">
-        <header className="flex items-center gap-8">
-          <img src={logoImage} alt="Corail's Rémoises" className="w-48 h-48 object-contain" />
-          <p className="text-xl text-muted-foreground">Gestion Loto, Bingo et Roue de la Chance par Fifi</p>
-        </header>
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          <div className="flex flex-col items-center lg:items-start gap-6 lg:w-1/3">
+            <img src={logoImage} alt="Corail's Rémoises" className="w-48 h-48 object-contain" />
+            <p className="text-xl text-muted-foreground text-center lg:text-left">Gestion Loto, Bingo et Roue de la Chance par Fifi</p>
+          </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card className="gradient-secondary border-border/50 hover:scale-105 transition-transform">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white flex items-center gap-3">
-                <Monitor className="w-8 h-8" />
-                Affichage Grand Écran
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-white/80 mb-6">Affichage public avec rack des 90 (ou Bingo 75) boules, et &quot;dernier sorti&quot; en évidence. Lots, démarque (ou non) et type de jeu. Roue de la Chance et tirage.</p>
-              <Button onClick={openDisplayOnExternalScreen} className="w-full gradient-primary text-white font-semibold text-lg py-3">
-                Ouvrir l'Affichage
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card className="gradient-accent border-border/50 hover:scale-105 transition-transform">
-            <CardHeader>
-              <CardTitle className="text-2xl text-gray-900 flex items-center gap-3">
-                <Settings className="w-8 h-8" />
-                Dashboard Animateur
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-800 mb-6">Interface de contrôle complète pour gérer les tirages (manuels ou par l'ordi), lancer les différents types de jeux et suivre l'ensemble du déroulement.</p>
-              <Link to="/dashboard">
-                <Button className="w-full gradient-secondary text-white font-semibold text-lg py-3">
-                  Accéder au Dashboard
+          <div className="grid md:grid-cols-2 gap-6 lg:w-2/3">
+            <Card className="gradient-secondary border-border/50 hover:scale-105 transition-transform">
+              <CardHeader>
+                <CardTitle className="text-2xl text-white flex items-center gap-3">
+                  <Monitor className="w-8 h-8" />
+                  Affichage Grand Écran
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-white/80 mb-6">Affichage public avec rack des 90 (ou Bingo 75) boules, et &quot;dernier sorti&quot; en évidence. Lots, démarque (ou non) et type de jeu. Roue de la Chance et tirage.</p>
+                <Button onClick={openDisplayOnExternalScreen} className="w-full gradient-primary text-white font-semibold text-lg py-3">
+                  Ouvrir l'Affichage
                 </Button>
-              </Link>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+
+            <Card className="gradient-accent border-border/50 hover:scale-105 transition-transform">
+              <CardHeader>
+                <CardTitle className="text-2xl text-gray-900 flex items-center gap-3">
+                  <Settings className="w-8 h-8" />
+                  Dashboard Animateur
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-800 mb-6">Interface de contrôle complète pour gérer les tirages (manuels ou par l'ordi), lancer les différents types de jeux et suivre l'ensemble du déroulement.</p>
+                <Link to="/dashboard">
+                  <Button className="w-full gradient-secondary text-white font-semibold text-lg py-3">
+                    Accéder au Dashboard
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         <Card className="bg-card/20 backdrop-blur-sm border-border/50">
