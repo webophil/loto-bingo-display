@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Monitor, Settings, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import logoImage from '@/assets/loto-bingo-corails.png';
 const Index = () => {
   const openDisplayOnExternalScreen = () => {
     // Obtenir l'URL complète pour l'affichage
@@ -20,9 +21,9 @@ const Index = () => {
   };
   return <div className="min-h-screen flex items-center justify-center p-6">
       <div className="max-w-4xl w-full space-y-8">
-        <header className="text-center space-y-4">
-          <h1 className="text-6xl font-bold gradient-primary bg-clip-text text-transparent">🎯 LOTO Corail's Rémoises🎯</h1>
-          <p className="text-xl text-muted-foreground">Système de gestion de lotos, bingos et roue de la fortune par Fifi</p>
+        <header className="flex items-center gap-8">
+          <img src={logoImage} alt="Corail's Rémoises" className="w-48 h-48 object-contain" />
+          <p className="text-xl text-muted-foreground">Gestion Loto, Bingo et Roue de la Chance par Fifi</p>
         </header>
 
         <div className="grid md:grid-cols-2 gap-6">
