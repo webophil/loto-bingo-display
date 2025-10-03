@@ -11,50 +11,13 @@ interface WheelOfFortuneProps {
 export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, prize, drawHistory }: WheelOfFortuneProps) => {
   const [rotation, setRotation] = useState(0);
 
-  // Function to create clicking sounds like a wheel
-  const playWheelSound = () => {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const duration = 8; // Match animation duration
-    let clickInterval = 50; // Start with fast clicks
-    const minInterval = 200; // End with slower clicks
-    
-    const scheduleClick = (time: number) => {
-      if (time >= duration) return;
-      
-      // Create a short "tick" sound
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      
-      oscillator.frequency.value = 800 + Math.random() * 200; // Random pitch for realism
-      oscillator.type = 'square';
-      
-      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime + time);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + time + 0.05);
-      
-      oscillator.start(audioContext.currentTime + time);
-      oscillator.stop(audioContext.currentTime + time + 0.05);
-      
-      // Gradually increase interval (slow down clicks)
-      clickInterval += (minInterval - 50) / (duration * 1000 / clickInterval);
-      scheduleClick(time + clickInterval / 1000);
-    };
-    
-    scheduleClick(0);
-  };
-
   useEffect(() => {
     if (isSpinning && winningNumber !== null) {
-      // Play synthesized wheel sound
-      playWheelSound();
-
       const segmentAngle = 360 / numberOfSegments;
       // Center the winning number under the pointer (at top = 0 degrees)
       const winningAngle = (winningNumber - 1) * segmentAngle + (segmentAngle / 2);
-      // Add many rotations for dramatic effect (10 full rotations) + final position
-      const finalRotation = 3600 + (360 - winningAngle); // 10 full rotations + stop at winning position centered
+      // Add 3 complete rotations + final position
+      const finalRotation = 1080 + (360 - winningAngle); // 3 full rotations + stop at winning position centered
       setRotation(finalRotation);
     }
   }, [isSpinning, winningNumber, numberOfSegments]);
@@ -103,7 +66,7 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
           className="drop-shadow-2xl"
           style={{
             transform: `rotate(${rotation}deg)`,
-            transition: isSpinning ? 'transform 8s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : 'none',
+            transition: isSpinning ? 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : 'none',
           }}
         >
           {/* Wheel segments */}
