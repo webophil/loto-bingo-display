@@ -10,17 +10,32 @@ interface WheelOfFortuneProps {
 
 export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, prize, drawHistory }: WheelOfFortuneProps) => {
   const [rotation, setRotation] = useState(0);
+  const [currentRotation, setCurrentRotation] = useState(0);
+  const wheelRef = useState<SVGSVGElement | null>(null)[0];
 
   useEffect(() => {
     if (isSpinning && winningNumber !== null) {
       const segmentAngle = 360 / numberOfSegments;
-      // Center the winning number under the pointer (at top = 0 degrees)
-      const winningAngle = (winningNumber - 1) * segmentAngle + (segmentAngle / 2);
-      // Add 3 complete rotations + final position
-      const finalRotation = 1080 + (360 - winningAngle); // 3 full rotations + stop at winning position centered
-      setRotation(finalRotation);
+      
+      // Calculate the center angle of the winning segment
+      const winningSegmentCenter = (winningNumber - 1) * segmentAngle + (segmentAngle / 2);
+      
+      // Add random offset within segment (with margins to avoid edges)
+      const margin = segmentAngle * 0.15; // 15% margin on each side
+      const randomOffset = (Math.random() - 0.5) * (segmentAngle - 2 * margin);
+      
+      // Delta: angle to reach inside the winning segment
+      const delta = 360 - winningSegmentCenter + randomOffset;
+      
+      // Random number of complete rotations (5 to 7)
+      const fullRotations = Math.floor(Math.random() * 3) + 5; // 5, 6, or 7
+      
+      // Calculate absolute target rotation
+      const targetRotation = currentRotation + fullRotations * 360 + delta;
+      
+      setRotation(targetRotation);
     }
-  }, [isSpinning, winningNumber, numberOfSegments]);
+  }, [isSpinning, winningNumber, numberOfSegments, currentRotation]);
 
   // Generate colors for segments
   const getSegmentColor = (index: number) => {
@@ -60,6 +75,16 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
         </div>
         
         <svg
+          ref={(el) => {
+            if (el && !wheelRef) {
+              const handleTransitionEnd = () => {
+                if (!isSpinning) {
+                  setCurrentRotation(rotation);
+                }
+              };
+              el.addEventListener('transitionend', handleTransitionEnd);
+            }
+          }}
           width="600"
           height="600"
           viewBox="0 0 600 600"
@@ -67,6 +92,11 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
           style={{
             transform: `rotate(${rotation}deg)`,
             transition: isSpinning ? 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : 'none',
+          }}
+          onTransitionEnd={() => {
+            if (!isSpinning) {
+              setCurrentRotation(rotation);
+            }
           }}
         >
           {/* Wheel segments */}
