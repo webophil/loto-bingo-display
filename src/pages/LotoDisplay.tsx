@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { Maximize } from 'lucide-react';
 import { GameType } from '@/hooks/useLoto';
+import logoImage from '@/assets/loto-bingo-corails.png';
 
 interface DisplayState {
   drawnNumbers: number[];
@@ -190,6 +191,13 @@ const LotoDisplay = () => {
   if (displayState.isWheelMode) {
     return (
       <div className="min-h-screen relative">
+        {/* Logo en haut à gauche */}
+        <img 
+          src={logoImage} 
+          alt="Corail's Rémoises" 
+          className="absolute top-4 left-4 w-32 h-32 object-contain z-10"
+        />
+        
         <Button 
           onClick={enterFullscreen}
           className="absolute top-4 right-4 gradient-primary z-10"

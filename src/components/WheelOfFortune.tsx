@@ -10,32 +10,36 @@ interface WheelOfFortuneProps {
 
 export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, prize, drawHistory }: WheelOfFortuneProps) => {
   const [rotation, setRotation] = useState(0);
-  const [currentRotation, setCurrentRotation] = useState(0);
-  const wheelRef = useState<SVGSVGElement | null>(null)[0];
 
   useEffect(() => {
     if (isSpinning && winningNumber !== null) {
-      const segmentAngle = 360 / numberOfSegments;
+      // Reset rotation to 0 before each new spin
+      setRotation(0);
       
-      // Calculate the center angle of the winning segment
-      const winningSegmentCenter = (winningNumber - 1) * segmentAngle + (segmentAngle / 2);
-      
-      // Add random offset within segment (with margins to avoid edges)
-      const margin = segmentAngle * 0.15; // 15% margin on each side
-      const randomOffset = (Math.random() - 0.5) * (segmentAngle - 2 * margin);
-      
-      // Delta: angle to reach inside the winning segment
-      const delta = 360 - winningSegmentCenter + randomOffset;
-      
-      // Random number of complete rotations (5 to 7)
-      const fullRotations = Math.floor(Math.random() * 3) + 5; // 5, 6, or 7
-      
-      // Calculate absolute target rotation
-      const targetRotation = currentRotation + fullRotations * 360 + delta;
-      
-      setRotation(targetRotation);
+      // Use setTimeout to ensure rotation is reset before starting new animation
+      setTimeout(() => {
+        const segmentAngle = 360 / numberOfSegments;
+        
+        // Calculate the center angle of the winning segment
+        const winningSegmentCenter = (winningNumber - 1) * segmentAngle + (segmentAngle / 2);
+        
+        // Add random offset within segment (with margins to avoid edges)
+        const margin = segmentAngle * 0.15; // 15% margin on each side
+        const randomOffset = (Math.random() - 0.5) * (segmentAngle - 2 * margin);
+        
+        // Delta: angle to reach inside the winning segment
+        const delta = 360 - winningSegmentCenter + randomOffset;
+        
+        // Random number of complete rotations (5 to 7)
+        const fullRotations = Math.floor(Math.random() * 3) + 5; // 5, 6, or 7
+        
+        // Calculate target rotation starting from 0
+        const targetRotation = fullRotations * 360 + delta;
+        
+        setRotation(targetRotation);
+      }, 50);
     }
-  }, [isSpinning, winningNumber, numberOfSegments, currentRotation]);
+  }, [isSpinning, winningNumber, numberOfSegments]);
 
   // Generate colors for segments
   const getSegmentColor = (index: number) => {
@@ -55,19 +59,7 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
   const segmentAngle = 360 / numberOfSegments;
   
   return (
-    <div className="flex items-center justify-center min-h-screen p-8 relative">
-      {/* Current winning number display - Left side */}
-      {winningNumber !== null && !isSpinning && (
-        <div className="absolute left-8 top-1/2 transform -translate-y-1/2 z-30">
-          <div className="bg-white p-8 rounded-2xl shadow-2xl text-center border-4 border-primary">
-            <div className="text-6xl mb-2">🎯</div>
-            <h3 className="text-4xl font-bold text-primary">
-              N° {winningNumber}
-            </h3>
-          </div>
-        </div>
-      )}
-
+    <div className="flex flex-col items-center justify-center min-h-screen p-8 relative">
       {/* Wheel Container */}
       <div className="relative">
         {/* Pointer - Now pointing down */}
@@ -75,28 +67,13 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
         </div>
         
         <svg
-          ref={(el) => {
-            if (el && !wheelRef) {
-              const handleTransitionEnd = () => {
-                if (!isSpinning) {
-                  setCurrentRotation(rotation);
-                }
-              };
-              el.addEventListener('transitionend', handleTransitionEnd);
-            }
-          }}
           width="600"
           height="600"
           viewBox="0 0 600 600"
           className="drop-shadow-2xl"
           style={{
             transform: `rotate(${rotation}deg)`,
-            transition: isSpinning ? 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : 'none',
-          }}
-          onTransitionEnd={() => {
-            if (!isSpinning) {
-              setCurrentRotation(rotation);
-            }
+            transition: isSpinning ? 'transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : 'none',
           }}
         >
           {/* Wheel segments */}
@@ -163,44 +140,19 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
         </svg>
       </div>
 
-      {/* Draw History - Right side */}
-      <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-30 max-w-xs">
-        <div className="bg-white p-6 rounded-2xl shadow-2xl border-4 border-primary">
-          <h3 className="text-2xl font-bold text-primary mb-4 text-center">
-            📋 Historique
-          </h3>
-          <div className="space-y-3 max-h-96 overflow-y-auto">
-            {drawHistory.map((draw, index) => (
-              <div key={index} className="bg-gray-50 p-3 rounded-lg border">
-                <div className="text-xl font-bold text-primary">
-                  N° {draw.number}
-                </div>
-                {draw.prize && (
-                  <div className="text-sm text-gray-600 mt-1">
-                    🎁 {draw.prize}
-                  </div>
-                )}
-              </div>
-            ))}
-            {winningNumber !== null && !isSpinning && (
-              <div className="bg-primary/10 p-3 rounded-lg border-2 border-primary">
-                <div className="text-xl font-bold text-primary">
-                  N° {winningNumber}
-                </div>
-                {prize && (
-                  <div className="text-sm text-gray-600 mt-1">
-                    🎁 {prize}
-                  </div>
-                )}
-              </div>
-            )}
+      {/* Result display below the wheel */}
+      {winningNumber !== null && !isSpinning && (
+        <div className="mt-8 text-center">
+          <div className="text-4xl font-bold text-primary animate-pulse">
+            N° {winningNumber}
+            {prize && <span className="ml-4 text-3xl text-foreground">🎁 {prize}</span>}
           </div>
         </div>
-      </div>
+      )}
 
       {/* Spinning indicator */}
       {isSpinning && (
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white text-2xl font-bold animate-pulse">
+        <div className="mt-8 text-2xl font-bold text-foreground animate-pulse">
           🎯 Tirage en cours...
         </div>
       )}
