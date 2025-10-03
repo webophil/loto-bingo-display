@@ -10,36 +10,31 @@ interface WheelOfFortuneProps {
 
 export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, prize, drawHistory }: WheelOfFortuneProps) => {
   const [rotation, setRotation] = useState(0);
+  const [currentRotation, setCurrentRotation] = useState(0);
 
   useEffect(() => {
     if (isSpinning && winningNumber !== null) {
-      // Reset rotation to 0 before each new spin
-      setRotation(0);
+      const segmentAngle = 360 / numberOfSegments;
       
-      // Use setTimeout to ensure rotation is reset before starting new animation
-      setTimeout(() => {
-        const segmentAngle = 360 / numberOfSegments;
-        
-        // Calculate the center angle of the winning segment
-        const winningSegmentCenter = (winningNumber - 1) * segmentAngle + (segmentAngle / 2);
-        
-        // Add random offset within segment (with margins to avoid edges)
-        const margin = segmentAngle * 0.15; // 15% margin on each side
-        const randomOffset = (Math.random() - 0.5) * (segmentAngle - 2 * margin);
-        
-        // Delta: angle to reach inside the winning segment
-        const delta = 360 - winningSegmentCenter + randomOffset;
-        
-        // Random number of complete rotations (5 to 7)
-        const fullRotations = Math.floor(Math.random() * 3) + 5; // 5, 6, or 7
-        
-        // Calculate target rotation starting from 0
-        const targetRotation = fullRotations * 360 + delta;
-        
-        setRotation(targetRotation);
-      }, 50);
+      // Calculate the center angle of the winning segment
+      const winningSegmentCenter = (winningNumber - 1) * segmentAngle + (segmentAngle / 2);
+      
+      // Add random offset within segment (with margins to avoid edges)
+      const margin = segmentAngle * 0.15; // 15% margin on each side
+      const randomOffset = (Math.random() - 0.5) * (segmentAngle - 2 * margin);
+      
+      // Delta: angle to reach inside the winning segment
+      const delta = 360 - winningSegmentCenter + randomOffset;
+      
+      // Random number of complete rotations (5 to 7)
+      const fullRotations = Math.floor(Math.random() * 3) + 5; // 5, 6, or 7
+      
+      // Calculate target rotation from current position
+      const targetRotation = currentRotation + fullRotations * 360 + delta;
+      
+      setRotation(targetRotation);
     }
-  }, [isSpinning, winningNumber, numberOfSegments]);
+  }, [isSpinning, winningNumber, numberOfSegments, currentRotation]);
 
   // Generate colors for segments
   const getSegmentColor = (index: number) => {
@@ -74,6 +69,11 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
           style={{
             transform: `rotate(${rotation}deg)`,
             transition: isSpinning ? 'transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : 'none',
+          }}
+          onTransitionEnd={() => {
+            if (!isSpinning) {
+              setCurrentRotation(rotation);
+            }
           }}
         >
           {/* Wheel segments */}

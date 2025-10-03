@@ -195,7 +195,7 @@ const LotoDisplay = () => {
         <img 
           src={logoImage} 
           alt="Corail's Rémoises" 
-          className="absolute top-4 left-4 w-32 h-32 object-contain z-10"
+          className="absolute top-4 left-4 w-52 h-52 object-contain z-10"
         />
         
         <Button 
