@@ -59,15 +59,16 @@ const Dashboard = () => {
                 <div>
                   <Label htmlFor="wheelNumbers">Nombre de numéros</Label>
                   <Input
-  id="wheelNumbers"
-  type="number"
-  placeholder="Ex: 36"
-  value={loto.wheelNumberCount}
-  onChange={(e) => {
-    loto.setWheelNumberCount(parseInt(e.target.value) || 0);
-  }}
-  className="mt-2"
-/>
+                    id="wheelNumbers"
+                    type="number"
+                    placeholder="Ex: 36"
+                    value={loto.wheelNumberCount}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value);
+                      loto.setWheelNumberCount(isNaN(value) ? 1 : value);
+                    }}
+                    className="mt-2"
+                  />
                 </div>
                 
                 <div>
@@ -82,25 +83,14 @@ const Dashboard = () => {
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Button
-                    onClick={loto.spinWheel}
-                    disabled={loto.isWheelSpinning}
-                    className="gradient-primary w-full"
-                    size="lg"
-                  >
-                    {loto.isWheelSpinning ? "🎯 Tirage en cours..." : "🎯 Tourner la roue"}
-                  </Button>
-                  
-                  <Button
-                    onClick={loto.clearWheelHistory}
-                    variant="outline"
-                    className="w-full"
-                    size="sm"
-                  >
-                    🗑️ Remise à zéro
-                  </Button>
-                </div>
+                <Button
+                  onClick={loto.spinWheel}
+                  disabled={loto.isWheelSpinning}
+                  className="gradient-primary w-full"
+                  size="lg"
+                >
+                  {loto.isWheelSpinning ? "🎯 Tirage en cours..." : "🎯 Tourner la roue"}
+                </Button>
               </CardContent>
             </Card>
           ) : (

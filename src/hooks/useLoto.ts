@@ -289,7 +289,7 @@ export const useLoto = () => {
   const setWheelNumberCount = useCallback((count: number) => {
     setState(prev => ({
       ...prev,
-      wheelNumberCount: Math.max(10, Math.min(50, count)),
+      wheelNumberCount: count || 1,
       wheelWinningNumber: null,
     }));
   }, []);
@@ -315,14 +315,21 @@ export const useLoto = () => {
       const margin = segmentAngle * 0.15;
       const randomOffset = (Math.random() - 0.5) * (segmentAngle - 2 * margin);
       
-      // Delta: angle to reach inside the winning segment
-      const delta = 360 - winningSegmentCenter + randomOffset;
+      // Calculate the final angle where the wheel should stop (modulo 360)
+      const finalAngle = 360 - winningSegmentCenter + randomOffset;
       
       // Random number of complete rotations (5 to 7)
       const fullRotations = Math.floor(Math.random() * 3) + 5;
       
-      // Calculate target rotation from current position
-      const targetRotation = prev.wheelCurrentRotation + fullRotations * 360 + delta;
+      // Calculate target rotation taking into account current cumulative rotation
+      // Find the next occurrence of finalAngle that is at least fullRotations * 360 away
+      const baseRotation = Math.floor(prev.wheelCurrentRotation / 360) * 360;
+      let targetRotation = baseRotation + finalAngle;
+      
+      // Ensure we make at least fullRotations complete turns
+      while (targetRotation < prev.wheelCurrentRotation + fullRotations * 360) {
+        targetRotation += 360;
+      }
       
       // Add previous result to history if exists
       const newHistory = prev.wheelWinningNumber ? 
@@ -348,12 +355,6 @@ export const useLoto = () => {
     }, 5000);
   }, []);
 
-  const clearWheelHistory = useCallback(() => {
-    setState(prev => ({
-      ...prev,
-      wheelDrawHistory: [],
-    }));
-  }, []);
 
   return {
     ...state,
@@ -373,6 +374,5 @@ export const useLoto = () => {
     setWheelNumberCount,
     setWheelPrize,
     spinWheel,
-    clearWheelHistory,
   };
 };
