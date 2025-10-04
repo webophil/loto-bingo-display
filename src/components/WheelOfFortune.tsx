@@ -113,9 +113,9 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
       {/* Result display below the wheel */}
       {winningNumber !== null && !isSpinning && (
         <div className="mt-8 text-center">
-          <div className="text-4xl font-bold text-primary animate-pulse">
+          <div className="text-[8rem] font-bold text-yellow-400 animate-blink">
             N° {winningNumber}
-            {prize && <span className="ml-4 text-3xl text-foreground">🎁 {prize}</span>}
+            {prize && <span className="ml-4 text-[6rem] text-foreground">🎁 {prize}</span>}
           </div>
         </div>
       )}
