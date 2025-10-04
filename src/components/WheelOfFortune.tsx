@@ -29,18 +29,18 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
   const segmentAngle = 360 / numberOfSegments;
   
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-8 relative">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 relative">
       {/* Wheel Container */}
-      <div className="relative">
+      <div className="relative w-full max-w-[90vh] aspect-square flex items-center justify-center">
         {/* Pointer - Now pointing down */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 z-20 w-0 h-0 border-l-[20px] border-r-[20px] border-t-[40px] border-l-transparent border-r-transparent border-t-white shadow-lg">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 z-20 w-0 h-0 border-l-[30px] border-r-[30px] border-t-[60px] border-l-transparent border-r-transparent border-t-white shadow-lg">
         </div>
         
         <svg
-          width="600"
-          height="600"
+          width="100%"
+          height="100%"
           viewBox="0 0 600 600"
-          className="drop-shadow-2xl"
+          className="drop-shadow-2xl max-w-full max-h-full"
           style={{
             transform: `rotate(${targetRotation}deg)`,
             transition: isSpinning ? 'transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : 'none',
