@@ -27,6 +27,7 @@ interface DisplayState {
   wheelWinningNumber: number | null;
   isWheelSpinning: boolean;
   wheelDrawHistory: Array<{ number: number; prize: string }>;
+  wheelTargetRotation: number;
 }
 
 // Function to get the same color system as NumberBall component
@@ -59,6 +60,7 @@ const LotoDisplay = () => {
     wheelWinningNumber: null,
     isWheelSpinning: false,
     wheelDrawHistory: [],
+    wheelTargetRotation: 0,
   });
   
   const latestNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
@@ -97,6 +99,7 @@ const LotoDisplay = () => {
               wheelWinningNumber: parsedState.wheelWinningNumber || null,
               isWheelSpinning: parsedState.isWheelSpinning || false,
               wheelDrawHistory: parsedState.wheelDrawHistory || [],
+              wheelTargetRotation: parsedState.wheelTargetRotation || 0,
             });
             console.log('📺 Display updated from localStorage:', parsedState);
           }
@@ -132,6 +135,7 @@ const LotoDisplay = () => {
           wheelWinningNumber: newState.wheelWinningNumber || null,
           isWheelSpinning: newState.isWheelSpinning || false,
           wheelDrawHistory: newState.wheelDrawHistory || [],
+          wheelTargetRotation: newState.wheelTargetRotation || 0,
         });
       }
     };
@@ -167,6 +171,7 @@ const LotoDisplay = () => {
           wheelWinningNumber: newState.wheelWinningNumber || null,
           isWheelSpinning: newState.isWheelSpinning || false,
           wheelDrawHistory: newState.wheelDrawHistory || [],
+          wheelTargetRotation: newState.wheelTargetRotation || 0,
         });
       }
     };
@@ -213,6 +218,7 @@ const LotoDisplay = () => {
           isSpinning={displayState.isWheelSpinning}
           prize={displayState.wheelPrize}
           drawHistory={displayState.wheelDrawHistory}
+          targetRotation={displayState.wheelTargetRotation}
         />
       </div>
     );

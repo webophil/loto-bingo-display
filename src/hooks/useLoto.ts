@@ -24,6 +24,8 @@ export interface LotoState {
   wheelWinningNumber: number | null;
   isWheelSpinning: boolean;
   wheelDrawHistory: Array<{ number: number; prize: string }>;
+  wheelTargetRotation: number;
+  wheelCurrentRotation: number;
 }
 
 export const useLoto = () => {
@@ -48,6 +50,8 @@ export const useLoto = () => {
     wheelWinningNumber: null,
     isWheelSpinning: false,
     wheelDrawHistory: [],
+    wheelTargetRotation: 0,
+    wheelCurrentRotation: 0,
   });
 
   // Create a persistent BroadcastChannel
@@ -268,6 +272,8 @@ export const useLoto = () => {
       wheelWinningNumber: null,
       isWheelSpinning: false,
       wheelDrawHistory: [],
+      wheelTargetRotation: 0,
+      wheelCurrentRotation: 0,
     });
   }, []);
 
@@ -301,6 +307,23 @@ export const useLoto = () => {
       
       const winningNumber = Math.floor(Math.random() * prev.wheelNumberCount) + 1;
       
+      // Calculate rotation ONCE here to share between all views
+      const segmentAngle = 360 / prev.wheelNumberCount;
+      const winningSegmentCenter = (winningNumber - 1) * segmentAngle + (segmentAngle / 2);
+      
+      // Add random offset within segment (with margins to avoid edges)
+      const margin = segmentAngle * 0.15;
+      const randomOffset = (Math.random() - 0.5) * (segmentAngle - 2 * margin);
+      
+      // Delta: angle to reach inside the winning segment
+      const delta = 360 - winningSegmentCenter + randomOffset;
+      
+      // Random number of complete rotations (5 to 7)
+      const fullRotations = Math.floor(Math.random() * 3) + 5;
+      
+      // Calculate target rotation from current position
+      const targetRotation = prev.wheelCurrentRotation + fullRotations * 360 + delta;
+      
       // Add previous result to history if exists
       const newHistory = prev.wheelWinningNumber ? 
         [...prev.wheelDrawHistory, { number: prev.wheelWinningNumber, prize: prev.wheelPrize }] : 
@@ -311,16 +334,18 @@ export const useLoto = () => {
         isWheelSpinning: true,
         wheelWinningNumber: winningNumber,
         wheelDrawHistory: newHistory,
+        wheelTargetRotation: targetRotation,
       };
     });
 
-    // Stop spinning after animation (3 seconds)
+    // Stop spinning and update current rotation after animation (5 seconds)
     setTimeout(() => {
       setState(prev => ({
         ...prev,
         isWheelSpinning: false,
+        wheelCurrentRotation: prev.wheelTargetRotation,
       }));
-    }, 3000);
+    }, 5000);
   }, []);
 
   const clearWheelHistory = useCallback(() => {

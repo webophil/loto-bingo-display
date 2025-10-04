@@ -122,6 +122,7 @@ const Dashboard = () => {
                   isSpinning={loto.isWheelSpinning}
                   prize={loto.wheelPrize}
                   drawHistory={loto.wheelDrawHistory}
+                  targetRotation={loto.wheelTargetRotation}
                 />
               </CardContent>
             </Card>
