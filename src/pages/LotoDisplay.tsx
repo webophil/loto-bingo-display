@@ -214,8 +214,9 @@ const LotoDisplay = () => {
               
               {/* Lot centré sous le numéro */}
               {displayState.wheelPrize && (
-                <div className="mt-8 text-[6rem] text-foreground font-bold leading-tight">
-                  🎁 {displayState.wheelPrize}
+                <div className="mt-8 text-foreground font-bold leading-tight flex items-center justify-center gap-4">
+                  <span className="text-[1.75rem]">🎁</span>
+                  <span className="text-[1.75rem]">{displayState.wheelPrize}</span>
                 </div>
               )}
             </div>
