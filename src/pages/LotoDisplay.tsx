@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { Maximize } from 'lucide-react';
 import { GameType } from '@/hooks/useLoto';
-import logoImage from '@/assets/loto-bingo-corails.png';
+import logoImage from '@/assets/logo.png';
 
 interface DisplayState {
   drawnNumbers: number[];

@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Monitor, Settings, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import logoImage from '@/assets/loto-bingo-corails.png';
+import logoImage from '@/assets/logo.png';
 const Index = () => {
   const openDisplayOnExternalScreen = () => {
     // Obtenir l'URL complète pour l'affichage
