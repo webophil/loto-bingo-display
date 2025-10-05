@@ -195,13 +195,52 @@ const LotoDisplay = () => {
   // Render Wheel of Fortune mode
   if (displayState.isWheelMode) {
     return (
-      <div className="min-h-screen relative">
-        {/* Logo en haut à gauche */}
-        <img 
-          src={logoImage} 
-          alt="Corail's Rémoises" 
-          className="absolute top-4 left-4 w-[375px] h-[375px] object-contain z-10"
-        />
+      <div className="min-h-screen relative flex">
+        {/* Colonne gauche - 1/3 */}
+        <div className="w-1/3 flex flex-col items-center p-8">
+          {/* Logo en haut */}
+          <img 
+            src={logoImage} 
+            alt="Corail's Rémoises" 
+            className="w-[375px] h-[375px] object-contain"
+          />
+          
+          {/* Numéro gagnant sous le logo avec marge */}
+          {displayState.wheelWinningNumber !== null && !displayState.isWheelSpinning && (
+            <div className="mt-12 text-center">
+              <div className="text-[8rem] font-bold text-yellow-400 animate-blink leading-none">
+                {displayState.wheelWinningNumber}
+              </div>
+              
+              {/* Lot centré sous le numéro */}
+              {displayState.wheelPrize && (
+                <div className="mt-8 text-[6rem] text-foreground font-bold leading-tight">
+                  🎁 {displayState.wheelPrize}
+                </div>
+              )}
+            </div>
+          )}
+          
+          {/* Spinning indicator */}
+          {displayState.isWheelSpinning && (
+            <div className="mt-12 text-4xl font-bold text-foreground animate-pulse">
+              🎯 Tirage en cours...
+            </div>
+          )}
+        </div>
+        
+        {/* Colonne droite - 2/3 avec la roue */}
+        <div className="w-2/3 flex items-center justify-center p-8">
+          <WheelOfFortune
+            numberOfSegments={displayState.wheelNumberCount}
+            winningNumber={displayState.wheelWinningNumber}
+            isSpinning={displayState.isWheelSpinning}
+            prize={displayState.wheelPrize}
+            drawHistory={displayState.wheelDrawHistory}
+            targetRotation={displayState.wheelTargetRotation}
+            hideResults={true}
+          />
+        </div>
         
         <Button 
           onClick={enterFullscreen}
@@ -211,15 +250,6 @@ const LotoDisplay = () => {
           <Maximize className="w-4 h-4 mr-2" />
           Plein écran
         </Button>
-        
-        <WheelOfFortune
-          numberOfSegments={displayState.wheelNumberCount}
-          winningNumber={displayState.wheelWinningNumber}
-          isSpinning={displayState.isWheelSpinning}
-          prize={displayState.wheelPrize}
-          drawHistory={displayState.wheelDrawHistory}
-          targetRotation={displayState.wheelTargetRotation}
-        />
       </div>
     );
   }

@@ -7,9 +7,10 @@ interface WheelOfFortuneProps {
   prize: string;
   drawHistory: Array<{ number: number; prize: string }>;
   targetRotation: number;
+  hideResults?: boolean;
 }
 
-export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, prize, drawHistory, targetRotation }: WheelOfFortuneProps) => {
+export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, prize, drawHistory, targetRotation, hideResults = false }: WheelOfFortuneProps) => {
 
   // Generate colors for segments
   const getSegmentColor = (index: number) => {
@@ -29,9 +30,9 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
   const segmentAngle = 360 / numberOfSegments;
   
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 relative">
+    <div className="flex flex-col items-center justify-center w-full h-full relative">
       {/* Wheel Container */}
-      <div className="relative w-full max-w-[90vh] aspect-square flex items-center justify-center">
+      <div className="relative w-full max-w-full aspect-square flex items-center justify-center">
         {/* Pointer - Now pointing down */}
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 z-20 w-0 h-0 border-l-[30px] border-r-[30px] border-t-[60px] border-l-transparent border-r-transparent border-t-white shadow-lg">
         </div>
@@ -111,7 +112,7 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
       </div>
 
       {/* Result display below the wheel */}
-      {winningNumber !== null && !isSpinning && (
+      {!hideResults && winningNumber !== null && !isSpinning && (
         <div className="mt-8 text-center">
           <div className="text-4xl font-bold text-primary animate-pulse">
             N° {winningNumber}
@@ -121,7 +122,7 @@ export const WheelOfFortune = ({ numberOfSegments, winningNumber, isSpinning, pr
       )}
 
       {/* Spinning indicator */}
-      {isSpinning && (
+      {!hideResults && isSpinning && (
         <div className="mt-8 text-2xl font-bold text-foreground animate-pulse">
           🎯 Tirage en cours...
         </div>
