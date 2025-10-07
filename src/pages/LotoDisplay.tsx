@@ -242,31 +242,13 @@ const LotoDisplay = () => {
             hideResults={true}
           />
         </div>
-        
-        <Button 
-          onClick={enterFullscreen}
-          className="absolute top-4 right-4 gradient-primary z-10"
-          size="sm"
-        >
-          <Maximize className="w-4 h-4 mr-2" />
-          Plein écran
-        </Button>
       </div>
     );
   }
 
   // Render normal Loto mode
   return (
-    <div className="min-h-screen p-8 flex flex-col items-center justify-center space-y-8 relative">
-      <Button 
-        onClick={enterFullscreen}
-        className="absolute top-4 right-4 gradient-primary"
-        size="sm"
-      >
-        <Maximize className="w-4 h-4 mr-2" />
-        Plein écran
-      </Button>
-
+    <div className="h-screen flex flex-col items-center justify-center space-y-6 relative overflow-hidden px-4 py-6">
       {/* Winning Banner */}
       {displayState.isWinning && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
@@ -289,11 +271,7 @@ const LotoDisplay = () => {
         </div>
       )}
 
-      <header className="text-center space-y-6">
-        <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">
-          🎯 LOTO CORAIL'S REMOISES 🎯
-        </h1>
-        
+      <header className="text-center space-y-4 flex-shrink-0">
         {displayState.currentGame && (
           <div className="flex items-center justify-center gap-8 flex-wrap">
             <Badge className="gradient-secondary text-white text-2xl px-8 py-3 font-bold animate-pulse-glow">

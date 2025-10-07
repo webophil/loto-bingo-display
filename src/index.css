@@ -150,7 +150,7 @@ All colors MUST be HSL.
   }
   
   .number-ball {
-    @apply w-20 h-20 rounded-full flex items-center justify-center text-3xl font-black text-black;
+    @apply w-24 h-24 rounded-full flex items-center justify-center text-4xl font-black text-black;
     box-shadow: var(--shadow-glow);
     transition: var(--transition-bounce);
   }
