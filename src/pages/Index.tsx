@@ -82,7 +82,7 @@ const Index = () => {
               <div className="space-y-2">
                 
                 
-                <p className="text-muted-foreground text-sm">Loto 90 numéros/Bingo 75 numéros</p>
+                <p className="text-muted-foreground text-sm">Loto 90 numéros/Bingo 75 numéros<br/>>br/>Roue de la Chance Las Végas</p>
               </div>
               <div className="space-y-2">
                 <div className="w-12 h-12 rounded-full bg-loto-blue mx-auto flex items-center justify-center text-white font-bold">
