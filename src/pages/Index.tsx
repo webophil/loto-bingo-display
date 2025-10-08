@@ -36,7 +36,7 @@ const Index = () => {
           <div className="flex flex-col items-center gap-4 lg:w-1/3">
             <img src={logoImage} alt="Corail's Rémoises" className="w-[307px] h-[307px] object-contain" />
             <div className="text-center text-base text-muted-foreground leading-relaxed">
-              <p>Loto, Bingo,Roue de la Chance</p>
+              <p>Loto, Bingo, Roue de la Chance</p>
               <p>par Fifi</p>
             </div>
           </div>
