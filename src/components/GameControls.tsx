@@ -177,16 +177,16 @@ export const GameControls = ({
         </div>
 
         {/* Prize Descriptions by Game Type */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           <Label className="text-white font-medium">
             <Gift className="w-4 h-4 inline mr-2" />
             Lots à gagner par étape
           </Label>
           
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
-              <Label htmlFor="prize-quine" className="text-white/80 text-sm">
-                🎯 Quine (1 ligne)
+              <Label htmlFor="prize-quine" className="text-white/80 text-xs mb-1 block">
+                🎯 Quine
               </Label>
               <Input
                 id="prize-quine"
@@ -195,14 +195,14 @@ export const GameControls = ({
                   ...prizeDescriptions,
                   quine: e.target.value
                 })}
-                placeholder="Ex: Panier garni..."
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                placeholder="Ex: Panier..."
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
               />
             </div>
             
             <div>
-              <Label htmlFor="prize-double-quine" className="text-white/80 text-sm">
-                🎯🎯 Double Quine (2 lignes)
+              <Label htmlFor="prize-double-quine" className="text-white/80 text-xs mb-1 block">
+                🎯🎯 Double Quine
               </Label>
               <Input
                 id="prize-double-quine"
@@ -212,12 +212,12 @@ export const GameControls = ({
                   'double-quine': e.target.value
                 })}
                 placeholder="Ex: Voyage..."
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
               />
             </div>
             
             <div>
-              <Label htmlFor="prize-carton-plein" className="text-white/80 text-sm">
+              <Label htmlFor="prize-carton-plein" className="text-white/80 text-xs mb-1 block">
                 🏆 Carton Plein
               </Label>
               <Input
@@ -228,7 +228,7 @@ export const GameControls = ({
                   'carton-plein': e.target.value
                 })}
                 placeholder="Ex: Gros lot..."
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
               />
             </div>
           </div>
@@ -270,68 +270,115 @@ export const GameControls = ({
               )}
             </div>
 
-            {isManualMode ? (
-              <ManualGrid
-                drawnNumbers={drawnNumbers}
-                onNumberClick={onDrawManualNumber}
-                isDrawing={isDrawing}
-              />
+{isManualMode ? (
+              <>
+                <ManualGrid
+                  drawnNumbers={drawnNumbers}
+                  onNumberClick={onDrawManualNumber}
+                  isDrawing={isDrawing}
+                />
+                
+                <div className="space-y-3">
+                  {/* Winning Control Buttons */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      onClick={() => onSetWinning(true)}
+                      className="bg-loto-blue text-white font-bold py-3"
+                      disabled={isWinning}
+                    >
+                      <Trophy className="w-4 h-4 mr-2" />
+                      C'est gagné !
+                    </Button>
+                    <Button
+                      onClick={onResumeGame}
+                      variant="outline"
+                      className="border-loto-green text-loto-green hover:bg-loto-green hover:text-white"
+                      disabled={!isWinning}
+                    >
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Reprise du jeu
+                    </Button>
+                  </div>
+
+                  {/* Game Control Buttons */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      onClick={onEndGame}
+                      variant="outline"
+                      className="border-loto-yellow text-loto-yellow hover:bg-loto-yellow hover:text-gray-900"
+                    >
+                      <Square className="w-4 h-4 mr-2" />
+                      Terminer
+                    </Button>
+                    <Button
+                      onClick={onReset}
+                      variant="outline"
+                      className="border-loto-red text-loto-red hover:bg-loto-red hover:text-white"
+                    >
+                      <RotateCcw className="w-4 h-4 mr-2" />
+                      Reset
+                    </Button>
+                  </div>
+                </div>
+              </>
             ) : (
-              <div className="grid gap-4">
-                <Button
-                  onClick={onDrawNumber}
-                  disabled={isDrawing || drawnNumbers.length >= 90}
-                  className="gradient-primary text-white font-bold text-xl py-8"
-                  size="lg"
-                >
-                  <Dice1 className="w-6 h-6 mr-3" />
-                  {isDrawing ? 'Tirage en cours...' : 'Tirer un numéro'}
-                </Button>
-              </div>
+              <>
+                <div className="grid gap-4">
+                  <Button
+                    onClick={onDrawNumber}
+                    disabled={isDrawing || drawnNumbers.length >= 90}
+                    className="gradient-primary text-white font-bold text-xl py-8"
+                    size="lg"
+                  >
+                    <Dice1 className="w-6 h-6 mr-3" />
+                    {isDrawing ? 'Tirage en cours...' : 'Tirer un numéro'}
+                  </Button>
+                </div>
+
+                <div className="space-y-3">
+                  {/* Winning Control Buttons */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      onClick={() => onSetWinning(true)}
+                      className="bg-loto-blue text-white font-bold py-3"
+                      disabled={isWinning}
+                    >
+                      <Trophy className="w-4 h-4 mr-2" />
+                      C'est gagné !
+                    </Button>
+                    <Button
+                      onClick={onResumeGame}
+                      variant="outline"
+                      className="border-loto-green text-loto-green hover:bg-loto-green hover:text-white"
+                      disabled={!isWinning}
+                    >
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Reprise du jeu
+                    </Button>
+                  </div>
+
+                  {/* Game Control Buttons */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      onClick={onEndGame}
+                      variant="outline"
+                      className="border-loto-yellow text-loto-yellow hover:bg-loto-yellow hover:text-gray-900"
+                    >
+                      <Square className="w-4 h-4 mr-2" />
+                      Terminer
+                    </Button>
+                    <Button
+                      onClick={onReset}
+                      variant="outline"
+                      className="border-loto-red text-loto-red hover:bg-loto-red hover:text-white"
+                    >
+                      <RotateCcw className="w-4 h-4 mr-2" />
+                      Reset
+                    </Button>
+                  </div>
+                </div>
+              </>
             )}
-
-            <div className="space-y-3">
-              {/* Winning Control Buttons */}
-              <div className="grid grid-cols-2 gap-3">
-                <Button
-                  onClick={() => onSetWinning(true)}
-                  className="bg-loto-blue text-white font-bold py-3"
-                  disabled={isWinning}
-                >
-                  <Trophy className="w-4 h-4 mr-2" />
-                  C'est gagné !
-                </Button>
-                <Button
-                  onClick={onResumeGame}
-                  variant="outline"
-                  className="border-loto-green text-loto-green hover:bg-loto-green hover:text-white"
-                  disabled={!isWinning}
-                >
-                  <RefreshCw className="w-4 h-4 mr-2" />
-                  Reprise du jeu
-                </Button>
-              </div>
-
-              {/* Game Control Buttons */}
-              <div className="grid grid-cols-2 gap-3">
-                <Button
-                  onClick={onEndGame}
-                  variant="outline"
-                  className="border-loto-yellow text-loto-yellow hover:bg-loto-yellow hover:text-gray-900"
-                >
-                  <Square className="w-4 h-4 mr-2" />
-                  Terminer
-                </Button>
-                <Button
-                  onClick={onReset}
-                  variant="outline"
-                  className="border-loto-red text-loto-red hover:bg-loto-red hover:text-white"
-                >
-                  <RotateCcw className="w-4 h-4 mr-2" />
-                  Reset
-                </Button>
-              </div>
-            </div>
           </div>
         )}
       </CardContent>

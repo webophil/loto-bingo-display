@@ -1,4 +1,3 @@
-import { NumberBall } from './NumberBall';
 import { Button } from '@/components/ui/button';
 
 interface ManualGridProps {
@@ -7,6 +6,15 @@ interface ManualGridProps {
   isDrawing: boolean;
 }
 
+const getNumberColor = (number: number) => {
+  if (number <= 15) return 'border-blue-700';
+  if (number <= 30) return 'border-red-600';
+  if (number <= 45) return 'border-white';
+  if (number <= 60) return 'border-green-600';
+  if (number <= 75) return 'border-yellow-400';
+  return 'border-pink-600';
+};
+
 export const ManualGrid = ({ drawnNumbers, onNumberClick, isDrawing }: ManualGridProps) => {
   const numbers = Array.from({ length: 90 }, (_, i) => i + 1);
   const latestNumber = drawnNumbers[drawnNumbers.length - 1];
@@ -14,37 +22,35 @@ export const ManualGrid = ({ drawnNumbers, onNumberClick, isDrawing }: ManualGri
   return (
     <div className="space-y-4">
       <div className="text-center">
-        <h3 className="text-lg font-semibold text-foreground">
+        <h3 className="text-lg font-semibold text-white">
           Cliquez sur le numéro tiré physiquement
         </h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white/70">
           {drawnNumbers.length}/90 numéros tirés
         </p>
       </div>
       
-      <div className="grid grid-cols-10 gap-2 p-4 bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50">
+      <div className="grid grid-cols-15 gap-1.5 p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
         {numbers.map((number) => {
           const isDrawn = drawnNumbers.includes(number);
           const isLatest = number === latestNumber && isDrawing;
           
           return (
-            <Button
+            <button
               key={number}
-              variant={isDrawn ? "default" : "outline"}
-              size="sm"
               className={`
-                aspect-square p-0 text-sm font-bold transition-all duration-300
+                aspect-square flex items-center justify-center text-sm font-bold transition-all duration-300 rounded-md border-4
+                ${getNumberColor(number)}
                 ${isDrawn 
-                  ? 'bg-primary hover:bg-primary/90 scale-95 opacity-80' 
-                  : 'hover:scale-105 hover:bg-accent'
+                  ? 'bg-red-600 text-white' 
+                  : 'bg-white text-black hover:scale-105'
                 }
-                ${isLatest ? 'animate-bounce-soft animate-pulse-glow' : ''}
+                ${isLatest ? 'animate-pulse' : ''}
               `}
-              onClick={() => !isDrawn && onNumberClick(number)}
-              disabled={isDrawn || isDrawing}
+              onClick={() => onNumberClick(number)}
             >
               {number}
-            </Button>
+            </button>
           );
         })}
       </div>
