@@ -94,12 +94,13 @@ const Index = () => {
                 <p className="text-muted-foreground text-sm">Quine, Double Quine, Carton Plein</p>
               </div>
               <div className="space-y-2">
-                <p className="text-muted-foreground text-sm">
-                  Loto 90 numéros/Bingo 75 numéros
+                <h3 className="text-xl font-semibold">
+                  Loto 90 numéros
                   <br />
+                  Bingo 75 numéros
                   <br />
                   Roue de la Chance Las Végas
-                </p>
+                </h3>
               </div>
               <div className="space-y-2">
                 <div className="w-12 h-12 rounded-full bg-loto-blue mx-auto flex items-center justify-center text-white font-bold">
