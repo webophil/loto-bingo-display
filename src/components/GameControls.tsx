@@ -5,6 +5,7 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { GameType } from '@/hooks/useLoto';
 import { Play, Square, RotateCcw, Dice1, Gift, Trophy, RefreshCw } from 'lucide-react';
 import { ManualGrid } from './ManualGrid';
@@ -70,62 +71,109 @@ export const GameControls = ({
     <Card className="gradient-secondary border-border/50">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center text-white">
-          🎯 Contrôles du Loto
+          🎯 Contrôles Loto-Bingo
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Mode Toggle */}
-        <div className="flex items-center justify-between p-4 bg-white/10 rounded-lg">
-          <div className="space-y-1">
-            <Label htmlFor="mode-toggle" className="text-white font-medium">
-              Mode de tirage
-            </Label>
-            <p className="text-xs text-white/70">
-              {isManualMode ? 'Manuel (tirage physique)' : 'Automatique (par l\'application)'}
-            </p>
+        {/* Première ligne: Tirage et Jeu */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Tirage */}
+          <div className="p-4 bg-white/10 rounded-lg space-y-3">
+            <Label className="text-white font-medium">Tirage</Label>
+            <RadioGroup
+              value={isManualMode ? "manuel" : "auto"}
+              onValueChange={(value) => onToggleMode()}
+              disabled={!!currentGame}
+              className="flex flex-col space-y-2"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="manuel" id="manuel" className="border-white text-white" />
+                <Label htmlFor="manuel" className="text-white/90 cursor-pointer font-normal">
+                  Manuel
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="auto" id="auto" className="border-white text-white" />
+                <Label htmlFor="auto" className="text-white/90 cursor-pointer font-normal">
+                  Auto
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
-          <Switch
-            id="mode-toggle"
-            checked={isManualMode}
-            onCheckedChange={onToggleMode}
-            disabled={!!currentGame}
-          />
+
+          {/* Jeu (Loto/Bingo) */}
+          <div className="p-4 bg-white/10 rounded-lg space-y-3">
+            <Label className="text-white font-medium">Jeu</Label>
+            <RadioGroup
+              value="loto"
+              disabled={true}
+              className="flex flex-col space-y-2"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="loto" id="loto" className="border-white text-white" />
+                <Label htmlFor="loto" className="text-white/90 cursor-pointer font-normal">
+                  Loto
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="bingo" id="bingo" className="border-white text-white" />
+                <Label htmlFor="bingo" className="text-white/60 cursor-not-allowed font-normal">
+                  Bingo <span className="text-xs">(bientôt)</span>
+                </Label>
+              </div>
+            </RadioGroup>
+          </div>
         </div>
 
-        {/* Démarque Toggle */}
-        <div className="flex items-center justify-between p-4 bg-white/10 rounded-lg">
-          <div className="space-y-1">
-            <Label htmlFor="demarque-toggle" className="text-white font-medium">
-              Démarque des grilles
-            </Label>
-            <p className="text-xs text-white/70">
-              {withDemarque ? 'Les joueurs démarquent leurs grilles' : 'Les joueurs ne démarquent pas'}
-            </p>
+        {/* Deuxième ligne: Démarque et Quines du Sud */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Démarque */}
+          <div className="p-4 bg-white/10 rounded-lg space-y-3">
+            <Label className="text-white font-medium">Démarque</Label>
+            <RadioGroup
+              value={withDemarque ? "oui" : "non"}
+              onValueChange={(value) => onToggleDemarque()}
+              disabled={!!currentGame}
+              className="flex flex-col space-y-2"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="oui" id="demarque-oui" className="border-white text-white" />
+                <Label htmlFor="demarque-oui" className="text-white/90 cursor-pointer font-normal">
+                  Oui
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="non" id="demarque-non" className="border-white text-white" />
+                <Label htmlFor="demarque-non" className="text-white/90 cursor-pointer font-normal">
+                  Non
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
-          <Switch
-            id="demarque-toggle"
-            checked={withDemarque}
-            onCheckedChange={onToggleDemarque}
-            disabled={!!currentGame}
-          />
-        </div>
 
-        {/* Quines du Sud Mode */}
-        <div className="flex items-center justify-between p-4 bg-white/10 rounded-lg">
-          <div className="space-y-1">
-            <Label htmlFor="quines-sud-toggle" className="text-white font-medium">
-              Mode Quines du Sud
-            </Label>
-            <p className="text-xs text-white/70">
-              {isQuinesDuSudMode ? 'Après chaque victoire, reprise automatique sur Quine' : 'Mode classique'}
-            </p>
+          {/* Quines du Sud */}
+          <div className="p-4 bg-white/10 rounded-lg space-y-3">
+            <Label className="text-white font-medium">Quines du Sud</Label>
+            <RadioGroup
+              value={isQuinesDuSudMode ? "oui" : "non"}
+              onValueChange={(value) => onToggleQuinesDuSud()}
+              disabled={!!currentGame}
+              className="flex flex-col space-y-2"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="oui" id="quines-sud-oui" className="border-white text-white" />
+                <Label htmlFor="quines-sud-oui" className="text-white/90 cursor-pointer font-normal">
+                  Oui
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="non" id="quines-sud-non" className="border-white text-white" />
+                <Label htmlFor="quines-sud-non" className="text-white/90 cursor-pointer font-normal">
+                  Non
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
-          <Switch
-            id="quines-sud-toggle"
-            checked={isQuinesDuSudMode}
-            onCheckedChange={onToggleQuinesDuSud}
-            disabled={!!currentGame}
-          />
         </div>
 
         {/* Prize Descriptions by Game Type */}
