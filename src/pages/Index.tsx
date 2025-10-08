@@ -1,32 +1,42 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Monitor, Settings, Trophy } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import logoImage from '@/assets/logo.png';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Monitor, Settings, Trophy } from "lucide-react";
+import { Link } from "react-router-dom";
+import logoImage from "@/assets/logo.png";
 const Index = () => {
   const openDisplayOnExternalScreen = () => {
     // Obtenir l'URL complète pour l'affichage
     const displayUrl = `${window.location.origin}/display`;
 
     // Paramètres pour maximiser la fenêtre sur l'écran externe
-    const features = ['width=' + screen.availWidth, 'height=' + screen.availHeight, 'left=' + (screen.availWidth + 100),
-    // Positionner sur l'écran externe
-    'top=0', 'scrollbars=no', 'toolbar=no', 'menubar=no', 'status=no', 'location=no', 'resizable=yes'].join(',');
+    const features = [
+      "width=" + screen.availWidth,
+      "height=" + screen.availHeight,
+      "left=" + (screen.availWidth + 100),
+      // Positionner sur l'écran externe
+      "top=0",
+      "scrollbars=no",
+      "toolbar=no",
+      "menubar=no",
+      "status=no",
+      "location=no",
+      "resizable=yes",
+    ].join(",");
 
     // Ouvrir la fenêtre maximisée
-    const newWindow = window.open(displayUrl, 'LotoDisplay', features);
+    const newWindow = window.open(displayUrl, "LotoDisplay", features);
     if (newWindow) {
       newWindow.focus();
     }
   };
-  return <div className="min-h-screen flex items-center justify-center p-6">
+  return (
+    <div className="min-h-screen flex items-center justify-center p-6">
       <div className="max-w-4xl w-full space-y-8">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           <div className="flex flex-col items-center gap-4 lg:w-1/3">
             <img src={logoImage} alt="Corail's Rémoises" className="w-[307px] h-[307px] object-contain" />
             <div className="text-center text-base text-muted-foreground leading-relaxed">
-              <p>Gestion Loto, Bingo,</p>
-              <p>Roue de la Chance,</p>
+              <p>Loto, Bingo,Roue de la Chance</p>
               <p>par Fifi</p>
             </div>
           </div>
@@ -40,8 +50,14 @@ const Index = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-white/80 mb-6">Affichage public avec rack des 90 (ou Bingo 75) boules, et &quot;dernier sorti&quot; en évidence. Lots, démarque (ou non) et type de jeu. Roue de la Chance et tirage.</p>
-                <Button onClick={openDisplayOnExternalScreen} className="w-full gradient-primary text-white font-semibold text-lg py-3">
+                <p className="text-white/80 mb-6">
+                  Affichage public avec rack des 90 (ou Bingo 75) boules, et &quot;dernier sorti&quot; en évidence.
+                  Lots, démarque (ou non) et type de jeu. Roue de la Chance et tirage.
+                </p>
+                <Button
+                  onClick={openDisplayOnExternalScreen}
+                  className="w-full gradient-primary text-white font-semibold text-lg py-3"
+                >
                   Ouvrir l'Affichage
                 </Button>
               </CardContent>
@@ -55,7 +71,10 @@ const Index = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-800 mb-6">Interface de contrôle complète pour gérer les tirages (manuels ou par l'ordi), lancer les différents types de jeux et suivre l'ensemble du déroulement.</p>
+                <p className="text-gray-800 mb-6">
+                  Interface de contrôle complète pour gérer les tirages (manuels ou par l'ordi), lancer les différents
+                  types de jeux et suivre l'ensemble du déroulement.
+                </p>
                 <Link to="/dashboard">
                   <Button className="w-full gradient-secondary text-white font-semibold text-lg py-3">
                     Accéder au Dashboard
@@ -72,32 +91,27 @@ const Index = () => {
               <div className="space-y-2">
                 <Trophy className="w-12 h-12 text-loto-yellow mx-auto" />
                 <h3 className="text-xl font-semibold">Types de Jeux</h3>
-                <p className="text-muted-foreground text-sm">
-                  Quine, Double Quine, Carton Plein
-                </p>
+                <p className="text-muted-foreground text-sm">Quine, Double Quine, Carton Plein</p>
               </div>
               <div className="space-y-2">
                 <div className="w-12 h-12 rounded-full bg-loto-red mx-auto flex items-center justify-center text-white font-bold text-2xl ">
                   90
                 </div>
                 <h3 className="text-xl font-semibold">Boules</h3>
-                <p className="text-muted-foreground text-sm">
-                  Système traditionnel 90 numéros
-                </p>
+                <p className="text-muted-foreground text-sm">Système traditionnel 90 numéros</p>
               </div>
               <div className="space-y-2">
                 <div className="w-12 h-12 rounded-full bg-loto-blue mx-auto flex items-center justify-center text-white font-bold">
                   ⚡
                 </div>
                 <h3 className="text-xl font-semibold">Temps Réel</h3>
-                <p className="text-muted-foreground text-sm">
-                  Synchronisation instantanée
-                </p>
+                <p className="text-muted-foreground text-sm">Synchronisation instantanée</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
-    </div>;
+    </div>
+  );
 };
 export default Index;
