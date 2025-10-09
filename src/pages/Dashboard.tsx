@@ -48,17 +48,19 @@ const Dashboard = () => {
                 <CardTitle>🎯 Config de la Roue</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="wheelNumbers">Nombre de numéros</Label>
-                  <Input id="wheelNumbers" type="number" placeholder="Ex: 36" value={loto.wheelNumberCount} onChange={e => {
-                const value = parseInt(e.target.value);
-                loto.setWheelNumberCount(isNaN(value) ? 1 : value);
-              }} className="mt-2" />
-                </div>
-                
-                <div>
-                  <Label htmlFor="wheelPrize">Lot à gagner</Label>
-                  <Input id="wheelPrize" type="text" placeholder="Ex: Bon d'achat 50€" value={loto.wheelPrize} onChange={e => loto.setWheelPrize(e.target.value)} className="mt-2" />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="wheelNumbers">Nombre de numéros</Label>
+                    <Input id="wheelNumbers" type="text" inputMode="numeric" placeholder="Ex: 36" value={loto.wheelNumberCount} onChange={e => {
+                  const value = parseInt(e.target.value);
+                  loto.setWheelNumberCount(isNaN(value) ? 1 : value);
+                }} className="mt-2" />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="wheelPrize">Lot à gagner</Label>
+                    <Input id="wheelPrize" type="text" placeholder="Ex: Bon d'achat 50€" value={loto.wheelPrize} onChange={e => loto.setWheelPrize(e.target.value)} className="mt-2" />
+                  </div>
                 </div>
 
                 <Button onClick={loto.spinWheel} disabled={loto.isWheelSpinning} className="gradient-primary w-full" size="lg">
