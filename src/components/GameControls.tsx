@@ -221,35 +221,12 @@ export const GameControls = ({
                 </p>}
             </div>
 
-        {isManualMode ? <>
-                <ManualGrid drawnNumbers={drawnNumbers} onNumberClick={onDrawManualNumber} isDrawing={isDrawing} />
-                
-                <div className="space-y-3">
-                  {/* Winning Control Buttons */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button onClick={() => onSetWinning(true)} className="bg-loto-blue text-white font-bold py-3" disabled={isWinning}>
-                      <Trophy className="w-4 h-4 mr-2" />
-                      C'est gagné !
-                    </Button>
-                    <Button onClick={onResumeGame} variant="outline" className="border-loto-green text-loto-green hover:bg-loto-green hover:text-white" disabled={!isWinning}>
-                      <RefreshCw className="w-4 h-4 mr-2" />
-                      Reprise du jeu
-                    </Button>
-                  </div>
-
-                  {/* Game Control Buttons */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button onClick={onEndGame} variant="outline" className="border-loto-yellow text-loto-yellow hover:bg-loto-yellow hover:text-gray-900">
-                      <Square className="w-4 h-4 mr-2" />
-                      Terminer
-                    </Button>
-                    <Button onClick={onReset} variant="outline" className="border-loto-red text-loto-red hover:bg-loto-red hover:text-white">
-                      <RotateCcw className="w-4 h-4 mr-2" />
-                      Reset
-                    </Button>
-                  </div>
-                </div>
-              </> : <>
+        {isManualMode ? (
+              <div className="text-center text-white/80 py-4">
+                La grille de tirage manuel s'affiche dans la colonne de droite →
+              </div>
+            ) : (
+              <>
                 <div className="grid gap-4">
                   <Button onClick={onDrawNumber} disabled={isDrawing || drawnNumbers.length >= 90} className="gradient-primary text-white font-bold text-xl py-8" size="lg">
                     <Dice1 className="w-6 h-6 mr-3" />
@@ -282,7 +259,8 @@ export const GameControls = ({
                     </Button>
                   </div>
                 </div>
-              </>}
+              </>
+            )}
           </div>}
       </CardContent>
     </Card>;

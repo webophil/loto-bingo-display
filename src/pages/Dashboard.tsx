@@ -2,12 +2,13 @@ import { useLoto } from '@/hooks/useLoto';
 import { GameControls } from '@/components/GameControls';
 import { DrawnHistory } from '@/components/DrawnHistory';
 import { LotoGrid } from '@/components/LotoGrid';
+import { ManualGrid } from '@/components/ManualGrid';
 import { WheelOfFortune } from '@/components/WheelOfFortune';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Monitor, Home, CircleDot } from 'lucide-react';
+import { Monitor, Home, CircleDot, Trophy, RefreshCw, Square, RotateCcw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 const Dashboard = () => {
   const loto = useLoto();
@@ -80,8 +81,44 @@ const Dashboard = () => {
             </Card>
           </div> : <div className="lg:col-span-2">
             <Card className="bg-card/20 backdrop-blur-sm border-border/50">
-              <CardContent>
-                <LotoGrid drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} />
+              <CardContent className="space-y-6 p-6">
+                {loto.currentGame && loto.isManualMode ? (
+                  <>
+                    <ManualGrid drawnNumbers={loto.drawnNumbers} onNumberClick={loto.drawManualNumber} isDrawing={loto.isDrawing} />
+                    
+                    <div className="flex gap-3 justify-center flex-wrap">
+                      <Button onClick={() => loto.setWinning(true)} className="bg-loto-blue text-white font-bold" disabled={loto.isWinning}>
+                        <Trophy className="w-4 h-4 mr-2" />
+                        C'est gagné !
+                      </Button>
+                      <Button onClick={loto.resumeGame} variant="outline" className="border-loto-green text-loto-green hover:bg-loto-green hover:text-white" disabled={!loto.isWinning}>
+                        <RefreshCw className="w-4 h-4 mr-2" />
+                        Reprise du jeu
+                      </Button>
+                      <Button onClick={loto.endGame} variant="outline" className="border-loto-yellow text-loto-yellow hover:bg-loto-yellow hover:text-gray-900">
+                        <Square className="w-4 h-4 mr-2" />
+                        Terminer
+                      </Button>
+                      <Button onClick={loto.resetAll} variant="outline" className="border-loto-red text-loto-red hover:bg-loto-red hover:text-white">
+                        <RotateCcw className="w-4 h-4 mr-2" />
+                        Reset
+                      </Button>
+                    </div>
+
+                    <div className="text-center">
+                      <h3 className="text-sm font-semibold text-muted-foreground mb-3">Derniers numéros tirés</h3>
+                      <div className="flex gap-2 justify-center flex-wrap">
+                        {loto.drawnNumbers.slice(-10).reverse().map((num, i) => (
+                          <span key={i} className="text-sm bg-primary text-primary-foreground px-3 py-1 rounded-full font-bold">
+                            {num}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <LotoGrid drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} />
+                )}
               </CardContent>
             </Card>
           </div>}
