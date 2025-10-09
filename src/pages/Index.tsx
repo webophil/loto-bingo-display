@@ -92,7 +92,7 @@ const Index = () => {
               <div className="space-y-2">
                 
                 <h3 className="text-xl font-semibold">Tirage Equitable</h3>
-                <p className="text-muted-foreground text-sm">Le tirage par le système est effectué par un &quot;crypto-randomizer&quot; utilisant la méthode Fisher-Yates Shuffle pour des tirages vraiment aléatoires.</p>
+                <p className="text-muted-foreground text-sm">Le tirage système (Auto) est effectué par un &quot;crypto-randomizer&quot; utilisant la méthode Fisher-Yates Shuffle pour des tirages vraiment aléatoires.</p>
               </div>
             </div>
           </CardContent>
