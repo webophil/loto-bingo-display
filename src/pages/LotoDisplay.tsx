@@ -23,7 +23,7 @@ interface DisplayState {
   isWinning: boolean;
   isWheelMode: boolean;
   wheelNumberCount: number;
-  wheelPrize: string;
+  wheelActivePrize: string;
   wheelWinningNumber: number | null;
   isWheelSpinning: boolean;
   wheelDrawHistory: Array<{ number: number; prize: string }>;
@@ -56,7 +56,7 @@ const LotoDisplay = () => {
     isWinning: false,
     isWheelMode: false,
     wheelNumberCount: 20,
-    wheelPrize: '',
+    wheelActivePrize: '',
     wheelWinningNumber: null,
     isWheelSpinning: false,
     wheelDrawHistory: [],
@@ -95,7 +95,7 @@ const LotoDisplay = () => {
               isWinning: parsedState.isWinning || false,
               isWheelMode: parsedState.isWheelMode || false,
               wheelNumberCount: parsedState.wheelNumberCount || 20,
-              wheelPrize: parsedState.wheelPrize || '',
+              wheelActivePrize: parsedState.wheelActivePrize || '',
               wheelWinningNumber: parsedState.wheelWinningNumber || null,
               isWheelSpinning: parsedState.isWheelSpinning || false,
               wheelDrawHistory: parsedState.wheelDrawHistory || [],
@@ -131,7 +131,7 @@ const LotoDisplay = () => {
           isWinning: newState.isWinning || false,
           isWheelMode: newState.isWheelMode || false,
           wheelNumberCount: newState.wheelNumberCount || 20,
-          wheelPrize: newState.wheelPrize || '',
+          wheelActivePrize: newState.wheelActivePrize || '',
           wheelWinningNumber: newState.wheelWinningNumber || null,
           isWheelSpinning: newState.isWheelSpinning || false,
           wheelDrawHistory: newState.wheelDrawHistory || [],
@@ -167,7 +167,7 @@ const LotoDisplay = () => {
           isWinning: newState.isWinning || false,
           isWheelMode: newState.isWheelMode || false,
           wheelNumberCount: newState.wheelNumberCount || 20,
-          wheelPrize: newState.wheelPrize || '',
+          wheelActivePrize: newState.wheelActivePrize || '',
           wheelWinningNumber: newState.wheelWinningNumber || null,
           isWheelSpinning: newState.isWheelSpinning || false,
           wheelDrawHistory: newState.wheelDrawHistory || [],
@@ -213,10 +213,10 @@ const LotoDisplay = () => {
               </div>
               
               {/* Lot centré sous le numéro */}
-              {displayState.wheelPrize && (
+              {displayState.wheelActivePrize && (
                 <div className="mt-4 text-foreground font-bold leading-tight flex items-center justify-center gap-2" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.75rem)' }}>
                   <span>🎁</span>
-                  <span>{displayState.wheelPrize}</span>
+                  <span>{displayState.wheelActivePrize}</span>
                 </div>
               )}
             </div>
@@ -236,7 +236,7 @@ const LotoDisplay = () => {
             numberOfSegments={displayState.wheelNumberCount}
             winningNumber={displayState.wheelWinningNumber}
             isSpinning={displayState.isWheelSpinning}
-            prize={displayState.wheelPrize}
+            prize={displayState.wheelActivePrize}
             drawHistory={displayState.wheelDrawHistory}
             targetRotation={displayState.wheelTargetRotation}
             hideResults={true}

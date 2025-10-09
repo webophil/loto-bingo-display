@@ -21,6 +21,7 @@ export interface LotoState {
   isWheelMode: boolean;
   wheelNumberCount: number;
   wheelPrize: string;
+  wheelActivePrize: string; // Le lot actuellement affiché (fixé au moment du tirage)
   wheelWinningNumber: number | null;
   isWheelSpinning: boolean;
   wheelDrawHistory: Array<{ number: number; prize: string }>;
@@ -47,6 +48,7 @@ export const useLoto = () => {
     isWheelMode: false,
     wheelNumberCount: 20,
     wheelPrize: '',
+    wheelActivePrize: '',
     wheelWinningNumber: null,
     isWheelSpinning: false,
     wheelDrawHistory: [],
@@ -269,6 +271,7 @@ export const useLoto = () => {
       isWheelMode: false,
       wheelNumberCount: 20,
       wheelPrize: '',
+      wheelActivePrize: '',
       wheelWinningNumber: null,
       isWheelSpinning: false,
       wheelDrawHistory: [],
@@ -333,13 +336,14 @@ export const useLoto = () => {
       
       // Add previous result to history if exists
       const newHistory = prev.wheelWinningNumber ? 
-        [...prev.wheelDrawHistory, { number: prev.wheelWinningNumber, prize: prev.wheelPrize }] : 
+        [...prev.wheelDrawHistory, { number: prev.wheelWinningNumber, prize: prev.wheelActivePrize }] : 
         prev.wheelDrawHistory;
       
       return {
         ...prev,
         isWheelSpinning: true,
         wheelWinningNumber: winningNumber,
+        wheelActivePrize: prev.wheelPrize, // Fixer le lot au moment du lancement
         wheelDrawHistory: newHistory,
         wheelTargetRotation: targetRotation,
       };
