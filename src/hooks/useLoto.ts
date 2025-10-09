@@ -2,6 +2,20 @@ import { useState, useCallback, useEffect } from 'react';
 
 export type GameType = 'quine' | 'double-quine' | 'carton-plein';
 
+// Secure random number generator using crypto.getRandomValues()
+const getSecureRandomInt = (max: number): number => {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return array[0] % max;
+};
+
+// Secure random float between -0.5 and 0.5
+const getSecureRandomFloat = (): number => {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return (array[0] / 0xFFFFFFFF) - 0.5;
+};
+
 export interface LotoState {
   drawnNumbers: number[];
   currentGame: GameType | null;
@@ -131,7 +145,7 @@ export const useLoto = () => {
       
       if (availableNumbers.length === 0) return prev;
       
-      const randomIndex = Math.floor(Math.random() * availableNumbers.length);
+      const randomIndex = getSecureRandomInt(availableNumbers.length);
       const newNumber = availableNumbers[randomIndex];
       
       return {
@@ -308,7 +322,7 @@ export const useLoto = () => {
     setState(prev => {
       if (prev.isWheelSpinning) return prev;
       
-      const winningNumber = Math.floor(Math.random() * prev.wheelNumberCount) + 1;
+      const winningNumber = getSecureRandomInt(prev.wheelNumberCount) + 1;
       
       // Calculate rotation ONCE here to share between all views
       const segmentAngle = 360 / prev.wheelNumberCount;
@@ -316,13 +330,13 @@ export const useLoto = () => {
       
       // Add random offset within segment (with margins to avoid edges)
       const margin = segmentAngle * 0.15;
-      const randomOffset = (Math.random() - 0.5) * (segmentAngle - 2 * margin);
+      const randomOffset = getSecureRandomFloat() * (segmentAngle - 2 * margin);
       
       // Calculate the final angle where the wheel should stop (modulo 360)
       const finalAngle = 360 - winningSegmentCenter + randomOffset;
       
       // Random number of complete rotations (5 to 7)
-      const fullRotations = Math.floor(Math.random() * 3) + 5;
+      const fullRotations = getSecureRandomInt(3) + 5;
       
       // Calculate target rotation taking into account current cumulative rotation
       // Find the next occurrence of finalAngle that is at least fullRotations * 360 away
