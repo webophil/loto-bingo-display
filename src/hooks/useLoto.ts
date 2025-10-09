@@ -182,12 +182,14 @@ export const useLoto = () => {
 
   const drawManualNumber = useCallback((number: number) => {
     setState(prev => {
-      if (prev.drawnNumbers.includes(number)) return prev;
+      const isAlreadyDrawn = prev.drawnNumbers.includes(number);
       
       return {
         ...prev,
-        drawnNumbers: [...prev.drawnNumbers, number],
-        isDrawing: true,
+        drawnNumbers: isAlreadyDrawn
+          ? prev.drawnNumbers.filter(n => n !== number)
+          : [...prev.drawnNumbers, number],
+        isDrawing: !isAlreadyDrawn,
       };
     });
 
