@@ -19,10 +19,7 @@ const Dashboard = () => {
         </div>
         <div className="flex gap-3">
           <Link to="/display">
-            <Button className="gradient-secondary text-white">
-              <Monitor className="w-4 h-4 mr-2" />
-              Affichage Écran Externe
-            </Button>
+            
           </Link>
           <Link to="/">
             <Button variant="outline">
@@ -38,94 +35,56 @@ const Dashboard = () => {
           {/* Wheel Mode Toggle Button */}
           <Card className="bg-card/20 backdrop-blur-sm border-border/50">
             <CardContent className="p-4">
-              <Button
-                onClick={loto.toggleWheelMode}
-                className={loto.isWheelMode ? "gradient-secondary text-white w-full" : "gradient-primary w-full"}
-                size="lg"
-              >
+              <Button onClick={loto.toggleWheelMode} className={loto.isWheelMode ? "gradient-secondary text-white w-full" : "gradient-primary w-full"} size="lg">
                 <CircleDot className="w-5 h-5 mr-2" />
                 {loto.isWheelMode ? "Retour Loto" : "Roue de la Chance"}
               </Button>
             </CardContent>
           </Card>
 
-          {loto.isWheelMode ? (
-            /* Wheel of Fortune Controls */
-            <Card className="bg-card/20 backdrop-blur-sm border-border/50">
+          {loto.isWheelMode ? (/* Wheel of Fortune Controls */
+        <Card className="bg-card/20 backdrop-blur-sm border-border/50">
               <CardHeader>
                 <CardTitle>🎯 Config de la Roue</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
                   <Label htmlFor="wheelNumbers">Nombre de numéros</Label>
-                  <Input
-                    id="wheelNumbers"
-                    type="number"
-                    placeholder="Ex: 36"
-                    value={loto.wheelNumberCount}
-                    onChange={(e) => {
-                      const value = parseInt(e.target.value);
-                      loto.setWheelNumberCount(isNaN(value) ? 1 : value);
-                    }}
-                    className="mt-2"
-                  />
+                  <Input id="wheelNumbers" type="number" placeholder="Ex: 36" value={loto.wheelNumberCount} onChange={e => {
+                const value = parseInt(e.target.value);
+                loto.setWheelNumberCount(isNaN(value) ? 1 : value);
+              }} className="mt-2" />
                 </div>
                 
                 <div>
                   <Label htmlFor="wheelPrize">Lot à gagner</Label>
-                  <Input
-                    id="wheelPrize"
-                    type="text"
-                    placeholder="Ex: Bon d'achat 50€"
-                    value={loto.wheelPrize}
-                    onChange={(e) => loto.setWheelPrize(e.target.value)}
-                    className="mt-2"
-                  />
+                  <Input id="wheelPrize" type="text" placeholder="Ex: Bon d'achat 50€" value={loto.wheelPrize} onChange={e => loto.setWheelPrize(e.target.value)} className="mt-2" />
                 </div>
 
-                <Button
-                  onClick={loto.spinWheel}
-                  disabled={loto.isWheelSpinning}
-                  className="gradient-primary w-full"
-                  size="lg"
-                >
+                <Button onClick={loto.spinWheel} disabled={loto.isWheelSpinning} className="gradient-primary w-full" size="lg">
                   {loto.isWheelSpinning ? "🎯 Tirage en cours..." : "🎯 Tourner la roue"}
                 </Button>
               </CardContent>
-            </Card>
-          ) : (
-            <>
+            </Card>) : <>
               <GameControls currentGame={loto.currentGame} drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} isManualMode={loto.isManualMode} withDemarque={loto.withDemarque} prizeDescription={loto.prizeDescription} isQuinesDuSudMode={loto.isQuinesDuSudMode} prizeDescriptions={loto.prizeDescriptions} isWinning={loto.isWinning} onStartGame={loto.startGame} onDrawNumber={loto.drawNumber} onDrawManualNumber={loto.drawManualNumber} onEndGame={loto.endGame} onReset={loto.resetAll} onToggleMode={loto.toggleMode} onToggleDemarque={loto.toggleDemarque} onSetPrizeDescription={loto.setPrizeDescription} onToggleQuinesDuSud={loto.toggleQuinesDuSud} onSetPrizeDescriptions={loto.setPrizeDescriptions} onSetWinning={loto.setWinning} onResumeGame={loto.resumeGame} />
               
               <DrawnHistory drawnNumbers={loto.drawnNumbers} />
-            </>
-          )}
+            </>}
         </div>
 
-        {loto.isWheelMode ? (
-          <div className="lg:col-span-2">
+        {loto.isWheelMode ? <div className="lg:col-span-2">
             <Card className="bg-card/20 backdrop-blur-sm border-border/50">
               <CardContent className="p-2">
-                <WheelOfFortune 
-                  numberOfSegments={loto.wheelNumberCount}
-                  winningNumber={loto.wheelWinningNumber}
-                  isSpinning={loto.isWheelSpinning}
-                  prize={loto.wheelPrize}
-                  drawHistory={loto.wheelDrawHistory}
-                  targetRotation={loto.wheelTargetRotation}
-                />
+                <WheelOfFortune numberOfSegments={loto.wheelNumberCount} winningNumber={loto.wheelWinningNumber} isSpinning={loto.isWheelSpinning} prize={loto.wheelPrize} drawHistory={loto.wheelDrawHistory} targetRotation={loto.wheelTargetRotation} />
               </CardContent>
             </Card>
-          </div>
-        ) : (
-          <div className="lg:col-span-2">
+          </div> : <div className="lg:col-span-2">
             <Card className="bg-card/20 backdrop-blur-sm border-border/50">
               <CardContent>
                 <LotoGrid drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} />
               </CardContent>
             </Card>
-          </div>
-        )}
+          </div>}
       </div>
 
       {!loto.isWheelMode && loto.gameHistory.length > 0 && <Card className="bg-card/20 backdrop-blur-sm border-border/50">
