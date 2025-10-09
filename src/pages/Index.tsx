@@ -9,19 +9,9 @@ const Index = () => {
     const displayUrl = `${window.location.origin}/display`;
 
     // Paramètres pour maximiser la fenêtre sur l'écran externe
-    const features = [
-      "width=" + screen.availWidth,
-      "height=" + screen.availHeight,
-      "left=" + (screen.availWidth + 100),
-      // Positionner sur l'écran externe
-      "top=0",
-      "scrollbars=no",
-      "toolbar=no",
-      "menubar=no",
-      "status=no",
-      "location=no",
-      "resizable=yes",
-    ].join(",");
+    const features = ["width=" + screen.availWidth, "height=" + screen.availHeight, "left=" + (screen.availWidth + 100),
+    // Positionner sur l'écran externe
+    "top=0", "scrollbars=no", "toolbar=no", "menubar=no", "status=no", "location=no", "resizable=yes"].join(",");
 
     // Ouvrir la fenêtre maximisée
     const newWindow = window.open(displayUrl, "LotoDisplay", features);
@@ -29,8 +19,7 @@ const Index = () => {
       newWindow.focus();
     }
   };
-  return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+  return <div className="min-h-screen flex items-center justify-center p-6">
       <div className="max-w-4xl w-full space-y-8">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           <div className="flex flex-col items-center gap-4 lg:w-1/3">
@@ -55,10 +44,7 @@ const Index = () => {
                   Affichage public avec rack des 90 (ou Bingo 75) boules, et &quot;dernier sorti&quot; en évidence.
                   Lots, démarque (ou non) et type de jeu. Roue de la Chance et tirage.
                 </p>
-                <Button
-                  onClick={openDisplayOnExternalScreen}
-                  className="w-full gradient-primary text-white font-semibold text-lg py-3"
-                >
+                <Button onClick={openDisplayOnExternalScreen} className="w-full gradient-primary text-white font-semibold text-lg py-3">
                   Ouvrir l'Affichage
                 </Button>
               </CardContent>
@@ -104,17 +90,14 @@ const Index = () => {
                 </h3>
               </div>
               <div className="space-y-2">
-                <div className="w-12 h-12 rounded-full bg-loto-blue mx-auto flex items-center justify-center text-white font-bold">
-                  ⚡
-                </div>
-                <h3 className="text-xl font-semibold">Temps Réel</h3>
-                <p className="text-muted-foreground text-sm">Synchronisation instantanée</p>
+                
+                <h3 className="text-xl font-semibold">Tirage Equitable</h3>
+                <p className="text-muted-foreground text-sm">Le tirage par le système est effectué par un &quot;crypto-randomizer&quot; utilisant la méthode Fisher-Yates Shuffle pour des tirages vraiment aléatoires.</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 };
 export default Index;
