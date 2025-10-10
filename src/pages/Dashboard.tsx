@@ -1,6 +1,5 @@
 import { useLoto } from '@/hooks/useLoto';
 import { GameControls } from '@/components/GameControls';
-import { DrawnHistory } from '@/components/DrawnHistory';
 import { ManualGrid } from '@/components/ManualGrid';
 import { WheelOfFortune } from '@/components/WheelOfFortune';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -67,8 +66,6 @@ const Dashboard = () => {
               </CardContent>
             </Card>) : <>
               <GameControls currentGame={loto.currentGame} drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} isManualMode={loto.isManualMode} isBingoMode={loto.isBingoMode} withDemarque={loto.withDemarque} prizeDescription={loto.prizeDescription} isQuinesDuSudMode={loto.isQuinesDuSudMode} prizeDescriptions={loto.prizeDescriptions} isWinning={loto.isWinning} onStartGame={loto.startGame} onDrawNumber={loto.drawNumber} onDrawManualNumber={loto.drawManualNumber} onEndGame={loto.endGame} onReset={loto.resetAll} onToggleMode={loto.toggleMode} onToggleBingoMode={loto.toggleBingoMode} onToggleDemarque={loto.toggleDemarque} onSetPrizeDescription={loto.setPrizeDescription} onToggleQuinesDuSud={loto.toggleQuinesDuSud} onSetPrizeDescriptions={loto.setPrizeDescriptions} onSetWinning={loto.setWinning} onResumeGame={loto.resumeGame} />
-              
-              <DrawnHistory drawnNumbers={loto.drawnNumbers} />
             </>}
         </div>
 
@@ -170,32 +167,6 @@ const Dashboard = () => {
           </div>}
       </div>
 
-      {!loto.isWheelMode && loto.gameHistory.length > 0 && <Card className="bg-card/20 backdrop-blur-sm border-border/50">
-          <CardHeader>
-            <CardTitle>📊 Historique des Parties</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {loto.gameHistory.map((game, index) => <div key={index} className="flex items-center justify-between p-3 bg-secondary/20 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="font-semibold">
-                      {game.type === 'quine' && '🎯 Quine'}
-                      {game.type === 'double-quine' && '🎯🎯 Double Quine'}  
-                      {game.type === 'carton-plein' && '🏆 Carton Plein'}
-                    </span>
-                    <span className="text-muted-foreground">
-                      {game.numbers.length} numéros tirés
-                    </span>
-                  </div>
-                  <div className="flex gap-1">
-                    {game.numbers.slice(-5).map((num, i) => <span key={i} className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded">
-                        {num}
-                      </span>)}
-                  </div>
-                </div>)}
-            </div>
-          </CardContent>
-        </Card>}
     </div>;
 };
 export default Dashboard;
