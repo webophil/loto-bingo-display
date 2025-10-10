@@ -82,43 +82,30 @@ export const GameControls = ({
         {/* Première ligne: Tirage et Jeu */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Tirage */}
-          <div className="p-4 bg-white/10 rounded-lg space-y-3">
-            <Label className="text-lg text-center text-slate-800 font-extrabold">TIRAGE</Label>
-            <RadioGroup value={isManualMode ? "manuel" : "auto"} onValueChange={value => onToggleMode()} disabled={!!currentGame} className="flex flex-col space-y-2">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="manuel" id="manuel" className="border-white text-white" />
-                <Label htmlFor="manuel" className="text-white/90 cursor-pointer font-normal">
-                  Manuel
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="auto" id="auto" className="border-white text-white" />
-                <Label htmlFor="auto" className="text-white/90 cursor-pointer font-normal">
-                  Auto
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
+          <div className="p-4 bg-white/10 rounded-lg flex flex-col justify-center">
+  <Label className="text-lg text-slate-800 font-extrabold mb-3 text-left">TIRAGE</Label>
+  
+  <RadioGroup
+    value={isManualMode ? "manuel" : "auto"}
+    onValueChange={value => onToggleMode()}
+    disabled={!!currentGame}
+    className="flex flex-col space-y-3 text-left"
+  >
+    <div className="flex items-center space-x-3">
+      <Label htmlFor="manuel" className="text-white/90 cursor-pointer font-normal">
+        Manuel
+      </Label>
+      <RadioGroupItem value="manuel" id="manuel" className="border-white text-white" />
+    </div>
 
-          {/* Jeu (Loto/Bingo) */}
-          <div className="p-4 bg-white/10 rounded-lg space-y-3">
-            <Label className="font-extrabold text-lg text-slate-800 text-center">JEU</Label>
-            <RadioGroup value={isBingoMode ? "bingo" : "loto"} onValueChange={value => onToggleBingoMode()} disabled={!!currentGame} className="flex flex-col space-y-2">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="loto" id="loto" className="border-white text-white" />
-                <Label htmlFor="loto" className="text-white/90 cursor-pointer font-normal">
-                  Loto
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="bingo" id="bingo" className="border-white text-white" />
-                <Label htmlFor="bingo" className="text-white/90 cursor-pointer font-normal">
-                  Bingo
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-        </div>
+    <div className="flex items-center space-x-3">
+      <Label htmlFor="auto" className="text-white/90 cursor-pointer font-normal">
+        Auto
+      </Label>
+      <RadioGroupItem value="auto" id="auto" className="border-white text-white" />
+    </div>
+  </RadioGroup>
+</div>
 
         {/* Deuxième ligne: Démarque et Quines du Sud */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
