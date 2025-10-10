@@ -291,7 +291,7 @@ const LotoDisplay = () => {
               </div>
             )}
 
-            {!displayState.withDemarque && (
+            {!displayState.withDemarque && displayState.currentGame !== "carton-plein" && (
               <div className="text-loto-red text-2xl font-bold animate-pulse bg-white/10 px-6 py-2 rounded-full">
                 ⚠️ SANS DEMARQUER ⚠️
               </div>
