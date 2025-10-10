@@ -22,6 +22,7 @@ export interface LotoState {
   isDrawing: boolean;
   gameHistory: { type: GameType; numbers: number[] }[];
   isManualMode: boolean;
+  isBingoMode: boolean;
   withDemarque: boolean;
   prizeDescription: string;
   isQuinesDuSudMode: boolean;
@@ -50,6 +51,7 @@ export const useLoto = () => {
     isDrawing: false,
     gameHistory: [],
     isManualMode: false,
+    isBingoMode: false,
     withDemarque: true,
     prizeDescription: '',
     isQuinesDuSudMode: false,
@@ -138,9 +140,10 @@ export const useLoto = () => {
 
   const drawNumber = useCallback(() => {
     setState(prev => {
-      if (prev.isDrawing || prev.drawnNumbers.length >= 75) return prev;
+      const maxNumbers = prev.isBingoMode ? 75 : 90;
+      if (prev.isDrawing || prev.drawnNumbers.length >= maxNumbers) return prev;
       
-      const availableNumbers = Array.from({ length: 75 }, (_, i) => i + 1)
+      const availableNumbers = Array.from({ length: maxNumbers }, (_, i) => i + 1)
         .filter(num => !prev.drawnNumbers.includes(num));
       
       if (availableNumbers.length === 0) return prev;
@@ -177,6 +180,13 @@ export const useLoto = () => {
     setState(prev => ({
       ...prev,
       isManualMode: !prev.isManualMode,
+    }));
+  }, []);
+
+  const toggleBingoMode = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      isBingoMode: !prev.isBingoMode,
     }));
   }, []);
 
@@ -275,6 +285,7 @@ export const useLoto = () => {
       isDrawing: false,
       gameHistory: [],
       isManualMode: false,
+      isBingoMode: false,
       withDemarque: true,
       prizeDescription: '',
       isQuinesDuSudMode: false,
@@ -384,6 +395,7 @@ export const useLoto = () => {
     endGame,
     resetAll,
     toggleMode,
+    toggleBingoMode,
     toggleDemarque,
     setPrizeDescription,
     toggleQuinesDuSud,

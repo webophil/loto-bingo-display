@@ -14,6 +14,7 @@ interface GameControlsProps {
   drawnNumbers: number[];
   isDrawing: boolean;
   isManualMode: boolean;
+  isBingoMode: boolean;
   withDemarque: boolean;
   prizeDescription: string;
   isQuinesDuSudMode: boolean;
@@ -29,6 +30,7 @@ interface GameControlsProps {
   onEndGame: () => void;
   onReset: () => void;
   onToggleMode: () => void;
+  onToggleBingoMode: () => void;
   onToggleDemarque: () => void;
   onSetPrizeDescription: (description: string) => void;
   onToggleQuinesDuSud: () => void;
@@ -50,6 +52,7 @@ export const GameControls = ({
   drawnNumbers,
   isDrawing,
   isManualMode,
+  isBingoMode,
   withDemarque,
   prizeDescription,
   isQuinesDuSudMode,
@@ -61,6 +64,7 @@ export const GameControls = ({
   onEndGame,
   onReset,
   onToggleMode,
+  onToggleBingoMode,
   onToggleDemarque,
   onSetPrizeDescription,
   onToggleQuinesDuSud,
@@ -99,7 +103,7 @@ export const GameControls = ({
           {/* Jeu (Loto/Bingo) */}
           <div className="p-4 bg-white/10 rounded-lg space-y-3">
             <Label className="font-extrabold text-lg text-slate-800 text-center">JEU</Label>
-            <RadioGroup value="loto" disabled={true} className="flex flex-col space-y-2">
+            <RadioGroup value={isBingoMode ? "bingo" : "loto"} onValueChange={value => onToggleBingoMode()} disabled={!!currentGame} className="flex flex-col space-y-2">
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="loto" id="loto" className="border-white text-white" />
                 <Label htmlFor="loto" className="text-white/90 cursor-pointer font-normal">
@@ -108,8 +112,8 @@ export const GameControls = ({
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="bingo" id="bingo" className="border-white text-white" />
-                <Label htmlFor="bingo" className="text-white/60 cursor-not-allowed font-normal">
-                  Bingo <span className="text-xs">(bientôt)</span>
+                <Label htmlFor="bingo" className="text-white/90 cursor-pointer font-normal">
+                  Bingo
                 </Label>
               </div>
             </RadioGroup>
@@ -213,7 +217,7 @@ export const GameControls = ({
                 {gameLabels[currentGame]}
               </Badge>
               <p className="text-white/80 mt-2">
-                {drawnNumbers.length} numéro{drawnNumbers.length > 1 ? 's' : ''} tiré{drawnNumbers.length > 1 ? 's' : ''} • Mode {isManualMode ? 'Manuel' : 'Auto'} • {withDemarque ? 'Avec' : 'Sans'} démarque
+                {drawnNumbers.length} numéro{drawnNumbers.length > 1 ? 's' : ''} tiré{drawnNumbers.length > 1 ? 's' : ''} • {isBingoMode ? 'Bingo' : 'Loto'} • Mode {isManualMode ? 'Manuel' : 'Auto'} • {withDemarque ? 'Avec' : 'Sans'} démarque
                 {isQuinesDuSudMode && ' • Quines du Sud'}
               </p>
               {currentGame && prizeDescriptions[currentGame] && <p className="text-loto-yellow mt-1 font-medium">
@@ -228,7 +232,7 @@ export const GameControls = ({
             ) : (
               <>
                 <div className="grid gap-4">
-                  <Button onClick={onDrawNumber} disabled={isDrawing || drawnNumbers.length >= 90} className="gradient-primary text-white font-bold text-xl py-8" size="lg">
+                  <Button onClick={onDrawNumber} disabled={isDrawing || drawnNumbers.length >= (isBingoMode ? 75 : 90)} className="gradient-primary text-white font-bold text-xl py-8" size="lg">
                     <Dice1 className="w-6 h-6 mr-3" />
                     {isDrawing ? 'Tirage en cours...' : 'Tirer un numéro'}
                   </Button>

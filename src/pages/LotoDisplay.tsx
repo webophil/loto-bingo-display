@@ -12,6 +12,7 @@ interface DisplayState {
   drawnNumbers: number[];
   currentGame: GameType | null;
   isDrawing: boolean;
+  isBingoMode: boolean;
   withDemarque: boolean;
   prizeDescription: string;
   isQuinesDuSudMode: boolean;
@@ -45,6 +46,7 @@ const LotoDisplay = () => {
     drawnNumbers: [],
     currentGame: null,
     isDrawing: false,
+    isBingoMode: false,
     withDemarque: true,
     prizeDescription: "",
     isQuinesDuSudMode: false,
@@ -88,6 +90,7 @@ const LotoDisplay = () => {
               drawnNumbers: parsedState.drawnNumbers || [],
               currentGame: parsedState.currentGame || null,
               isDrawing: parsedState.isDrawing || false,
+              isBingoMode: parsedState.isBingoMode || false,
               withDemarque: parsedState.withDemarque ?? true,
               prizeDescription: parsedState.prizeDescription || "",
               isQuinesDuSudMode: parsedState.isQuinesDuSudMode || false,
@@ -124,6 +127,7 @@ const LotoDisplay = () => {
           drawnNumbers: newState.drawnNumbers || [],
           currentGame: newState.currentGame || null,
           isDrawing: newState.isDrawing || false,
+          isBingoMode: newState.isBingoMode || false,
           withDemarque: newState.withDemarque ?? true,
           prizeDescription: newState.prizeDescription || "",
           isQuinesDuSudMode: newState.isQuinesDuSudMode || false,
@@ -160,6 +164,7 @@ const LotoDisplay = () => {
           drawnNumbers: newState.drawnNumbers || [],
           currentGame: newState.currentGame || null,
           isDrawing: newState.isDrawing || false,
+          isBingoMode: newState.isBingoMode || false,
           withDemarque: newState.withDemarque ?? true,
           prizeDescription: newState.prizeDescription || "",
           isQuinesDuSudMode: newState.isQuinesDuSudMode || false,
@@ -310,12 +315,12 @@ const LotoDisplay = () => {
       </header>
 
       {!displayState.isWinning && (
-        <LotoGrid drawnNumbers={displayState.drawnNumbers} isDrawing={displayState.isDrawing} />
+        <LotoGrid drawnNumbers={displayState.drawnNumbers} isDrawing={displayState.isDrawing} isBingoMode={displayState.isBingoMode} />
       )}
 
       {!displayState.isWinning && (
         <footer className="text-center space-y-2">
-          <p className="text-xl text-muted-foreground">{displayState.drawnNumbers.length} / 75 numéros tirés</p>
+          <p className="text-xl text-muted-foreground">{displayState.drawnNumbers.length} / {displayState.isBingoMode ? 75 : 90} numéros tirés</p>
           {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
             <p className="text-lg text-muted-foreground italic">En attente du prochain tirage...</p>
           )}

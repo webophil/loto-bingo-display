@@ -67,7 +67,7 @@ const Dashboard = () => {
                 </Button>
               </CardContent>
             </Card>) : <>
-              <GameControls currentGame={loto.currentGame} drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} isManualMode={loto.isManualMode} withDemarque={loto.withDemarque} prizeDescription={loto.prizeDescription} isQuinesDuSudMode={loto.isQuinesDuSudMode} prizeDescriptions={loto.prizeDescriptions} isWinning={loto.isWinning} onStartGame={loto.startGame} onDrawNumber={loto.drawNumber} onDrawManualNumber={loto.drawManualNumber} onEndGame={loto.endGame} onReset={loto.resetAll} onToggleMode={loto.toggleMode} onToggleDemarque={loto.toggleDemarque} onSetPrizeDescription={loto.setPrizeDescription} onToggleQuinesDuSud={loto.toggleQuinesDuSud} onSetPrizeDescriptions={loto.setPrizeDescriptions} onSetWinning={loto.setWinning} onResumeGame={loto.resumeGame} />
+              <GameControls currentGame={loto.currentGame} drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} isManualMode={loto.isManualMode} isBingoMode={loto.isBingoMode} withDemarque={loto.withDemarque} prizeDescription={loto.prizeDescription} isQuinesDuSudMode={loto.isQuinesDuSudMode} prizeDescriptions={loto.prizeDescriptions} isWinning={loto.isWinning} onStartGame={loto.startGame} onDrawNumber={loto.drawNumber} onDrawManualNumber={loto.drawManualNumber} onEndGame={loto.endGame} onReset={loto.resetAll} onToggleMode={loto.toggleMode} onToggleBingoMode={loto.toggleBingoMode} onToggleDemarque={loto.toggleDemarque} onSetPrizeDescription={loto.setPrizeDescription} onToggleQuinesDuSud={loto.toggleQuinesDuSud} onSetPrizeDescriptions={loto.setPrizeDescriptions} onSetWinning={loto.setWinning} onResumeGame={loto.resumeGame} />
               
               <DrawnHistory drawnNumbers={loto.drawnNumbers} />
             </>}
@@ -84,7 +84,7 @@ const Dashboard = () => {
               <CardContent className="space-y-6 p-6">
                 {loto.currentGame && loto.isManualMode ? (
                   <>
-                    <ManualGrid drawnNumbers={loto.drawnNumbers} onNumberClick={loto.drawManualNumber} isDrawing={loto.isDrawing} />
+                    <ManualGrid drawnNumbers={loto.drawnNumbers} onNumberClick={loto.drawManualNumber} isDrawing={loto.isDrawing} isBingoMode={loto.isBingoMode} />
                     
                     <div className="flex gap-3 justify-center flex-wrap">
                       <Button onClick={() => loto.setWinning(true)} className="bg-loto-blue text-white font-bold" disabled={loto.isWinning}>
@@ -117,7 +117,7 @@ const Dashboard = () => {
                     </div>
                   </>
                 ) : (
-                  <LotoGrid drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} />
+                  <LotoGrid drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} isBingoMode={loto.isBingoMode} />
                 )}
               </CardContent>
             </Card>
