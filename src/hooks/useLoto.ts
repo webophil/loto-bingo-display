@@ -138,9 +138,9 @@ export const useLoto = () => {
 
   const drawNumber = useCallback(() => {
     setState(prev => {
-      if (prev.isDrawing || prev.drawnNumbers.length >= 90) return prev;
+      if (prev.isDrawing || prev.drawnNumbers.length >= 75) return prev;
       
-      const availableNumbers = Array.from({ length: 90 }, (_, i) => i + 1)
+      const availableNumbers = Array.from({ length: 75 }, (_, i) => i + 1)
         .filter(num => !prev.drawnNumbers.includes(num));
       
       if (availableNumbers.length === 0) return prev;

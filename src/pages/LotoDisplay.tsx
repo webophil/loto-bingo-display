@@ -315,7 +315,7 @@ const LotoDisplay = () => {
 
       {!displayState.isWinning && (
         <footer className="text-center space-y-2">
-          <p className="text-xl text-muted-foreground">{displayState.drawnNumbers.length} / 90 numéros tirés</p>
+          <p className="text-xl text-muted-foreground">{displayState.drawnNumbers.length} / 75 numéros tirés</p>
           {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
             <p className="text-lg text-muted-foreground italic">En attente du prochain tirage...</p>
           )}
