@@ -42,6 +42,10 @@ export interface LotoState {
   wheelDrawHistory: Array<{ number: number; prize: string }>;
   wheelTargetRotation: number;
   wheelCurrentRotation: number;
+  // Local image display mode
+  localImages: Array<{ id: string; name: string; dataUrl: string }>;
+  selectedImageId: string | null;
+  isImageDisplayMode: boolean;
 }
 
 export const useLoto = () => {
@@ -70,6 +74,9 @@ export const useLoto = () => {
     wheelDrawHistory: [],
     wheelTargetRotation: 0,
     wheelCurrentRotation: 0,
+    localImages: [],
+    selectedImageId: null,
+    isImageDisplayMode: false,
   });
 
   // Create a persistent BroadcastChannel
@@ -304,6 +311,9 @@ export const useLoto = () => {
       wheelDrawHistory: [],
       wheelTargetRotation: 0,
       wheelCurrentRotation: 0,
+      localImages: [],
+      selectedImageId: null,
+      isImageDisplayMode: false,
     });
   }, []);
 
@@ -386,6 +396,47 @@ export const useLoto = () => {
     }, 5000);
   }, []);
 
+  const addLocalImage = useCallback((file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target?.result as string;
+      setState(prev => ({
+        ...prev,
+        localImages: [
+          ...prev.localImages,
+          {
+            id: `img-${Date.now()}-${Math.random()}`,
+            name: file.name,
+            dataUrl,
+          }
+        ],
+      }));
+    };
+    reader.readAsDataURL(file);
+  }, []);
+
+  const selectImage = useCallback((id: string | null) => {
+    setState(prev => ({
+      ...prev,
+      selectedImageId: id,
+    }));
+  }, []);
+
+  const deleteAllImages = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      localImages: [],
+      selectedImageId: null,
+      isImageDisplayMode: false,
+    }));
+  }, []);
+
+  const toggleImageDisplay = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      isImageDisplayMode: !prev.isImageDisplayMode,
+    }));
+  }, []);
 
   return {
     ...state,
@@ -406,5 +457,9 @@ export const useLoto = () => {
     setWheelNumberCount,
     setWheelPrize,
     spinWheel,
+    addLocalImage,
+    selectImage,
+    deleteAllImages,
+    toggleImageDisplay,
   };
 };

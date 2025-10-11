@@ -6,15 +6,84 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Monitor, Home, CircleDot, Trophy, RefreshCw, Square, RotateCcw, Dice1 } from 'lucide-react';
+import { Monitor, Home, CircleDot, Trophy, RefreshCw, Square, RotateCcw, Dice1, ImagePlus, Image as ImageIcon, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useRef } from 'react';
 const Dashboard = () => {
   const loto = useLoto();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      loto.addLocalImage(file);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleImageSelect = (value: string) => {
+    if (value === 'delete-all') {
+      loto.deleteAllImages();
+    } else {
+      loto.selectImage(value);
+    }
+  };
+
+  const selectedImage = loto.localImages.find(img => img.id === loto.selectedImageId);
+
   return <div className="min-h-screen p-6 space-y-6">
       <header className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">Espace Animation</h1>
+        <div className="flex items-center gap-3">
+          <input type="file" ref={fileInputRef} onChange={handleImageUpload} accept="image/*" className="hidden" />
           
+          <Button onClick={() => fileInputRef.current?.click()} variant="outline" size="sm">
+            <ImagePlus className="w-4 h-4 mr-2" />
+            Ajouter image
+          </Button>
+
+          {loto.localImages.length > 0 && (
+            <>
+              <Select value={loto.selectedImageId || undefined} onValueChange={handleImageSelect}>
+                <SelectTrigger className="w-[200px]">
+                  <SelectValue placeholder="Choisir une image" />
+                </SelectTrigger>
+                <SelectContent>
+                  {loto.localImages.map(img => (
+                    <SelectItem key={img.id} value={img.id}>
+                      <div className="flex items-center gap-2">
+                        <ImageIcon className="w-4 h-4" />
+                        <span className="truncate max-w-[150px]">{img.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                  <SelectItem value="delete-all" className="text-destructive">
+                    🗑️ Supprimer les fichiers
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+
+              {selectedImage && (
+                <Button onClick={loto.toggleImageDisplay} variant={loto.isImageDisplayMode ? "destructive" : "default"} size="sm">
+                  {loto.isImageDisplayMode ? (
+                    <>
+                      <EyeOff className="w-4 h-4 mr-2" />
+                      Retirer image
+                    </>
+                  ) : (
+                    <>
+                      <Eye className="w-4 h-4 mr-2" />
+                      Afficher image
+                    </>
+                  )}
+                </Button>
+              )}
+            </>
+          )}
+          
+          <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent ml-4">Espace Animation</h1>
         </div>
         <div className="flex gap-3">
           <Link to="/display">

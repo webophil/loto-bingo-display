@@ -29,6 +29,8 @@ interface DisplayState {
   isWheelSpinning: boolean;
   wheelDrawHistory: Array<{ number: number; prize: string }>;
   wheelTargetRotation: number;
+  isImageDisplayMode: boolean;
+  selectedImageDataUrl: string | null;
 }
 
 // Function to get the same color system as NumberBall component
@@ -63,6 +65,8 @@ const LotoDisplay = () => {
     isWheelSpinning: false,
     wheelDrawHistory: [],
     wheelTargetRotation: 0,
+    isImageDisplayMode: false,
+    selectedImageDataUrl: null,
   });
 
   const latestNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
@@ -86,6 +90,12 @@ const LotoDisplay = () => {
           // Only update if this is newer data
           if (parsedState.timestamp && parsedState.timestamp > lastTimestamp) {
             lastTimestamp = parsedState.timestamp;
+            
+            // Get selected image data URL
+            const selectedImageDataUrl = parsedState.isImageDisplayMode && parsedState.selectedImageId
+              ? (parsedState.localImages || []).find((img: any) => img.id === parsedState.selectedImageId)?.dataUrl || null
+              : null;
+
             setDisplayState({
               drawnNumbers: parsedState.drawnNumbers || [],
               currentGame: parsedState.currentGame || null,
@@ -103,6 +113,8 @@ const LotoDisplay = () => {
               isWheelSpinning: parsedState.isWheelSpinning || false,
               wheelDrawHistory: parsedState.wheelDrawHistory || [],
               wheelTargetRotation: parsedState.wheelTargetRotation || 0,
+              isImageDisplayMode: parsedState.isImageDisplayMode || false,
+              selectedImageDataUrl,
             });
             console.log("📺 Display updated from localStorage:", parsedState);
           }
@@ -123,6 +135,12 @@ const LotoDisplay = () => {
       const newState = event.data;
       if (newState.timestamp && newState.timestamp > lastTimestamp) {
         lastTimestamp = newState.timestamp;
+        
+        // Get selected image data URL
+        const selectedImageDataUrl = newState.isImageDisplayMode && newState.selectedImageId
+          ? (newState.localImages || []).find((img: any) => img.id === newState.selectedImageId)?.dataUrl || null
+          : null;
+
         setDisplayState({
           drawnNumbers: newState.drawnNumbers || [],
           currentGame: newState.currentGame || null,
@@ -140,6 +158,8 @@ const LotoDisplay = () => {
           isWheelSpinning: newState.isWheelSpinning || false,
           wheelDrawHistory: newState.wheelDrawHistory || [],
           wheelTargetRotation: newState.wheelTargetRotation || 0,
+          isImageDisplayMode: newState.isImageDisplayMode || false,
+          selectedImageDataUrl,
         });
       }
     };
@@ -160,6 +180,12 @@ const LotoDisplay = () => {
       const newState = event.detail;
       if (newState.timestamp && newState.timestamp > lastTimestamp) {
         lastTimestamp = newState.timestamp;
+        
+        // Get selected image data URL
+        const selectedImageDataUrl = newState.isImageDisplayMode && newState.selectedImageId
+          ? (newState.localImages || []).find((img: any) => img.id === newState.selectedImageId)?.dataUrl || null
+          : null;
+
         setDisplayState({
           drawnNumbers: newState.drawnNumbers || [],
           currentGame: newState.currentGame || null,
@@ -177,6 +203,8 @@ const LotoDisplay = () => {
           isWheelSpinning: newState.isWheelSpinning || false,
           wheelDrawHistory: newState.wheelDrawHistory || [],
           wheelTargetRotation: newState.wheelTargetRotation || 0,
+          isImageDisplayMode: newState.isImageDisplayMode || false,
+          selectedImageDataUrl,
         });
       }
     };
@@ -196,6 +224,19 @@ const LotoDisplay = () => {
   }, []);
 
   const currentPrize = displayState.currentGame ? displayState.prizeDescriptions[displayState.currentGame] : "";
+
+  // Render Image Display mode
+  if (displayState.isImageDisplayMode && displayState.selectedImageDataUrl) {
+    return (
+      <div className="h-screen w-screen bg-black flex items-center justify-center overflow-hidden">
+        <img 
+          src={displayState.selectedImageDataUrl} 
+          alt="Image affichée" 
+          className="max-w-full max-h-full object-contain"
+        />
+      </div>
+    );
+  }
 
   // Render Wheel of Fortune mode
   if (displayState.isWheelMode) {
