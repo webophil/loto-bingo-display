@@ -97,6 +97,11 @@ const Index = () => {
             </div>
           </CardContent>
         </Card>
+        <Card className="bg-card/20 backdrop-blur-sm border-border/50">
+          <CardContent className="p-8">
+             <p className="text-muted-foreground text-sm">Conception - Développement Philippe André 2025 - Reproduction Interdite</p
+          </CardContent>
+        </Card>
       </div>
     </div>;
 };
