@@ -149,14 +149,32 @@ export const useLoto = () => {
 
   // Load state from localStorage on mount
   useEffect(() => {
-    const savedState = localStorage.getItem('loto-state');
-    if (savedState) {
-      try {
+    try {
+      const savedState = localStorage.getItem('loto-state');
+      if (savedState) {
         const parsedState = JSON.parse(savedState);
-        setState(parsedState);
-      } catch (error) {
-        console.error('Error loading saved state:', error);
+        // Merge with default state to ensure all properties exist
+        setState(prev => ({
+          ...prev,
+          ...parsedState,
+          // Ensure localImages exists and is an array
+          localImages: Array.isArray(parsedState.localImages) ? parsedState.localImages : [],
+          // Ensure other critical arrays/objects exist
+          drawnNumbers: Array.isArray(parsedState.drawnNumbers) ? parsedState.drawnNumbers : [],
+          gameHistory: Array.isArray(parsedState.gameHistory) ? parsedState.gameHistory : [],
+          wheelDrawHistory: Array.isArray(parsedState.wheelDrawHistory) ? parsedState.wheelDrawHistory : [],
+          prizeDescriptions: parsedState.prizeDescriptions || {
+            quine: '',
+            'double-quine': '',
+            'carton-plein': '',
+          },
+        }));
+        console.log('✅ State loaded from localStorage');
       }
+    } catch (error) {
+      console.error('❌ Error loading saved state, using defaults:', error);
+      // Clear corrupted state
+      localStorage.removeItem('loto-state');
     }
   }, []);
 
