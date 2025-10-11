@@ -104,8 +104,8 @@ export const useLoto = () => {
     try {
       localStorage.setItem('loto-state', JSON.stringify(stateData));
       
-      // Save images separately in sessionStorage (higher quota, per-tab)
-      sessionStorage.setItem('loto-images', JSON.stringify(localImages));
+      // Save images separately in localStorage for persistence across sessions
+      localStorage.setItem('loto-images', JSON.stringify(localImages));
     } catch (error) {
       console.error('❌ localStorage quota exceeded:', error);
       // Fallback: save without history to reduce size
@@ -117,7 +117,7 @@ export const useLoto = () => {
           timestamp: Date.now()
         };
         localStorage.setItem('loto-state', JSON.stringify(minimalState));
-        sessionStorage.setItem('loto-images', JSON.stringify(localImages));
+        localStorage.setItem('loto-images', JSON.stringify(localImages));
       } catch (fallbackError) {
         console.error('❌ Even minimal state failed:', fallbackError);
       }
@@ -155,14 +155,18 @@ export const useLoto = () => {
   useEffect(() => {
     try {
       const savedState = localStorage.getItem('loto-state');
+      const savedImages = localStorage.getItem('loto-images');
+      
       if (savedState) {
         const parsedState = JSON.parse(savedState);
+        const parsedImages = savedImages ? JSON.parse(savedImages) : [];
+        
         // Merge with default state to ensure all properties exist
         setState(prev => ({
           ...prev,
           ...parsedState,
-          // Ensure localImages exists and is an array
-          localImages: Array.isArray(parsedState.localImages) ? parsedState.localImages : [],
+          // Load images from localStorage
+          localImages: Array.isArray(parsedImages) ? parsedImages : [],
           // Ensure other critical arrays/objects exist
           drawnNumbers: Array.isArray(parsedState.drawnNumbers) ? parsedState.drawnNumbers : [],
           gameHistory: Array.isArray(parsedState.gameHistory) ? parsedState.gameHistory : [],
@@ -179,6 +183,7 @@ export const useLoto = () => {
       console.error('❌ Error loading saved state, using defaults:', error);
       // Clear corrupted state
       localStorage.removeItem('loto-state');
+      localStorage.removeItem('loto-images');
     }
   }, []);
 
@@ -472,6 +477,9 @@ export const useLoto = () => {
   }, []);
 
   const deleteAllImages = useCallback(() => {
+    // Clear images from localStorage
+    localStorage.removeItem('loto-images');
+    
     setState(prev => ({
       ...prev,
       localImages: [],

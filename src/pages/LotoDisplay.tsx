@@ -91,15 +91,15 @@ const LotoDisplay = () => {
           if (parsedState.timestamp && parsedState.timestamp > lastTimestamp) {
             lastTimestamp = parsedState.timestamp;
             
-            // Load images from sessionStorage
+            // Load images from localStorage
             let localImages = [];
             try {
-              const savedImages = sessionStorage.getItem('loto-images');
+              const savedImages = localStorage.getItem('loto-images');
               if (savedImages) {
                 localImages = JSON.parse(savedImages);
               }
             } catch (imgError) {
-              console.error("❌ Error loading images from sessionStorage:", imgError);
+              console.error("❌ Error loading images from localStorage:", imgError);
             }
             
             // Get selected image data URL
