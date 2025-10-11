@@ -232,7 +232,7 @@ const LotoDisplay = () => {
         <img 
           src={displayState.selectedImageDataUrl} 
           alt="Image affichée" 
-          className="max-w-full max-h-full object-contain"
+          className="max-w-[90%] max-h-[90%] object-contain"
         />
       </div>
     );
