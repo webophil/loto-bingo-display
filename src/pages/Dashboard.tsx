@@ -36,6 +36,8 @@ const Dashboard = () => {
 
   return <div className="min-h-screen p-6 space-y-6">
       <header className="flex items-center justify-between">
+        <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent">Espace Animation</h1>
+        
         <div className="flex items-center gap-3">
           <input type="file" ref={fileInputRef} onChange={handleImageUpload} accept="image/*" className="hidden" />
           
@@ -83,12 +85,6 @@ const Dashboard = () => {
             </>
           )}
           
-          <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent ml-4">Espace Animation</h1>
-        </div>
-        <div className="flex gap-3">
-          <Link to="/display">
-            
-          </Link>
           <Link to="/">
             <Button variant="outline">
               <Home className="w-4 h-4 mr-2" />
