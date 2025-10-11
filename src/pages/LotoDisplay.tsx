@@ -91,9 +91,20 @@ const LotoDisplay = () => {
           if (parsedState.timestamp && parsedState.timestamp > lastTimestamp) {
             lastTimestamp = parsedState.timestamp;
             
+            // Load images from sessionStorage
+            let localImages = [];
+            try {
+              const savedImages = sessionStorage.getItem('loto-images');
+              if (savedImages) {
+                localImages = JSON.parse(savedImages);
+              }
+            } catch (imgError) {
+              console.error("❌ Error loading images from sessionStorage:", imgError);
+            }
+            
             // Get selected image data URL
             const selectedImageDataUrl = parsedState.isImageDisplayMode && parsedState.selectedImageId
-              ? (parsedState.localImages || []).find((img: any) => img.id === parsedState.selectedImageId)?.dataUrl || null
+              ? localImages.find((img: any) => img.id === parsedState.selectedImageId)?.dataUrl || null
               : null;
 
             setDisplayState({

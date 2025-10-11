@@ -103,6 +103,9 @@ export const useLoto = () => {
     
     try {
       localStorage.setItem('loto-state', JSON.stringify(stateData));
+      
+      // Save images separately in sessionStorage (higher quota, per-tab)
+      sessionStorage.setItem('loto-images', JSON.stringify(localImages));
     } catch (error) {
       console.error('❌ localStorage quota exceeded:', error);
       // Fallback: save without history to reduce size
@@ -114,6 +117,7 @@ export const useLoto = () => {
           timestamp: Date.now()
         };
         localStorage.setItem('loto-state', JSON.stringify(minimalState));
+        sessionStorage.setItem('loto-images', JSON.stringify(localImages));
       } catch (fallbackError) {
         console.error('❌ Even minimal state failed:', fallbackError);
       }
