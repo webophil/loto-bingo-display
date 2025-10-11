@@ -94,20 +94,44 @@ export const useLoto = () => {
 
   // Save state to localStorage and broadcast changes
   useEffect(() => {
+    // Exclude localImages from localStorage to avoid quota errors with base64 data
+    const { localImages, ...stateWithoutImages } = state;
     const stateData = {
-      ...state,
+      ...stateWithoutImages,
       timestamp: Date.now()
     };
     
-    localStorage.setItem('loto-state', JSON.stringify(stateData));
+    try {
+      localStorage.setItem('loto-state', JSON.stringify(stateData));
+    } catch (error) {
+      console.error('❌ localStorage quota exceeded:', error);
+      // Fallback: save without history to reduce size
+      try {
+        const minimalState = {
+          ...stateWithoutImages,
+          gameHistory: [],
+          wheelDrawHistory: [],
+          timestamp: Date.now()
+        };
+        localStorage.setItem('loto-state', JSON.stringify(minimalState));
+      } catch (fallbackError) {
+        console.error('❌ Even minimal state failed:', fallbackError);
+      }
+    }
     
     // Multiple broadcasting methods for reliability
     try {
+      // For broadcasting, include localImages so display window can show them
+      const broadcastData = {
+        ...state,
+        timestamp: Date.now()
+      };
+      
       // Method 1: BroadcastChannel
       const channel = (window as any).lotoBroadcastChannel;
       if (channel) {
-        console.log('📡 Broadcasting via BroadcastChannel:', stateData);
-        channel.postMessage(stateData);
+        console.log('📡 Broadcasting via BroadcastChannel:', broadcastData);
+        channel.postMessage(broadcastData);
       }
       
       // Method 2: Storage event trigger
@@ -115,7 +139,7 @@ export const useLoto = () => {
       
       // Method 3: Custom event
       window.dispatchEvent(new CustomEvent('loto-update', { 
-        detail: stateData 
+        detail: broadcastData 
       }));
       
     } catch (error) {
@@ -411,6 +435,9 @@ export const useLoto = () => {
           }
         ],
       }));
+    };
+    reader.onerror = (error) => {
+      console.error('❌ Error reading image file:', error);
     };
     reader.readAsDataURL(file);
   }, []);
