@@ -35,9 +35,7 @@ const Index = () => {
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           <div className="flex flex-col items-center gap-4 lg:w-1/3">
             <img src={logoImage} alt="Loto Bingo Display" className="w-[230px] h-[230px] object-contain" />
-            <div className="text-center text-base text-muted-foreground leading-relaxed">
-              <p>Loto Bingo Display v1.0 - &copy;2025</p>
-            </div>
+            <div className="text-center text-base text-muted-foreground leading-relaxed"></div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 lg:w-2/3">
