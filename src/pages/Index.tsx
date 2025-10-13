@@ -72,7 +72,7 @@ const Index = () => {
               <CardContent>
                 <p className="text-gray-800 mb-6">
                   Configuration de vos tirages (loto/bingo), des phases de jeu et des lots offerts. Grille des numéros à
-                  cocher. Gestion des images "annonces" ou "sponsors".
+                  cocher. Gestion affichage "Annonces".
                 </p>
                 <Link to="/dashboard">
                   <Button className="w-full gradient-secondary text-white font-semibold text-lg py-3">
