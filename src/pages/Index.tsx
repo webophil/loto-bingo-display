@@ -115,7 +115,7 @@ const Index = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </div>ligne légale
   );
 };
 export default Index;
