@@ -71,8 +71,8 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-800 mb-6">
-                  Interface de contrôle complète pour gérer les tirages (manuels ou par l'ordi), lancer les différents
-                  types de jeux et suivre l'ensemble du déroulement.
+                  Choix du jeu (Loto-Bingo), phase (quine, double-quine-carton plein), choix démarque, lots, entrée
+                  manuelle des numéros gagnants. Choix et affichage des images "annonces, sponsors..."
                 </p>
                 <Link to="/dashboard">
                   <Button className="w-full gradient-secondary text-white font-semibold text-lg py-3">
