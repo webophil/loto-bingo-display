@@ -97,7 +97,11 @@ const Index = () => {
                   Au choix :<br />
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  Loto avec 90 boules<br>Bingo avec 75 boules</br>Démarque ou non
+                  Loto avec 90 boules
+                  <br />
+                  Bingo avec 75 boules
+                  <br />
+                  Démarque ou non
                 </p>
               </div>
               <div className="space-y-2">
