@@ -94,15 +94,14 @@ const Index = () => {
               </div>
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold">
+                  Au choix :<br />
                   Loto 90 numéros
                   <br />
                   Bingo 75 numéros
-                  <br />
-                  Roue de la Chance Las Végas
                 </h3>
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-semibold text-yellow-300">Tirage Equitable</h3>
+                <h3 className="text-xl font-semibold text-yellow-300">Annonces et Sponsors</h3>
                 <p className="text-muted-foreground text-sm">
                   Le tirage système (Auto) est effectué par un &quot;crypto-randomizer&quot; utilisant la méthode
                   Fisher-Yates Shuffle pour des tirages vraiment aléatoires.
