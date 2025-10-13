@@ -45,13 +45,13 @@ const Index = () => {
               <CardHeader>
                 <CardTitle className="text-2xl text-white flex items-center gap-3">
                   <Monitor className="w-8 h-8" />
-                  Grand Écran
+                  Écran Externe
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-white/80 mb-6">
-                  Affichage public avec rack des 90 (ou Bingo 75) boules, et &quot;dernier sorti&quot; en évidence.
-                  Lots, démarque (ou non) et type de jeu. Roue de la Chance et tirage.
+                  Affichage public des 90 (ou Bingo 75) boules, et &quot;Dernier Sorti&quot; en évidence. Lots, choix
+                  démarque et phase de jeu. Ecrans annonces, sponsors...
                 </p>
                 <Button
                   onClick={openDisplayOnExternalScreen}
