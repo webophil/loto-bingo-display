@@ -93,7 +93,7 @@ const Index = () => {
                 <p className="text-muted-foreground text-sm">Quine, Double Quine, Carton Plein</p>
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-semibold" text-yellow-300">
+                <h3 className="text-xl font-semibold text-yellow-300">
                   Au choix :<br /><br />
                   Loto 90 numéros
                   <br />
