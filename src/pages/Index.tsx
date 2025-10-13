@@ -114,6 +114,7 @@ const Index = () => {
             </div>
           </CardContent>
         </Card>
+        <div align="center">Loto Bingo Display par Philippe André</div>
       </div>
     </div>
   );
