@@ -93,8 +93,8 @@ const Index = () => {
                 <p className="text-muted-foreground text-sm">Quine, Double Quine, Carton Plein</p>
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-semibold">
-                  Au choix :<br />
+                <h3 className="text-xl font-semibold" text-yellow-300">
+                  Au choix :<br /><br />
                   Loto 90 numéros
                   <br />
                   Bingo 75 numéros
@@ -103,8 +103,7 @@ const Index = () => {
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold text-yellow-300">Annonces et Sponsors</h3>
                 <p className="text-muted-foreground text-sm">
-                  Le tirage système (Auto) est effectué par un &quot;crypto-randomizer&quot; utilisant la méthode
-                  Fisher-Yates Shuffle pour des tirages vraiment aléatoires.
+                  Affichez des images de votre choix entre les phases de jeu : annonce prochain loto, pub d'un sponsor...
                 </p>
               </div>
             </div>
