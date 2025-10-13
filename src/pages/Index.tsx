@@ -94,7 +94,8 @@ const Index = () => {
               </div>
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold text-yellow-300">
-                  Au choix :<br /><br />
+                  Au choix :<br />
+                  <br />
                   Loto 90 numéros
                   <br />
                   Bingo 75 numéros
@@ -103,7 +104,8 @@ const Index = () => {
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold text-yellow-300">Annonces et Sponsors</h3>
                 <p className="text-muted-foreground text-sm">
-                  Affichez des images de votre choix entre les phases de jeu : annonce prochain loto, pub d'un sponsor...
+                  Affichez des images de votre choix entre les phases de jeu : annonce prochain loto, pub d'un sponsor,
+                  gros plan sur les lots...
                 </p>
               </div>
             </div>
