@@ -71,8 +71,8 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-800 mb-6">
-                  Choix du jeu (Loto-Bingo), phase (quine, double-quine-carton plein), choix démarque, lots, entrée
-                  manuelle des numéros gagnants. Choix et affichage des images "annonces, sponsors..."
+                  Configuration de vos tirages (loto/bingo), des phases de jeu et des lots offerts. Grille des numéros à
+                  cocher.
                 </p>
                 <Link to="/dashboard">
                   <Button className="w-full gradient-secondary text-white font-semibold text-lg py-3">
