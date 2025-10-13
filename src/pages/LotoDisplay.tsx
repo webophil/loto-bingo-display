@@ -1,6 +1,5 @@
 import { useLoto } from "@/hooks/useLoto";
 import { LotoGrid } from "@/components/LotoGrid";
-import { WheelOfFortune } from "@/components/WheelOfFortune";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -22,13 +21,6 @@ interface DisplayState {
     "carton-plein": string;
   };
   isWinning: boolean;
-  isWheelMode: boolean;
-  wheelNumberCount: number;
-  wheelActivePrize: string;
-  wheelWinningNumber: number | null;
-  isWheelSpinning: boolean;
-  wheelDrawHistory: Array<{ number: number; prize: string }>;
-  wheelTargetRotation: number;
   isImageDisplayMode: boolean;
   selectedImageDataUrl: string | null;
 }
@@ -58,13 +50,6 @@ const LotoDisplay = () => {
       "carton-plein": "",
     },
     isWinning: false,
-    isWheelMode: false,
-    wheelNumberCount: 20,
-    wheelActivePrize: "",
-    wheelWinningNumber: null,
-    isWheelSpinning: false,
-    wheelDrawHistory: [],
-    wheelTargetRotation: 0,
     isImageDisplayMode: false,
     selectedImageDataUrl: null,
   });
@@ -117,13 +102,6 @@ const LotoDisplay = () => {
               isQuinesDuSudMode: parsedState.isQuinesDuSudMode || false,
               prizeDescriptions: parsedState.prizeDescriptions || { quine: "", "double-quine": "", "carton-plein": "" },
               isWinning: parsedState.isWinning || false,
-              isWheelMode: parsedState.isWheelMode || false,
-              wheelNumberCount: parsedState.wheelNumberCount || 20,
-              wheelActivePrize: parsedState.wheelActivePrize || "",
-              wheelWinningNumber: parsedState.wheelWinningNumber || null,
-              isWheelSpinning: parsedState.isWheelSpinning || false,
-              wheelDrawHistory: parsedState.wheelDrawHistory || [],
-              wheelTargetRotation: parsedState.wheelTargetRotation || 0,
               isImageDisplayMode: parsedState.isImageDisplayMode || false,
               selectedImageDataUrl,
             });
@@ -162,13 +140,6 @@ const LotoDisplay = () => {
           isQuinesDuSudMode: newState.isQuinesDuSudMode || false,
           prizeDescriptions: newState.prizeDescriptions || { quine: "", "double-quine": "", "carton-plein": "" },
           isWinning: newState.isWinning || false,
-          isWheelMode: newState.isWheelMode || false,
-          wheelNumberCount: newState.wheelNumberCount || 20,
-          wheelActivePrize: newState.wheelActivePrize || "",
-          wheelWinningNumber: newState.wheelWinningNumber || null,
-          isWheelSpinning: newState.isWheelSpinning || false,
-          wheelDrawHistory: newState.wheelDrawHistory || [],
-          wheelTargetRotation: newState.wheelTargetRotation || 0,
           isImageDisplayMode: newState.isImageDisplayMode || false,
           selectedImageDataUrl,
         });
@@ -207,13 +178,6 @@ const LotoDisplay = () => {
           isQuinesDuSudMode: newState.isQuinesDuSudMode || false,
           prizeDescriptions: newState.prizeDescriptions || { quine: "", "double-quine": "", "carton-plein": "" },
           isWinning: newState.isWinning || false,
-          isWheelMode: newState.isWheelMode || false,
-          wheelNumberCount: newState.wheelNumberCount || 20,
-          wheelActivePrize: newState.wheelActivePrize || "",
-          wheelWinningNumber: newState.wheelWinningNumber || null,
-          isWheelSpinning: newState.isWheelSpinning || false,
-          wheelDrawHistory: newState.wheelDrawHistory || [],
-          wheelTargetRotation: newState.wheelTargetRotation || 0,
           isImageDisplayMode: newState.isImageDisplayMode || false,
           selectedImageDataUrl,
         });
@@ -245,65 +209,6 @@ const LotoDisplay = () => {
           alt="Image affichée" 
           className="max-w-[90%] max-h-[90%] object-contain"
         />
-      </div>
-    );
-  }
-
-  // Render Wheel of Fortune mode
-  if (displayState.isWheelMode) {
-    return (
-      <div className="h-screen relative flex overflow-hidden">
-        {/* Colonne gauche - 1/3 */}
-        <div className="w-1/3 flex flex-col items-center justify-start p-4 overflow-hidden">
-          {/* Logo en haut, réduit à 90% et centré */}
-          <img src={logoImage} alt="Corail's Rémoises" className="w-[min(90%,338px)] h-auto object-contain" />
-
-          {/* Numéro gagnant sous le logo avec marge */}
-          {displayState.wheelWinningNumber !== null && !displayState.isWheelSpinning && (
-            <div className="mt-8 text-center flex-shrink-0">
-              <div
-                className="font-bold text-yellow-400 animate-blink leading-none"
-                style={{ fontSize: "clamp(4rem, 12vw, 8rem)" }}
-              >
-                {displayState.wheelWinningNumber}
-              </div>
-
-              {/* Lot centré sous le numéro */}
-              {displayState.wheelActivePrize && (
-                <div
-                  className="mt-4 text-foreground font-bold leading-tight flex items-center justify-center gap-2"
-                  style={{ fontSize: "clamp(1rem, 2.5vw, 1.75rem)" }}
-                >
-                  <span>🎁</span>
-                  <span>{displayState.wheelActivePrize}</span>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Spinning indicator */}
-          {displayState.isWheelSpinning && (
-            <div
-              className="mt-8 font-bold text-foreground animate-pulse"
-              style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)" }}
-            >
-              🎯 Tirage en cours...
-            </div>
-          )}
-        </div>
-
-        {/* Colonne droite - 2/3 avec la roue */}
-        <div className="w-2/3 flex items-center justify-center p-4 overflow-hidden">
-          <WheelOfFortune
-            numberOfSegments={displayState.wheelNumberCount}
-            winningNumber={displayState.wheelWinningNumber}
-            isSpinning={displayState.isWheelSpinning}
-            prize={displayState.wheelActivePrize}
-            drawHistory={displayState.wheelDrawHistory}
-            targetRotation={displayState.wheelTargetRotation}
-            hideResults={true}
-          />
-        </div>
       </div>
     );
   }

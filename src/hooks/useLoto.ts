@@ -32,16 +32,6 @@ export interface LotoState {
     'carton-plein': string;
   };
   isWinning: boolean;
-  // Wheel of Fortune mode
-  isWheelMode: boolean;
-  wheelNumberCount: number;
-  wheelPrize: string;
-  wheelActivePrize: string; // Le lot actuellement affiché (fixé au moment du tirage)
-  wheelWinningNumber: number | null;
-  isWheelSpinning: boolean;
-  wheelDrawHistory: Array<{ number: number; prize: string }>;
-  wheelTargetRotation: number;
-  wheelCurrentRotation: number;
   // Local image display mode
   localImages: Array<{ id: string; name: string; dataUrl: string }>;
   selectedImageId: string | null;
@@ -65,15 +55,6 @@ export const useLoto = () => {
       'carton-plein': '',
     },
     isWinning: false,
-    isWheelMode: false,
-    wheelNumberCount: 20,
-    wheelPrize: '',
-    wheelActivePrize: '',
-    wheelWinningNumber: null,
-    isWheelSpinning: false,
-    wheelDrawHistory: [],
-    wheelTargetRotation: 0,
-    wheelCurrentRotation: 0,
     localImages: [],
     selectedImageId: null,
     isImageDisplayMode: false,
@@ -113,7 +94,6 @@ export const useLoto = () => {
         const minimalState = {
           ...stateWithoutImages,
           gameHistory: [],
-          wheelDrawHistory: [],
           timestamp: Date.now()
         };
         localStorage.setItem('loto-state', JSON.stringify(minimalState));
@@ -170,7 +150,6 @@ export const useLoto = () => {
           // Ensure other critical arrays/objects exist
           drawnNumbers: Array.isArray(parsedState.drawnNumbers) ? parsedState.drawnNumbers : [],
           gameHistory: Array.isArray(parsedState.gameHistory) ? parsedState.gameHistory : [],
-          wheelDrawHistory: Array.isArray(parsedState.wheelDrawHistory) ? parsedState.wheelDrawHistory : [],
           prizeDescriptions: parsedState.prizeDescriptions || {
             quine: '',
             'double-quine': '',
@@ -353,98 +332,10 @@ export const useLoto = () => {
         'carton-plein': '',
       },
       isWinning: false,
-      isWheelMode: false,
-      wheelNumberCount: 20,
-      wheelPrize: '',
-      wheelActivePrize: '',
-      wheelWinningNumber: null,
-      isWheelSpinning: false,
-      wheelDrawHistory: [],
-      wheelTargetRotation: 0,
-      wheelCurrentRotation: 0,
       localImages: [],
       selectedImageId: null,
       isImageDisplayMode: false,
     });
-  }, []);
-
-  const toggleWheelMode = useCallback(() => {
-    setState(prev => ({
-      ...prev,
-      isWheelMode: !prev.isWheelMode,
-      wheelWinningNumber: null,
-      isWheelSpinning: false,
-    }));
-  }, []);
-
-  const setWheelNumberCount = useCallback((count: number) => {
-    setState(prev => ({
-      ...prev,
-      wheelNumberCount: count || 1,
-      wheelWinningNumber: null,
-    }));
-  }, []);
-
-  const setWheelPrize = useCallback((prize: string) => {
-    setState(prev => ({
-      ...prev,
-      wheelPrize: prize,
-    }));
-  }, []);
-
-  const spinWheel = useCallback(() => {
-    setState(prev => {
-      if (prev.isWheelSpinning) return prev;
-      
-      const winningNumber = getSecureRandomInt(prev.wheelNumberCount) + 1;
-      
-      // Calculate rotation ONCE here to share between all views
-      const segmentAngle = 360 / prev.wheelNumberCount;
-      const winningSegmentCenter = (winningNumber - 1) * segmentAngle + (segmentAngle / 2);
-      
-      // Add random offset within segment (with margins to avoid edges)
-      const margin = segmentAngle * 0.15;
-      const randomOffset = getSecureRandomFloat() * (segmentAngle - 2 * margin);
-      
-      // Calculate the final angle where the wheel should stop (modulo 360)
-      const finalAngle = 360 - winningSegmentCenter + randomOffset;
-      
-      // Random number of complete rotations (5 to 7)
-      const fullRotations = getSecureRandomInt(3) + 5;
-      
-      // Calculate target rotation taking into account current cumulative rotation
-      // Find the next occurrence of finalAngle that is at least fullRotations * 360 away
-      const baseRotation = Math.floor(prev.wheelCurrentRotation / 360) * 360;
-      let targetRotation = baseRotation + finalAngle;
-      
-      // Ensure we make at least fullRotations complete turns
-      while (targetRotation < prev.wheelCurrentRotation + fullRotations * 360) {
-        targetRotation += 360;
-      }
-      
-      // Add previous result to history if exists
-      const newHistory = prev.wheelWinningNumber ? 
-        [...prev.wheelDrawHistory, { number: prev.wheelWinningNumber, prize: prev.wheelActivePrize }] : 
-        prev.wheelDrawHistory;
-      
-      return {
-        ...prev,
-        isWheelSpinning: true,
-        wheelWinningNumber: winningNumber,
-        wheelActivePrize: prev.wheelPrize, // Fixer le lot au moment du lancement
-        wheelDrawHistory: newHistory,
-        wheelTargetRotation: targetRotation,
-      };
-    });
-
-    // Stop spinning and update current rotation after animation (5 seconds)
-    setTimeout(() => {
-      setState(prev => ({
-        ...prev,
-        isWheelSpinning: false,
-        wheelCurrentRotation: prev.wheelTargetRotation,
-      }));
-    }, 5000);
   }, []);
 
   const addLocalImage = useCallback((file: File) => {
@@ -510,10 +401,6 @@ export const useLoto = () => {
     setPrizeDescriptions,
     setWinning,
     resumeGame,
-    toggleWheelMode,
-    setWheelNumberCount,
-    setWheelPrize,
-    spinWheel,
     addLocalImage,
     selectImage,
     deleteAllImages,

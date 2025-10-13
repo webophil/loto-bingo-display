@@ -1,12 +1,11 @@
 import { useLoto } from '@/hooks/useLoto';
 import { GameControls } from '@/components/GameControls';
 import { ManualGrid } from '@/components/ManualGrid';
-import { WheelOfFortune } from '@/components/WheelOfFortune';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Monitor, Home, CircleDot, Trophy, RefreshCw, Square, RotateCcw, Dice1, ImagePlus, Image as ImageIcon, Eye, EyeOff } from 'lucide-react';
+import { Monitor, Home, Trophy, RefreshCw, Square, RotateCcw, ImagePlus, Image as ImageIcon, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useRef } from 'react';
@@ -96,51 +95,10 @@ const Dashboard = () => {
 
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-6">
-          {/* Wheel Mode Toggle Button */}
-          <Card className="bg-card/20 backdrop-blur-sm border-border/50">
-            <CardContent className="p-4">
-              <Button onClick={loto.toggleWheelMode} className={loto.isWheelMode ? "gradient-secondary text-white w-full" : "gradient-primary w-full"} size="lg">
-                <CircleDot className="w-5 h-5 mr-2" />
-                {loto.isWheelMode ? "Retour Loto" : "Roue de la Chance"}
-              </Button>
-            </CardContent>
-          </Card>
-
-          {loto.isWheelMode ? (/* Wheel of Fortune Controls */
-        <Card className="bg-card/20 backdrop-blur-sm border-border/50">
-              <CardHeader>
-                <CardTitle>🎯 Config de la Roue</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <Label htmlFor="wheelNumbers" className="whitespace-nowrap">Nombre de numéros</Label>
-                  <Input id="wheelNumbers" type="text" inputMode="numeric" placeholder="Ex: 36" value={loto.wheelNumberCount} onChange={e => {
-                const value = parseInt(e.target.value);
-                loto.setWheelNumberCount(isNaN(value) ? 1 : value);
-              }} className="flex-1" />
-                </div>
-                
-                <div>
-                  <Label htmlFor="wheelPrize">Lot à gagner</Label>
-                  <Input id="wheelPrize" type="text" placeholder="Ex: Bon d'achat 50€" value={loto.wheelPrize} onChange={e => loto.setWheelPrize(e.target.value)} className="mt-2" />
-                </div>
-
-                <Button onClick={loto.spinWheel} disabled={loto.isWheelSpinning} className="gradient-primary w-full" size="lg">
-                  {loto.isWheelSpinning ? "🎯 Tirage en cours..." : "🎯 Tourner la roue"}
-                </Button>
-              </CardContent>
-            </Card>) : <>
-              <GameControls currentGame={loto.currentGame} drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} isManualMode={true} isBingoMode={loto.isBingoMode} withDemarque={loto.withDemarque} prizeDescription={loto.prizeDescription} isQuinesDuSudMode={loto.isQuinesDuSudMode} prizeDescriptions={loto.prizeDescriptions} isWinning={loto.isWinning} onStartGame={loto.startGame} onDrawNumber={loto.drawNumber} onDrawManualNumber={loto.drawManualNumber} onEndGame={loto.endGame} onReset={loto.resetAll} onToggleMode={() => {}} onToggleBingoMode={loto.toggleBingoMode} onToggleDemarque={loto.toggleDemarque} onSetPrizeDescription={loto.setPrizeDescription} onToggleQuinesDuSud={loto.toggleQuinesDuSud} onSetPrizeDescriptions={loto.setPrizeDescriptions} onSetWinning={loto.setWinning} onResumeGame={loto.resumeGame} />
-            </>}
+          <GameControls currentGame={loto.currentGame} drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} isManualMode={true} isBingoMode={loto.isBingoMode} withDemarque={loto.withDemarque} prizeDescription={loto.prizeDescription} isQuinesDuSudMode={loto.isQuinesDuSudMode} prizeDescriptions={loto.prizeDescriptions} isWinning={loto.isWinning} onStartGame={loto.startGame} onDrawNumber={loto.drawNumber} onDrawManualNumber={loto.drawManualNumber} onEndGame={loto.endGame} onReset={loto.resetAll} onToggleMode={() => {}} onToggleBingoMode={loto.toggleBingoMode} onToggleDemarque={loto.toggleDemarque} onSetPrizeDescription={loto.setPrizeDescription} onToggleQuinesDuSud={loto.toggleQuinesDuSud} onSetPrizeDescriptions={loto.setPrizeDescriptions} onSetWinning={loto.setWinning} onResumeGame={loto.resumeGame} />
         </div>
 
-        {loto.isWheelMode ? <div className="lg:col-span-2">
-            <Card className="bg-card/20 backdrop-blur-sm border-border/50">
-              <CardContent className="p-2">
-                <WheelOfFortune numberOfSegments={loto.wheelNumberCount} winningNumber={loto.wheelWinningNumber} isSpinning={loto.isWheelSpinning} prize={loto.wheelPrize} drawHistory={loto.wheelDrawHistory} targetRotation={loto.wheelTargetRotation} />
-              </CardContent>
-            </Card>
-          </div> : <div className="lg:col-span-2">
+        <div className="lg:col-span-2">
             <Card className="bg-card/20 backdrop-blur-sm border-border/50">
               <CardContent className="space-y-6 p-6">
                 <>
@@ -182,7 +140,7 @@ const Dashboard = () => {
                 </>
               </CardContent>
             </Card>
-          </div>}
+          </div>
       </div>
 
     </div>;
