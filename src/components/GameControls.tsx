@@ -74,32 +74,8 @@ export const GameControls = ({
         <CardTitle className="text-2xl font-bold text-center text-white">🎯 Contrôles Loto-Bingo</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Première ligne: Tirage et Jeu */}
+        {/* Première ligne: Jeu et Démarque */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Tirage */}
-          <div className="p-4 bg-white/10 rounded-lg space-y-3">
-            <Label className="text-lg text-center text-slate-800 font-extrabold">TIRAGE</Label>
-            <RadioGroup
-              value={isManualMode ? "manuel" : "auto"}
-              onValueChange={(value) => onToggleMode()}
-              disabled={!!currentGame}
-              className="flex flex-col space-y-2"
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="manuel" id="manuel" className="border-white text-white" />
-                <Label htmlFor="manuel" className="text-white/90 cursor-pointer font-normal">
-                  Manuel
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="auto" id="auto" className="border-white text-white" />
-                <Label htmlFor="auto" className="text-white/90 cursor-pointer font-normal">
-                  Auto
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
           {/* Jeu (Loto/Bingo) */}
           <div className="p-4 bg-white/10 rounded-lg space-y-3">
             <Label className="font-extrabold text-lg text-slate-800 text-center">JEU</Label>
@@ -123,10 +99,7 @@ export const GameControls = ({
               </div>
             </RadioGroup>
           </div>
-        </div>
 
-        {/* Deuxième ligne: Démarque et Quines du Sud */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Démarque */}
           <div className="p-4 bg-white/10 rounded-lg space-y-3">
             <Label className="font-extrabold text-slate-800 text-lg">Démarque</Label>
@@ -150,7 +123,10 @@ export const GameControls = ({
               </div>
             </RadioGroup>
           </div>
+        </div>
 
+        {/* Deuxième ligne: Quines du Sud */}
+        <div className="grid grid-cols-1 gap-4">
           {/* Quines du Sud */}
           <div className="p-4 bg-white/10 rounded-lg space-y-3">
             <Label className="text-slate-800 text-center font-extrabold text-lg">RAPIDE</Label>
@@ -267,9 +243,8 @@ export const GameControls = ({
               </Badge>
               <p className="text-white/80 mt-2">
                 {drawnNumbers.length} numéro{drawnNumbers.length > 1 ? "s" : ""} tiré
-                {drawnNumbers.length > 1 ? "s" : ""} • {isBingoMode ? "Bingo" : "Loto"} • Mode{" "}
-                {isManualMode ? "Manuel" : "Auto"} • {withDemarque ? "Avec" : "Sans"} démarque
-                {isQuinesDuSudMode && " • Quines du Sud"}
+                {drawnNumbers.length > 1 ? "s" : ""} • {isBingoMode ? "Bingo" : "Loto"} • {withDemarque ? "Avec" : "Sans"} démarque
+                {isQuinesDuSudMode && " • Rapide"}
               </p>
               {currentGame && prizeDescriptions[currentGame] && (
                 <p className="text-loto-yellow mt-1 font-medium">🎁 {prizeDescriptions[currentGame]}</p>
@@ -277,7 +252,7 @@ export const GameControls = ({
             </div>
 
             <div className="text-center text-white/80 py-4">
-              {isManualMode ? "La grille de tirage manuel" : "La grille de jeu"} s'affiche dans la colonne de droite →
+              La grille de tirage s'affiche dans la colonne de droite →
             </div>
           </div>
         )}
