@@ -84,15 +84,15 @@ export const GameControls = ({
                 value={isBingoMode ? "bingo" : "loto"}
                 onValueChange={(value) => onToggleBingoMode()}
                 disabled={!!currentGame}
-                className="flex flex-col gap-2"
+                className="flex gap-6"
               >
-                <div className="flex items-center justify-end space-x-2">
+                <div className="flex items-center space-x-2">
                   <RadioGroupItem value="loto" id="loto" className="border-white text-white" />
                   <Label htmlFor="loto" className="text-gray-900 cursor-pointer font-bold text-base">
                     Loto
                   </Label>
                 </div>
-                <div className="flex items-center justify-end space-x-2">
+                <div className="flex items-center space-x-2">
                   <RadioGroupItem value="bingo" id="bingo" className="border-white text-white" />
                   <Label htmlFor="bingo" className="text-gray-900 cursor-pointer font-bold text-base">
                     Bingo
@@ -110,15 +110,15 @@ export const GameControls = ({
                 value={withDemarque ? "oui" : "non"}
                 onValueChange={(value) => onToggleDemarque()}
                 disabled={!!currentGame}
-                className="flex flex-col gap-2"
+                className="flex gap-6"
               >
-                <div className="flex items-center justify-end space-x-2">
+                <div className="flex items-center space-x-2">
                   <RadioGroupItem value="oui" id="demarque-oui" className="border-white text-white" />
                   <Label htmlFor="demarque-oui" className="text-gray-900 cursor-pointer font-bold text-base">
                     Oui
                   </Label>
                 </div>
-                <div className="flex items-center justify-end space-x-2">
+                <div className="flex items-center space-x-2">
                   <RadioGroupItem value="non" id="demarque-non" className="border-white text-white" />
                   <Label htmlFor="demarque-non" className="text-gray-900 cursor-pointer font-bold text-base">
                     Non
