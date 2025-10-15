@@ -155,87 +155,100 @@ export const GameControls = ({
           </div>
         </div>
 
-        {/* Prize Descriptions by Game Type */}
-        <div className="space-y-3">
-          <Label className="text-white font-medium">
-            <Gift className="w-4 h-4 inline mr-2" />
-            Lots à gagner par étape
-          </Label>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div>
-              <Label htmlFor="prize-quine" className="text-white/80 text-xs mb-1 block">
-                🎯 Quine
-              </Label>
-              <Input
-                id="prize-quine"
-                value={prizeDescriptions.quine}
-                onChange={(e) =>
-                  onSetPrizeDescriptions({
-                    ...prizeDescriptions,
-                    quine: e.target.value,
-                  })
-                }
-                placeholder="Ex: Panier..."
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="prize-double-quine" className="text-white/80 text-xs mb-1 block">
-                🎯🎯 Double Quine
-              </Label>
-              <Input
-                id="prize-double-quine"
-                value={prizeDescriptions["double-quine"]}
-                onChange={(e) =>
-                  onSetPrizeDescriptions({
-                    ...prizeDescriptions,
-                    "double-quine": e.target.value,
-                  })
-                }
-                placeholder="Ex: Voyage..."
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="prize-carton-plein" className="text-white/80 text-xs mb-1 block">
-                🏆 Carton Plein
-              </Label>
-              <Input
-                id="prize-carton-plein"
-                value={prizeDescriptions["carton-plein"]}
-                onChange={(e) =>
-                  onSetPrizeDescriptions({
-                    ...prizeDescriptions,
-                    "carton-plein": e.target.value,
-                  })
-                }
-                placeholder="Ex: Gros lot..."
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
-              />
-            </div>
-          </div>
-        </div>
-
-        <Separator className="bg-white/20" />
-
         {!currentGame ? (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white/90">Choisir le type de jeu :</h3>
-            <div className="grid gap-3">
-              {Object.entries(gameLabels).map(([type, label]) => (
+            {/* Game Type Selection Card */}
+            <Card className="bg-gradient-to-b from-blue-900 to-white border-border/50 p-4">
+              <div className="grid grid-cols-3 gap-3">
                 <Button
-                  key={type}
-                  onClick={() => onStartGame(type as GameType)}
+                  onClick={() => onStartGame("quine")}
                   className="gradient-primary text-white font-semibold py-6 text-lg"
                   size="lg"
                 >
                   <Play className="w-5 h-5 mr-2" />
-                  {label}
+                  Quine
                 </Button>
-              ))}
+                <Button
+                  onClick={() => onStartGame("double-quine")}
+                  className="gradient-primary text-white font-semibold py-6 text-lg flex-col h-auto"
+                  size="lg"
+                >
+                  <Play className="w-5 h-5 mb-1" />
+                  <span className="text-center">Double<br/>Quine</span>
+                </Button>
+                <Button
+                  onClick={() => onStartGame("carton-plein")}
+                  className="gradient-primary text-white font-semibold py-6 text-lg flex-col h-auto"
+                  size="lg"
+                >
+                  <Play className="w-5 h-5 mb-1" />
+                  <span className="text-center">Carton<br/>Plein</span>
+                </Button>
+              </div>
+            </Card>
+
+            {/* Prize Descriptions by Game Type */}
+            <div className="space-y-3">
+              <Label className="text-white font-medium">
+                <Gift className="w-4 h-4 inline mr-2" />
+                Lots à gagner par étape
+              </Label>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div>
+                  <Label htmlFor="prize-quine" className="text-white/80 text-xs mb-1 block">
+                    🎯 Quine
+                  </Label>
+                  <Input
+                    id="prize-quine"
+                    value={prizeDescriptions.quine}
+                    onChange={(e) =>
+                      onSetPrizeDescriptions({
+                        ...prizeDescriptions,
+                        quine: e.target.value,
+                      })
+                    }
+                    placeholder="Ex: Panier..."
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="prize-double-quine" className="text-white/80 text-xs mb-1 block">
+                    🎯🎯 Double Quine
+                  </Label>
+                  <Input
+                    id="prize-double-quine"
+                    value={prizeDescriptions["double-quine"]}
+                    onChange={(e) =>
+                      onSetPrizeDescriptions({
+                        ...prizeDescriptions,
+                        "double-quine": e.target.value,
+                      })
+                    }
+                    placeholder="Ex: Voyage..."
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="prize-carton-plein" className="text-white/80 text-xs mb-1 block">
+                    🏆 Carton Plein
+                  </Label>
+                  <Input
+                    id="prize-carton-plein"
+                    value={prizeDescriptions["carton-plein"]}
+                    onChange={(e) =>
+                      onSetPrizeDescriptions({
+                        ...prizeDescriptions,
+                        "carton-plein": e.target.value,
+                      })
+                    }
+                    placeholder="Ex: Gros lot..."
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         ) : (
