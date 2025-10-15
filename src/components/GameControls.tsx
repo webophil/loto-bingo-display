@@ -77,51 +77,55 @@ export const GameControls = ({
         {/* Première ligne: Jeu et Démarque */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Jeu (Loto/Bingo) */}
-          <div className="p-4 bg-white/10 rounded-lg space-y-3">
-            <Label className="font-extrabold text-lg text-slate-800 text-center">JEU</Label>
-            <RadioGroup
-              value={isBingoMode ? "bingo" : "loto"}
-              onValueChange={(value) => onToggleBingoMode()}
-              disabled={!!currentGame}
-              className="flex flex-col space-y-2"
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="loto" id="loto" className="border-white text-white" />
-                <Label htmlFor="loto" className="text-white/90 cursor-pointer font-normal">
-                  Loto
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="bingo" id="bingo" className="border-white text-white" />
-                <Label htmlFor="bingo" className="text-white/90 cursor-pointer font-normal">
-                  Bingo
-                </Label>
-              </div>
-            </RadioGroup>
+          <div className="p-4 bg-loto-orange rounded-lg">
+            <div className="flex items-center gap-4">
+              <Label className="font-extrabold text-lg text-white">JEU</Label>
+              <RadioGroup
+                value={isBingoMode ? "bingo" : "loto"}
+                onValueChange={(value) => onToggleBingoMode()}
+                disabled={!!currentGame}
+                className="flex gap-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="loto" id="loto" className="border-white text-white" />
+                  <Label htmlFor="loto" className="text-white cursor-pointer font-normal">
+                    Loto
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="bingo" id="bingo" className="border-white text-white" />
+                  <Label htmlFor="bingo" className="text-white cursor-pointer font-normal">
+                    Bingo
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
           </div>
 
           {/* Démarque */}
-          <div className="p-4 bg-white/10 rounded-lg space-y-3">
-            <Label className="font-extrabold text-slate-800 text-lg">Démarque</Label>
-            <RadioGroup
-              value={withDemarque ? "oui" : "non"}
-              onValueChange={(value) => onToggleDemarque()}
-              disabled={!!currentGame}
-              className="flex flex-col space-y-2"
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="oui" id="demarque-oui" className="border-white text-white" />
-                <Label htmlFor="demarque-oui" className="text-white/90 cursor-pointer font-normal">
-                  Oui
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="non" id="demarque-non" className="border-white text-white" />
-                <Label htmlFor="demarque-non" className="text-white/90 cursor-pointer font-normal">
-                  Non
-                </Label>
-              </div>
-            </RadioGroup>
+          <div className="p-4 bg-loto-orange rounded-lg">
+            <div className="flex items-center gap-4">
+              <Label className="font-extrabold text-white text-lg">Démarque</Label>
+              <RadioGroup
+                value={withDemarque ? "oui" : "non"}
+                onValueChange={(value) => onToggleDemarque()}
+                disabled={!!currentGame}
+                className="flex gap-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="oui" id="demarque-oui" className="border-white text-white" />
+                  <Label htmlFor="demarque-oui" className="text-white cursor-pointer font-normal">
+                    Oui
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="non" id="demarque-non" className="border-white text-white" />
+                  <Label htmlFor="demarque-non" className="text-white cursor-pointer font-normal">
+                    Non
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
           </div>
         </div>
 
