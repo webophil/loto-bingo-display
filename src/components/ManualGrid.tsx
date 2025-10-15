@@ -74,7 +74,7 @@ export const ManualGrid = ({ drawnNumbers, onNumberClick, isDrawing, isBingoMode
       <div className="text-center">
         <h3 className="text-lg font-semibold text-white">Cliquez sur le numéro sorti du boulier</h3>
         <p className="text-sm text-white/70">
-          <i>(cliquez à nouveau pour changer)</i>
+          <i>(cliquez à nouveau pour modifier)</i>
         </p>
         <p className="text-sm text-white/120">{drawnNumbers.length}/90 numéros tirés</p>
       </div>
