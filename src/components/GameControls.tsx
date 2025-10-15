@@ -129,26 +129,25 @@ export const GameControls = ({
           </div>
         </div>
 
-        {/* Deuxième ligne: Quines du Sud */}
-        <div className="grid grid-cols-1 gap-4">
-          {/* Quines du Sud */}
-          <div className="p-4 bg-white/10 rounded-lg space-y-3">
-            <Label className="text-slate-800 text-center font-extrabold text-lg">RAPIDE</Label>
+        {/* Mode Rapide */}
+        <div className="p-3 bg-loto-orange rounded-lg">
+          <div className="flex items-center justify-between">
+            <Label className="font-extrabold text-white text-base">Mode Rapide</Label>
             <RadioGroup
               value={isQuinesDuSudMode ? "oui" : "non"}
               onValueChange={(value) => onToggleQuinesDuSud()}
               disabled={!!currentGame}
-              className="flex flex-col space-y-2"
+              className="flex gap-6"
             >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="oui" id="quines-sud-oui" className="border-white text-white" />
-                <Label htmlFor="quines-sud-oui" className="text-white/90 cursor-pointer font-normal">
+                <Label htmlFor="quines-sud-oui" className="text-gray-900 cursor-pointer font-bold text-base">
                   Oui
                 </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="non" id="quines-sud-non" className="border-white text-white" />
-                <Label htmlFor="quines-sud-non" className="text-white/90 cursor-pointer font-normal">
+                <Label htmlFor="quines-sud-non" className="text-gray-900 cursor-pointer font-bold text-base">
                   Non
                 </Label>
               </div>
