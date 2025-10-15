@@ -157,35 +157,27 @@ export const GameControls = ({
 
         {!currentGame ? (
           <div className="space-y-4">
-            {/* Game Type Selection Card */}
-            <Card className="bg-gradient-to-b from-blue-900 to-white border-border/50 p-4">
-              <div className="grid grid-cols-3 gap-3">
-                <Button
-                  onClick={() => onStartGame("quine")}
-                  className="gradient-primary text-white font-semibold py-6 text-lg"
-                  size="lg"
-                >
-                  <Play className="w-5 h-5 mr-2" />
-                  Quine
-                </Button>
-                <Button
-                  onClick={() => onStartGame("double-quine")}
-                  className="gradient-primary text-white font-semibold py-6 text-lg flex-col h-auto"
-                  size="lg"
-                >
-                  <Play className="w-5 h-5 mb-1" />
-                  <span className="text-center">Double<br/>Quine</span>
-                </Button>
-                <Button
-                  onClick={() => onStartGame("carton-plein")}
-                  className="gradient-primary text-white font-semibold py-6 text-lg flex-col h-auto"
-                  size="lg"
-                >
-                  <Play className="w-5 h-5 mb-1" />
-                  <span className="text-center">Carton<br/>Plein</span>
-                </Button>
-              </div>
-            </Card>
+            {/* Game Type Selection */}
+            <div className="grid grid-cols-3 gap-3">
+              <Button
+                onClick={() => onStartGame("quine")}
+                className="bg-gradient-to-b from-blue-900 to-blue-500 hover:from-blue-800 hover:to-blue-400 text-white font-semibold text-lg h-24 flex items-center justify-center"
+              >
+                Quine
+              </Button>
+              <Button
+                onClick={() => onStartGame("double-quine")}
+                className="bg-gradient-to-b from-blue-900 to-blue-500 hover:from-blue-800 hover:to-blue-400 text-white font-semibold text-lg h-24 flex items-center justify-center"
+              >
+                <span className="text-center leading-tight">Double<br/>Quine</span>
+              </Button>
+              <Button
+                onClick={() => onStartGame("carton-plein")}
+                className="bg-gradient-to-b from-blue-900 to-blue-500 hover:from-blue-800 hover:to-blue-400 text-white font-semibold text-lg h-24 flex items-center justify-center"
+              >
+                <span className="text-center leading-tight">Carton<br/>Plein</span>
+              </Button>
+            </div>
 
             {/* Prize Descriptions by Game Type */}
             <div className="space-y-3">
