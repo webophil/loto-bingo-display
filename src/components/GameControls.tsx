@@ -156,15 +156,10 @@ export const GameControls = ({
         </div>
 
         {/* Prize Descriptions by Game Type */}
-        <div className="space-y-3">
-          <Label className="text-white font-medium">
-            <Gift className="w-4 h-4 inline mr-2" />
-            Lots à gagner par étape
-          </Label>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div>
-              <Label htmlFor="prize-quine" className="text-white/80 text-xs mb-1 block">
+        <div className="space-y-3 p-4 rounded-lg bg-gradient-to-b from-blue-900 to-white">
+          <div className="grid grid-cols-3 gap-3 mb-3">
+            <div className="p-3 bg-white/20 rounded-lg">
+              <Label htmlFor="prize-quine" className="text-white font-bold text-sm block text-center mb-2">
                 🎯 Quine
               </Label>
               <Input
@@ -177,13 +172,13 @@ export const GameControls = ({
                   })
                 }
                 placeholder="Ex: Panier..."
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
+                className="bg-white/30 border-white/40 text-gray-900 placeholder:text-gray-600 text-sm font-medium"
               />
             </div>
 
-            <div>
-              <Label htmlFor="prize-double-quine" className="text-white/80 text-xs mb-1 block">
-                🎯🎯 Double Quine
+            <div className="p-3 bg-white/20 rounded-lg">
+              <Label htmlFor="prize-double-quine" className="text-white font-bold text-sm block text-center mb-2">
+                🎯🎯 Double<br/>Quine
               </Label>
               <Input
                 id="prize-double-quine"
@@ -195,13 +190,13 @@ export const GameControls = ({
                   })
                 }
                 placeholder="Ex: Voyage..."
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
+                className="bg-white/30 border-white/40 text-gray-900 placeholder:text-gray-600 text-sm font-medium"
               />
             </div>
 
-            <div>
-              <Label htmlFor="prize-carton-plein" className="text-white/80 text-xs mb-1 block">
-                🏆 Carton Plein
+            <div className="p-3 bg-white/20 rounded-lg">
+              <Label htmlFor="prize-carton-plein" className="text-white font-bold text-sm block text-center mb-2">
+                🏆 Carton<br/>Plein
               </Label>
               <Input
                 id="prize-carton-plein"
@@ -213,10 +208,15 @@ export const GameControls = ({
                   })
                 }
                 placeholder="Ex: Gros lot..."
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
+                className="bg-white/30 border-white/40 text-gray-900 placeholder:text-gray-600 text-sm font-medium"
               />
             </div>
           </div>
+
+          <Label className="text-gray-900 font-bold text-base block text-center">
+            <Gift className="w-4 h-4 inline mr-2" />
+            Lots à gagner par étape
+          </Label>
         </div>
 
         <Separator className="bg-white/20" />
