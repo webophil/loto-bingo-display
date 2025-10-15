@@ -34,9 +34,7 @@ const Index = () => {
       <div className="max-w-4xl w-full space-y-8">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           <div className="flex flex-col items-center gap-4 lg:w-1/3">
-            <br />
-            <br />
-            <img src={logoImage} alt="Loto Bingo Display" className="w-[230px] h-[230px] object-contain" />
+            <img src={logoImage} alt="Loto Bingo Display" className="w-[260px] h-[260px] object-contain" />
             <div className="text-center text-base text-muted-foreground leading-relaxed"></div>
           </div>
 
@@ -114,7 +112,9 @@ const Index = () => {
             </div>
           </CardContent>
         </Card>
-        <div className="text-center">Loto Bingo Display v1.0 - &copy;2025 par Philippe André - Tous droits réservés</div>
+        <div className="text-center">
+          Loto Bingo Display v1.0 - &copy;2025 par Philippe André - Tous droits réservés
+        </div>
       </div>
     </div>
   );
