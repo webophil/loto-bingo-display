@@ -74,12 +74,12 @@ export const GameControls = ({
         <CardTitle className="text-2xl font-bold text-center text-white">🎯 Contrôles Loto-Bingo</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Première ligne: Jeu et Démarque */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Cartes Jeu et Démarque */}
+        <div className="space-y-3">
           {/* Jeu (Loto/Bingo) */}
-          <div className="p-4 bg-loto-orange rounded-lg">
+          <div className="p-3 bg-loto-orange rounded-lg">
             <div className="flex items-center gap-4">
-              <Label className="font-extrabold text-lg text-white">JEU</Label>
+              <Label className="font-extrabold text-base text-white">JEU</Label>
               <RadioGroup
                 value={isBingoMode ? "bingo" : "loto"}
                 onValueChange={(value) => onToggleBingoMode()}
@@ -88,13 +88,13 @@ export const GameControls = ({
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="loto" id="loto" className="border-white text-white" />
-                  <Label htmlFor="loto" className="text-white cursor-pointer font-normal">
+                  <Label htmlFor="loto" className="text-white cursor-pointer font-normal text-sm">
                     Loto
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="bingo" id="bingo" className="border-white text-white" />
-                  <Label htmlFor="bingo" className="text-white cursor-pointer font-normal">
+                  <Label htmlFor="bingo" className="text-white cursor-pointer font-normal text-sm">
                     Bingo
                   </Label>
                 </div>
@@ -103,9 +103,9 @@ export const GameControls = ({
           </div>
 
           {/* Démarque */}
-          <div className="p-4 bg-loto-orange rounded-lg">
+          <div className="p-3 bg-loto-orange rounded-lg">
             <div className="flex items-center gap-4">
-              <Label className="font-extrabold text-white text-lg">Démarque</Label>
+              <Label className="font-extrabold text-white text-base">Démarque</Label>
               <RadioGroup
                 value={withDemarque ? "oui" : "non"}
                 onValueChange={(value) => onToggleDemarque()}
@@ -114,13 +114,13 @@ export const GameControls = ({
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="oui" id="demarque-oui" className="border-white text-white" />
-                  <Label htmlFor="demarque-oui" className="text-white cursor-pointer font-normal">
+                  <Label htmlFor="demarque-oui" className="text-white cursor-pointer font-normal text-sm">
                     Oui
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="non" id="demarque-non" className="border-white text-white" />
-                  <Label htmlFor="demarque-non" className="text-white cursor-pointer font-normal">
+                  <Label htmlFor="demarque-non" className="text-white cursor-pointer font-normal text-sm">
                     Non
                   </Label>
                 </div>
