@@ -74,7 +74,7 @@ export const GameControls = ({
         <CardTitle className="text-2xl font-bold text-center text-white">🎯 Contrôles Loto-Bingo</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Cartes Jeu et Démarque */}
+        {/* Cartes Jeu, Démarque et Mode Rapide */}
         <div className="space-y-3">
           {/* Jeu (Loto/Bingo) */}
           <div className="p-3 bg-loto-orange rounded-lg">
@@ -127,31 +127,31 @@ export const GameControls = ({
               </RadioGroup>
             </div>
           </div>
-        </div>
 
-        {/* Mode Rapide */}
-        <div className="p-3 bg-loto-orange rounded-lg">
-          <div className="flex items-center justify-between">
-            <Label className="font-extrabold text-white text-base">Mode Rapide</Label>
-            <RadioGroup
-              value={isQuinesDuSudMode ? "oui" : "non"}
-              onValueChange={(value) => onToggleQuinesDuSud()}
-              disabled={!!currentGame}
-              className="flex gap-6"
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="oui" id="quines-sud-oui" className="border-white text-white" />
-                <Label htmlFor="quines-sud-oui" className="text-gray-900 cursor-pointer font-bold text-base">
-                  Oui
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="non" id="quines-sud-non" className="border-white text-white" />
-                <Label htmlFor="quines-sud-non" className="text-gray-900 cursor-pointer font-bold text-base">
-                  Non
-                </Label>
-              </div>
-            </RadioGroup>
+          {/* Mode Rapide */}
+          <div className="p-3 bg-loto-orange rounded-lg">
+            <div className="flex items-center justify-between">
+              <Label className="font-extrabold text-white text-base">Mode Rapide</Label>
+              <RadioGroup
+                value={isQuinesDuSudMode ? "oui" : "non"}
+                onValueChange={(value) => onToggleQuinesDuSud()}
+                disabled={!!currentGame}
+                className="flex gap-6"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="oui" id="quines-sud-oui" className="border-white text-white" />
+                  <Label htmlFor="quines-sud-oui" className="text-gray-900 cursor-pointer font-bold text-base">
+                    Oui
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="non" id="quines-sud-non" className="border-white text-white" />
+                  <Label htmlFor="quines-sud-non" className="text-gray-900 cursor-pointer font-bold text-base">
+                    Non
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
           </div>
         </div>
 
