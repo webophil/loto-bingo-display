@@ -13,6 +13,26 @@ const Dashboard = () => {
   const loto = useLoto();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const openDisplayOnExternalScreen = () => {
+    const displayUrl = `${window.location.origin}/display`;
+    const features = [
+      "width=" + screen.availWidth,
+      "height=" + screen.availHeight,
+      "left=" + (screen.availWidth + 100),
+      "top=0",
+      "scrollbars=no",
+      "toolbar=no",
+      "menubar=no",
+      "status=no",
+      "location=no",
+      "resizable=yes",
+    ].join(",");
+    const newWindow = window.open(displayUrl, "LotoDisplay", features);
+    if (newWindow) {
+      newWindow.focus();
+    }
+  };
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith('image/')) {
@@ -83,6 +103,11 @@ const Dashboard = () => {
               )}
             </>
           )}
+          
+          <Button onClick={openDisplayOnExternalScreen} className="gradient-primary text-white">
+            <Monitor className="w-4 h-4 mr-2" />
+            Afficher Écran Externe
+          </Button>
           
           <Link to="/">
             <Button variant="outline">
