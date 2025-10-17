@@ -69,13 +69,31 @@ const Index = () => {
                         <span className="text-xs">Aide</span>
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-md">
+                    <DialogContent className="sm:max-w-lg">
                       <DialogHeader>
-                        <DialogTitle>Aide - Écran Externe</DialogTitle>
+                        <DialogTitle>🖥️ Aide rapide – Affichage écran externe</DialogTitle>
                       </DialogHeader>
-                      <div className="py-4">
-                        <p className="text-sm text-muted-foreground">
-                          Configurer l'affichage de l'écran externe. le reste du contenu est à venir.
+                      <div className="py-4 space-y-4 text-sm">
+                        <p>
+                          <strong>Pour afficher la fenêtre visible par les joueurs :</strong>
+                        </p>
+                        <p>
+                          Raccordez votre TV ou vidéo-projecteur à votre ordinateur.
+                        </p>
+                        <p>
+                          <strong>Sous Windows</strong>, clic droit sur le bureau → Paramètres d'affichage → choisir <em>Étendre ces affichages</em> → Appliquer.
+                        </p>
+                        <p>
+                          Dans Loto Bingo Display, cliquez sur <strong>Afficher</strong> (ou Afficher Écran Externe depuis le tableau de bord).
+                        </p>
+                        <p>
+                          Déplacez la nouvelle fenêtre sur le second écran, puis appuyez sur <strong>F11</strong> pour le plein écran.
+                        </p>
+                        <p>
+                          Pour quitter le plein écran : <strong>F11</strong> ou <strong>Échap (Esc)</strong>.
+                        </p>
+                        <p className="text-muted-foreground">
+                          💡 Si la fenêtre n'apparaît pas, vérifiez le mode "Étendre" ou glissez-la manuellement sur l'écran externe.
                         </p>
                       </div>
                     </DialogContent>
