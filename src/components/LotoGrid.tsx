@@ -25,7 +25,7 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
       <div className="grid grid-cols-[auto_repeat(15,1fr)] gap-x-0.5 gap-y-2 px-12 py-6 bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50 flex-shrink-0">
         {Array.from({ length: 5 }).map((_, rowIndex) => (
           <>
-            <div key={`letter-${rowIndex}`} className={`flex items-center justify-center text-xl font-bold mr-2 aspect-square rounded-lg ${bingoLetterColors[rowIndex]}`}>
+            <div key={`letter-${rowIndex}`} className={`flex items-center justify-center text-4xl font-bold mr-2 aspect-square rounded-lg ${bingoLetterColors[rowIndex]}`}>
               {bingoLetters[rowIndex]}
             </div>
             {numbers.slice(rowIndex * 15, (rowIndex + 1) * 15).map((number) => (
