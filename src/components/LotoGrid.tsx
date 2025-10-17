@@ -12,13 +12,20 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
   const latestNumber = drawnNumbers[drawnNumbers.length - 1];
 
   const bingoLetters = ['B', 'I', 'N', 'G', 'O'];
+  const bingoLetterColors = [
+    'bg-blue-700 text-white',
+    'bg-red-600 text-white',
+    'bg-white text-black',
+    'bg-green-600 text-white',
+    'bg-yellow-400 text-black'
+  ];
 
   if (isBingoMode) {
     return (
-      <div className="grid grid-cols-[auto_repeat(15,1fr)] gap-x-1 gap-y-2 p-6 bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50 flex-shrink-0">
+      <div className="grid grid-cols-[auto_repeat(15,1fr)] gap-x-0.5 gap-y-2 px-12 py-6 bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50 flex-shrink-0">
         {Array.from({ length: 5 }).map((_, rowIndex) => (
           <>
-            <div key={`letter-${rowIndex}`} className="flex items-center justify-center text-xl font-bold text-primary pr-1">
+            <div key={`letter-${rowIndex}`} className={`flex items-center justify-center text-xl font-bold mr-2 aspect-square rounded-lg ${bingoLetterColors[rowIndex]}`}>
               {bingoLetters[rowIndex]}
             </div>
             {numbers.slice(rowIndex * 15, (rowIndex + 1) * 15).map((number) => (
