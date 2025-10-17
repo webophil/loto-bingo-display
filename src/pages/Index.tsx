@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Monitor, Settings, Trophy } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Monitor, Settings, Trophy, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoImage from "@/assets/logo.png";
 const Index = () => {
@@ -51,12 +52,35 @@ const Index = () => {
                   Affichage public des 90 (ou Bingo 75) boules, et &quot;Dernier Sorti&quot; en évidence. Lots, choix
                   démarque et phase de jeu. Ecrans annonces, sponsors...
                 </p>
-                <Button
-                  onClick={openDisplayOnExternalScreen}
-                  className="w-full gradient-primary text-white font-semibold text-lg py-3"
-                >
-                  Ouvrir l'Affichage
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={openDisplayOnExternalScreen}
+                    className="flex-1 gradient-primary text-white font-semibold text-lg py-3"
+                  >
+                    Afficher
+                  </Button>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="px-3 py-3 bg-white/10 border-white/20 text-white hover:bg-white/20"
+                      >
+                        <HelpCircle className="w-4 h-4 mr-1" />
+                        <span className="text-xs">Aide</span>
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Aide - Écran Externe</DialogTitle>
+                      </DialogHeader>
+                      <div className="py-4">
+                        <p className="text-sm text-muted-foreground">
+                          Configurer l'affichage de l'écran externe. le reste du contenu est à venir.
+                        </p>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
               </CardContent>
             </Card>
 
