@@ -258,7 +258,7 @@ const LotoDisplay = () => {
               <div className="flex items-center gap-4">
                 <p className="text-2xl font-semibold text-foreground">Dernier numéro :</p>
                 <div
-                  className={`w-24 h-24 rounded-full flex items-center justify-center text-4xl font-bold text-white animate-bounce-soft animate-blink ${getNumberDisplayColor(
+                  className={`w-24 h-24 rounded-full flex items-center justify-center text-7xl font-bold text-white animate-bounce-soft animate-blink ${getNumberDisplayColor(
                     latestNumber,
                   )}`}
                   style={{ boxShadow: "var(--shadow-glow)" }}
