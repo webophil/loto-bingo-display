@@ -142,11 +142,7 @@ const Dashboard = () => {
                         </Button>
                         <Button onClick={loto.endGame} variant="outline" className="border-loto-yellow text-loto-yellow hover:bg-loto-yellow hover:text-gray-900">
                           <Square className="w-4 h-4 mr-2" />
-                          Terminer
-                        </Button>
-                        <Button onClick={loto.resetAll} variant="outline" className="border-loto-red text-loto-red hover:bg-loto-red hover:text-white">
-                          <RotateCcw className="w-4 h-4 mr-2" />
-                          Reset
+                          Nouveau tirage
                         </Button>
                       </div>
 
