@@ -38,69 +38,67 @@ export interface LotoState {
   isImageDisplayMode: boolean;
 }
 
-const getInitialState = (): LotoState => {
-  try {
-    const savedState = localStorage.getItem('loto-state');
-    const savedImages = localStorage.getItem('loto-images');
-    
-    if (savedState) {
-      const parsedState = JSON.parse(savedState);
-      const parsedImages = savedImages ? JSON.parse(savedImages) : [];
-      
-      console.log('✅ Loading initial state from localStorage');
-      
-      return {
-        drawnNumbers: Array.isArray(parsedState.drawnNumbers) ? parsedState.drawnNumbers : [],
-        currentGame: parsedState.currentGame || null,
-        isDrawing: false,
-        gameHistory: Array.isArray(parsedState.gameHistory) ? parsedState.gameHistory : [],
-        isManualMode: parsedState.isManualMode ?? true,
-        isBingoMode: parsedState.isBingoMode ?? false,
-        withDemarque: parsedState.withDemarque ?? true,
-        prizeDescription: parsedState.prizeDescription || '',
-        isQuinesDuSudMode: parsedState.isQuinesDuSudMode ?? false,
-        prizeDescriptions: parsedState.prizeDescriptions || {
-          quine: '',
-          'double-quine': '',
-          'carton-plein': '',
-        },
-        isWinning: parsedState.isWinning ?? false,
-        localImages: Array.isArray(parsedImages) ? parsedImages : [],
-        selectedImageId: parsedState.selectedImageId || null,
-        isImageDisplayMode: parsedState.isImageDisplayMode ?? false,
-      };
-    }
-  } catch (error) {
-    console.error('❌ Error loading initial state:', error);
-    localStorage.removeItem('loto-state');
-    localStorage.removeItem('loto-images');
-  }
-  
-  // Default state if nothing saved or error occurred
-  return {
-    drawnNumbers: [],
-    currentGame: null,
-    isDrawing: false,
-    gameHistory: [],
-    isManualMode: true,
-    isBingoMode: false,
-    withDemarque: true,
-    prizeDescription: '',
-    isQuinesDuSudMode: false,
-    prizeDescriptions: {
-      quine: '',
-      'double-quine': '',
-      'carton-plein': '',
-    },
-    isWinning: false,
-    localImages: [],
-    selectedImageId: null,
-    isImageDisplayMode: false,
-  };
-};
-
 export const useLoto = () => {
-  const [state, setState] = useState<LotoState>(getInitialState);
+  const [state, setState] = useState<LotoState>(() => {
+    try {
+      const savedState = localStorage.getItem('loto-state');
+      const savedImages = localStorage.getItem('loto-images');
+      
+      if (savedState) {
+        const parsedState = JSON.parse(savedState);
+        const parsedImages = savedImages ? JSON.parse(savedImages) : [];
+        
+        console.log('✅ Loading initial state from localStorage');
+        
+        return {
+          drawnNumbers: Array.isArray(parsedState.drawnNumbers) ? parsedState.drawnNumbers : [],
+          currentGame: parsedState.currentGame || null,
+          isDrawing: false,
+          gameHistory: Array.isArray(parsedState.gameHistory) ? parsedState.gameHistory : [],
+          isManualMode: parsedState.isManualMode ?? true,
+          isBingoMode: parsedState.isBingoMode ?? false,
+          withDemarque: parsedState.withDemarque ?? true,
+          prizeDescription: parsedState.prizeDescription || '',
+          isQuinesDuSudMode: parsedState.isQuinesDuSudMode ?? false,
+          prizeDescriptions: parsedState.prizeDescriptions || {
+            quine: '',
+            'double-quine': '',
+            'carton-plein': '',
+          },
+          isWinning: parsedState.isWinning ?? false,
+          localImages: Array.isArray(parsedImages) ? parsedImages : [],
+          selectedImageId: parsedState.selectedImageId || null,
+          isImageDisplayMode: parsedState.isImageDisplayMode ?? false,
+        };
+      }
+    } catch (error) {
+      console.error('❌ Error loading initial state:', error);
+      localStorage.removeItem('loto-state');
+      localStorage.removeItem('loto-images');
+    }
+    
+    // Default state if nothing saved or error occurred
+    return {
+      drawnNumbers: [],
+      currentGame: null,
+      isDrawing: false,
+      gameHistory: [],
+      isManualMode: true,
+      isBingoMode: false,
+      withDemarque: true,
+      prizeDescription: '',
+      isQuinesDuSudMode: false,
+      prizeDescriptions: {
+        quine: '',
+        'double-quine': '',
+        'carton-plein': '',
+      },
+      isWinning: false,
+      localImages: [],
+      selectedImageId: null,
+      isImageDisplayMode: false,
+    };
+  });
 
   // Create a persistent BroadcastChannel
   useEffect(() => {
