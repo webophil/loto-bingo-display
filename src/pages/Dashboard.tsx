@@ -136,7 +136,7 @@ const Dashboard = () => {
                           <Trophy className="w-4 h-4 mr-2" />
                           C'est gagné !
                         </Button>
-                        <Button onClick={loto.resumeGame} variant="outline" className="border-loto-green text-loto-green hover:bg-loto-green hover:text-white" disabled={!loto.isWinning}>
+                        <Button onClick={loto.resumeGame} variant="outline" className="border-loto-green text-loto-green hover:bg-loto-green hover:text-white" disabled={!loto.isWinning || loto.withDemarque}>
                           <RefreshCw className="w-4 h-4 mr-2" />
                           Reprise du jeu
                         </Button>
