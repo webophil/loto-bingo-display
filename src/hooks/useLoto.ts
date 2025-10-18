@@ -216,6 +216,9 @@ export const useLoto = () => {
       currentGame: null,
       drawnNumbers: [],
       isDrawing: false,
+      isWinning: false,
+      prizeDescription: '',
+      // Préserver les paramètres de configuration et les images
     }));
   }, []);
 
@@ -322,26 +325,24 @@ export const useLoto = () => {
   }, []);
 
   const resetAll = useCallback(() => {
-    setState({
+    setState(prev => ({
+      ...prev,
       drawnNumbers: [],
       currentGame: null,
       isDrawing: false,
       gameHistory: [],
       isManualMode: true,
-      isBingoMode: false,
-      withDemarque: true,
       prizeDescription: '',
-      isQuinesDuSudMode: false,
-      prizeDescriptions: {
-        quine: '',
-        'double-quine': '',
-        'carton-plein': '',
-      },
       isWinning: false,
-      localImages: [],
-      selectedImageId: null,
-      isImageDisplayMode: false,
-    });
+      // Préserver les paramètres de configuration et les images
+      // isBingoMode: conservé
+      // withDemarque: conservé
+      // isQuinesDuSudMode: conservé
+      // prizeDescriptions: conservé
+      // localImages: conservé
+      // selectedImageId: conservé
+      // isImageDisplayMode: conservé
+    }));
   }, []);
 
   const addLocalImage = useCallback((file: File) => {
