@@ -7,12 +7,12 @@ interface NumberBallProps {
 }
 
 const getNumberColor = (number: number) => {
-  if (number <= 15) return 'bg-white border-[15px] border-blue-700 text-black';
-  if (number <= 30) return 'bg-white border-[15px] border-red-600 text-black';
-  if (number <= 45) return 'bg-white border-[15px] border-white text-black';
-  if (number <= 60) return 'bg-white border-[15px] border-green-600 text-black';
-  if (number <= 75) return 'bg-white border-[15px] border-yellow-400 text-black';
-  return 'bg-white border-[15px] border-pink-600 text-black';
+  if (number <= 15) return 'ball-blue';
+  if (number <= 30) return 'ball-red';
+  if (number <= 45) return 'ball-white';
+  if (number <= 60) return 'ball-green';
+  if (number <= 75) return 'ball-yellow';
+  return 'ball-pink';
 };
 
 export const NumberBall = ({ number, isDrawn, isLatest }: NumberBallProps) => {
