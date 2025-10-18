@@ -256,7 +256,10 @@ const LotoDisplay = () => {
 
             {latestNumber && !displayState.isWinning && (
               <div className="flex items-center gap-4">
-                <p className="text-2xl font-semibold text-foreground">Dernier numéro :</p>
+                <div className="flex flex-col items-end text-2xl font-semibold text-foreground leading-tight">
+                  <p>Dernier</p>
+                  <p>sorti</p>
+                </div>
                 <div
                   className={`w-32 h-32 rounded-full flex items-center justify-center text-8xl font-bold text-white leading-none animate-bounce-soft animate-blink ${getNumberDisplayColor(
                     latestNumber,
