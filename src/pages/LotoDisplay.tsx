@@ -227,7 +227,7 @@ const LotoDisplay = () => {
               {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
               {displayState.currentGame === "carton-plein" && "🏆 CARTON PLEIN"}
             </p>
-            {currentPrize && <p className="text-xl text-gray-600 mt-2">🎁 {currentPrize}</p>}
+            {currentPrize && <p className="text-3xl md:text-4xl lg:text-5xl text-gray-700 font-bold mt-4 max-w-full break-words px-4">🎁 {currentPrize}</p>}
           </div>
         </div>
       )}
