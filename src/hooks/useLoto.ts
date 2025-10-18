@@ -38,8 +38,46 @@ export interface LotoState {
   isImageDisplayMode: boolean;
 }
 
-export const useLoto = () => {
-  const [state, setState] = useState<LotoState>({
+const getInitialState = (): LotoState => {
+  try {
+    const savedState = localStorage.getItem('loto-state');
+    const savedImages = localStorage.getItem('loto-images');
+    
+    if (savedState) {
+      const parsedState = JSON.parse(savedState);
+      const parsedImages = savedImages ? JSON.parse(savedImages) : [];
+      
+      console.log('✅ Loading initial state from localStorage');
+      
+      return {
+        drawnNumbers: Array.isArray(parsedState.drawnNumbers) ? parsedState.drawnNumbers : [],
+        currentGame: parsedState.currentGame || null,
+        isDrawing: false,
+        gameHistory: Array.isArray(parsedState.gameHistory) ? parsedState.gameHistory : [],
+        isManualMode: parsedState.isManualMode ?? true,
+        isBingoMode: parsedState.isBingoMode ?? false,
+        withDemarque: parsedState.withDemarque ?? true,
+        prizeDescription: parsedState.prizeDescription || '',
+        isQuinesDuSudMode: parsedState.isQuinesDuSudMode ?? false,
+        prizeDescriptions: parsedState.prizeDescriptions || {
+          quine: '',
+          'double-quine': '',
+          'carton-plein': '',
+        },
+        isWinning: parsedState.isWinning ?? false,
+        localImages: Array.isArray(parsedImages) ? parsedImages : [],
+        selectedImageId: parsedState.selectedImageId || null,
+        isImageDisplayMode: parsedState.isImageDisplayMode ?? false,
+      };
+    }
+  } catch (error) {
+    console.error('❌ Error loading initial state:', error);
+    localStorage.removeItem('loto-state');
+    localStorage.removeItem('loto-images');
+  }
+  
+  // Default state if nothing saved or error occurred
+  return {
     drawnNumbers: [],
     currentGame: null,
     isDrawing: false,
@@ -58,7 +96,11 @@ export const useLoto = () => {
     localImages: [],
     selectedImageId: null,
     isImageDisplayMode: false,
-  });
+  };
+};
+
+export const useLoto = () => {
+  const [state, setState] = useState<LotoState>(getInitialState);
 
   // Create a persistent BroadcastChannel
   useEffect(() => {
@@ -131,40 +173,6 @@ export const useLoto = () => {
     }
   }, [state]);
 
-  // Load state from localStorage on mount
-  useEffect(() => {
-    try {
-      const savedState = localStorage.getItem('loto-state');
-      const savedImages = localStorage.getItem('loto-images');
-      
-      if (savedState) {
-        const parsedState = JSON.parse(savedState);
-        const parsedImages = savedImages ? JSON.parse(savedImages) : [];
-        
-        // Merge with default state to ensure all properties exist
-        setState(prev => ({
-          ...prev,
-          ...parsedState,
-          // Load images from localStorage
-          localImages: Array.isArray(parsedImages) ? parsedImages : [],
-          // Ensure other critical arrays/objects exist
-          drawnNumbers: Array.isArray(parsedState.drawnNumbers) ? parsedState.drawnNumbers : [],
-          gameHistory: Array.isArray(parsedState.gameHistory) ? parsedState.gameHistory : [],
-          prizeDescriptions: parsedState.prizeDescriptions || {
-            quine: '',
-            'double-quine': '',
-            'carton-plein': '',
-          },
-        }));
-        console.log('✅ State loaded from localStorage');
-      }
-    } catch (error) {
-      console.error('❌ Error loading saved state, using defaults:', error);
-      // Clear corrupted state
-      localStorage.removeItem('loto-state');
-      localStorage.removeItem('loto-images');
-    }
-  }, []);
 
   const startGame = useCallback((gameType: GameType) => {
     setState(prev => ({
