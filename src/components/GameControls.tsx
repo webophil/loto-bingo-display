@@ -83,7 +83,6 @@ export const GameControls = ({
               <RadioGroup
                 value={isBingoMode ? "bingo" : "loto"}
                 onValueChange={(value) => onToggleBingoMode()}
-                disabled={!!currentGame}
                 className="flex gap-6"
               >
                 <div className="flex items-center space-x-2">
@@ -109,7 +108,6 @@ export const GameControls = ({
               <RadioGroup
                 value={withDemarque ? "oui" : "non"}
                 onValueChange={(value) => onToggleDemarque()}
-                disabled={!!currentGame}
                 className="flex gap-6"
               >
                 <div className="flex items-center space-x-2">
@@ -135,7 +133,6 @@ export const GameControls = ({
               <RadioGroup
                 value={isQuinesDuSudMode ? "oui" : "non"}
                 onValueChange={(value) => onToggleQuinesDuSud()}
-                disabled={!!currentGame}
                 className="flex gap-6"
               >
                 <div className="flex items-center space-x-2">
