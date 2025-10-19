@@ -43,7 +43,7 @@ const Index = () => {
             <Card className="gradient-secondary border-border/50 hover:scale-105 transition-transform">
               <CardHeader>
                 <CardTitle className="text-2xl text-white flex items-center gap-3">
-                  <Monitor className="w-8 h-8" />
+                  <Monitor className="w-16 h-16" />
                   Écran Externe
                 </CardTitle>
               </CardHeader>
