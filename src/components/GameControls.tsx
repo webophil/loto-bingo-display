@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { GameType } from "@/hooks/useLoto";
-import { Play, Gift, Plus, Edit } from "lucide-react";
+import { Play, Gift, Plus, Edit, HelpCircle } from "lucide-react";
 import { ManualGrid } from "./ManualGrid";
 import { useState, useEffect } from "react";
 interface GameControlsProps {
@@ -74,6 +74,7 @@ export const GameControls = ({
   const [prizeList, setPrizeList] = useState<string[]>([]);
   const [prizeListText, setPrizeListText] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isHelpDialogOpen, setIsHelpDialogOpen] = useState(false);
 
   // Load prize list from localStorage on mount
   useEffect(() => {
@@ -167,7 +168,18 @@ export const GameControls = ({
           {/* Mode Rapide */}
           <div className="p-3 bg-loto-orange rounded-lg">
             <div className="flex items-center justify-between">
-              <Label className="font-extrabold text-white text-base">Mode Rapide</Label>
+              <div className="flex items-center gap-2">
+                <Label className="font-extrabold text-white text-base">Mode Rapide</Label>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsHelpDialogOpen(true)}
+                  className="h-6 w-6 p-0 hover:bg-white/20"
+                >
+                  <HelpCircle className="w-4 h-4 text-white" />
+                </Button>
+              </div>
               <RadioGroup
                 value={isQuinesDuSudMode ? "oui" : "non"}
                 onValueChange={(value) => onToggleQuinesDuSud()}
@@ -188,6 +200,29 @@ export const GameControls = ({
               </RadioGroup>
             </div>
           </div>
+
+          {/* Help Dialog for Mode Rapide */}
+          <Dialog open={isHelpDialogOpen} onOpenChange={setIsHelpDialogOpen}>
+            <DialogContent className="bg-card border-border max-w-2xl">
+              <DialogHeader>
+                <DialogTitle className="text-foreground text-xl">Le Mode Rapide, c'est quoi ?</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4 text-foreground">
+                <p>
+                  Le mode rapide vous permet d'enchainer plusieurs Quine (1 ligne) de suite, sans démarquer.
+                </p>
+                <p>
+                  Lorsque c'est gagné, ne cliquez pas automatiquement sur le bouton correspondant, en cas d'ex-aequos. Si vous départagez les gagnants en tirant de nouveaux numéros qui sont à marquer, vous pouvez continuer à les cocher normalement, et seulement après détermination du gagnant, cliquez sur "C'est gagné", puis reprise du jeu.
+                </p>
+                <p>
+                  Si les numéros sortis pour départager ont faits un (ou des) nouveau(x) gagnant(s), répétez la même procédure.
+                </p>
+                <p>
+                  Vous modifiez le lot Quine au fur et à mesure des tirages et des gagnants.
+                </p>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
 
         <div className="space-y-4">
