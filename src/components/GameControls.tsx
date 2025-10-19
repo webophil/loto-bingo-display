@@ -106,19 +106,20 @@ export const GameControls = ({
             <div className="flex items-center justify-between">
               <Label className="font-extrabold text-white text-base">Démarque</Label>
               <RadioGroup
-                value={withDemarque ? "oui" : "non"}
-                onValueChange={(value) => onToggleDemarque()}
+                value={isQuinesDuSudMode ? "non" : (withDemarque ? "oui" : "non")}
+                onValueChange={(value) => !isQuinesDuSudMode && onToggleDemarque()}
                 className="flex gap-6"
+                disabled={isQuinesDuSudMode}
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="oui" id="demarque-oui" className="border-white text-white" />
-                  <Label htmlFor="demarque-oui" className="text-gray-900 cursor-pointer font-bold text-base">
+                  <RadioGroupItem value="oui" id="demarque-oui" className="border-white text-white" disabled={isQuinesDuSudMode} />
+                  <Label htmlFor="demarque-oui" className={`cursor-pointer font-bold text-base ${isQuinesDuSudMode ? 'text-gray-600 cursor-not-allowed' : 'text-gray-900'}`}>
                     Oui
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="non" id="demarque-non" className="border-white text-white" />
-                  <Label htmlFor="demarque-non" className="text-gray-900 cursor-pointer font-bold text-base">
+                  <RadioGroupItem value="non" id="demarque-non" className="border-white text-white" disabled={isQuinesDuSudMode} />
+                  <Label htmlFor="demarque-non" className={`cursor-pointer font-bold text-base ${isQuinesDuSudMode ? 'text-gray-600 cursor-not-allowed' : 'text-gray-900'}`}>
                     Non
                   </Label>
                 </div>
