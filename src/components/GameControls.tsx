@@ -258,6 +258,12 @@ export const GameControls = ({
                       quine: e.target.value,
                     })
                   }
+                  onFocus={() =>
+                    onSetPrizeDescriptions({
+                      ...prizeDescriptions,
+                      quine: "",
+                    })
+                  }
                   placeholder="Ex: Panier..."
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
                 />
@@ -284,6 +290,12 @@ export const GameControls = ({
                       "double-quine": e.target.value,
                     })
                   }
+                  onFocus={() =>
+                    onSetPrizeDescriptions({
+                      ...prizeDescriptions,
+                      "double-quine": "",
+                    })
+                  }
                   placeholder="Ex: Voyage..."
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
                 />
@@ -308,6 +320,12 @@ export const GameControls = ({
                     onSetPrizeDescriptions({
                       ...prizeDescriptions,
                       "carton-plein": e.target.value,
+                    })
+                  }
+                  onFocus={() =>
+                    onSetPrizeDescriptions({
+                      ...prizeDescriptions,
+                      "carton-plein": "",
                     })
                   }
                   placeholder="Ex: Gros lot..."
