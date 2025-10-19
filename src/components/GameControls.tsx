@@ -191,9 +191,9 @@ export const GameControls = ({
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsHelpDialogOpen(true)}
-                  className="h-9 w-9 p-0 hover:bg-white/20"
+                  className="h-6 w-6 p-0 hover:bg-white/20"
                 >
-                  <HelpCircle className="w-4 h-4 text-white" />
+                  <HelpCircle className="w-6 h-6 text-black" />
                 </Button>
               </div>
               <RadioGroup
