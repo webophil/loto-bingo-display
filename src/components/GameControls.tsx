@@ -93,9 +93,9 @@ export const GameControls = ({
   const handleSavePrizeList = () => {
     const list = prizeListText
       .split("\n")
-      .map(line => line.trim())
-      .filter(line => line.length > 0);
-    
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+
     setPrizeList(list);
     localStorage.setItem("loto-prize-list", JSON.stringify(list));
     setIsDialogOpen(false);
@@ -144,20 +144,36 @@ export const GameControls = ({
             <div className="flex items-center justify-between">
               <Label className="font-extrabold text-white text-base">Démarque</Label>
               <RadioGroup
-                value={isQuinesDuSudMode ? "non" : (withDemarque ? "oui" : "non")}
+                value={isQuinesDuSudMode ? "non" : withDemarque ? "oui" : "non"}
                 onValueChange={(value) => !isQuinesDuSudMode && onToggleDemarque()}
                 className="flex gap-6"
                 disabled={isQuinesDuSudMode}
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="oui" id="demarque-oui" className="border-white text-white" disabled={isQuinesDuSudMode} />
-                  <Label htmlFor="demarque-oui" className={`cursor-pointer font-bold text-base ${isQuinesDuSudMode ? 'text-gray-600 cursor-not-allowed' : 'text-gray-900'}`}>
+                  <RadioGroupItem
+                    value="oui"
+                    id="demarque-oui"
+                    className="border-white text-white"
+                    disabled={isQuinesDuSudMode}
+                  />
+                  <Label
+                    htmlFor="demarque-oui"
+                    className={`cursor-pointer font-bold text-base ${isQuinesDuSudMode ? "text-gray-600 cursor-not-allowed" : "text-gray-900"}`}
+                  >
                     Oui
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="non" id="demarque-non" className="border-white text-white" disabled={isQuinesDuSudMode} />
-                  <Label htmlFor="demarque-non" className={`cursor-pointer font-bold text-base ${isQuinesDuSudMode ? 'text-gray-600 cursor-not-allowed' : 'text-gray-900'}`}>
+                  <RadioGroupItem
+                    value="non"
+                    id="demarque-non"
+                    className="border-white text-white"
+                    disabled={isQuinesDuSudMode}
+                  />
+                  <Label
+                    htmlFor="demarque-non"
+                    className={`cursor-pointer font-bold text-base ${isQuinesDuSudMode ? "text-gray-600 cursor-not-allowed" : "text-gray-900"}`}
+                  >
                     Non
                   </Label>
                 </div>
@@ -175,7 +191,7 @@ export const GameControls = ({
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsHelpDialogOpen(true)}
-                  className="h-6 w-6 p-0 hover:bg-white/20"
+                  className="h-9 w-9 p-0 hover:bg-white/20"
                 >
                   <HelpCircle className="w-4 h-4 text-white" />
                 </Button>
@@ -208,18 +224,18 @@ export const GameControls = ({
                 <DialogTitle className="text-foreground text-xl">Le Mode Rapide, c'est quoi ?</DialogTitle>
               </DialogHeader>
               <div className="space-y-4 text-foreground">
+                <p>Le mode rapide vous permet d'enchainer plusieurs Quine (1 ligne) de suite, sans démarquer.</p>
                 <p>
-                  Le mode rapide vous permet d'enchainer plusieurs Quine (1 ligne) de suite, sans démarquer.
+                  Lorsque c'est gagné, ne cliquez pas automatiquement sur le bouton correspondant, en cas d'ex-aequos.
+                  Si vous départagez les gagnants en tirant de nouveaux numéros qui sont à marquer, vous pouvez
+                  continuer à les cocher normalement, et seulement après détermination du gagnant, cliquez sur "C'est
+                  gagné", puis reprise du jeu.
                 </p>
                 <p>
-                  Lorsque c'est gagné, ne cliquez pas automatiquement sur le bouton correspondant, en cas d'ex-aequos. Si vous départagez les gagnants en tirant de nouveaux numéros qui sont à marquer, vous pouvez continuer à les cocher normalement, et seulement après détermination du gagnant, cliquez sur "C'est gagné", puis reprise du jeu.
+                  Si les numéros sortis pour départager ont faits un (ou des) nouveau(x) gagnant(s), répétez la même
+                  procédure.
                 </p>
-                <p>
-                  Si les numéros sortis pour départager ont faits un (ou des) nouveau(x) gagnant(s), répétez la même procédure.
-                </p>
-                <p>
-                  Vous modifiez le lot Quine au fur et à mesure des tirages et des gagnants.
-                </p>
+                <p>Vous modifiez le lot Quine au fur et à mesure des tirages et des gagnants.</p>
               </div>
             </DialogContent>
           </Dialog>
@@ -230,9 +246,7 @@ export const GameControls = ({
           <div className="space-y-3">
             {!currentGame && (
               <div className="flex items-center justify-between mb-2">
-                <Label className="text-white font-bold text-lg">
-                  LOTS
-                </Label>
+                <Label className="text-white font-bold text-lg">LOTS</Label>
                 <div className="flex gap-2">
                   <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger asChild>
@@ -262,7 +276,7 @@ export const GameControls = ({
                       </Button>
                     </DialogContent>
                   </Dialog>
-                  
+
                   <Button
                     type="button"
                     variant="outline"
@@ -389,13 +403,21 @@ export const GameControls = ({
               onClick={() => onStartGame("double-quine")}
               className="bg-gradient-to-b from-blue-900 to-blue-500 hover:from-blue-800 hover:to-blue-400 text-white font-semibold text-lg h-24 flex items-center justify-center"
             >
-              <span className="text-center leading-tight">Double<br/>Quine</span>
+              <span className="text-center leading-tight">
+                Double
+                <br />
+                Quine
+              </span>
             </Button>
             <Button
               onClick={() => onStartGame("carton-plein")}
               className="bg-gradient-to-b from-blue-900 to-blue-500 hover:from-blue-800 hover:to-blue-400 text-white font-semibold text-lg h-24 flex items-center justify-center"
             >
-              <span className="text-center leading-tight">Carton<br/>Plein</span>
+              <span className="text-center leading-tight">
+                Carton
+                <br />
+                Plein
+              </span>
             </Button>
           </div>
 
@@ -407,7 +429,8 @@ export const GameControls = ({
                 </Badge>
                 <p className="text-white/80 mt-2">
                   {drawnNumbers.length} numéro{drawnNumbers.length > 1 ? "s" : ""} tiré
-                  {drawnNumbers.length > 1 ? "s" : ""} • {isBingoMode ? "Bingo" : "Loto"} • {withDemarque ? "Avec" : "Sans"} démarque
+                  {drawnNumbers.length > 1 ? "s" : ""} • {isBingoMode ? "Bingo" : "Loto"} •{" "}
+                  {withDemarque ? "Avec" : "Sans"} démarque
                   {isQuinesDuSudMode && " • Rapide"}
                 </p>
                 {currentGame && prizeDescriptions[currentGame] && (
