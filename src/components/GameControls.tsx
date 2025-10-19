@@ -6,9 +6,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 import { GameType } from "@/hooks/useLoto";
-import { Play, Gift } from "lucide-react";
+import { Play, Gift, Plus, Edit } from "lucide-react";
 import { ManualGrid } from "./ManualGrid";
+import { useState, useEffect } from "react";
 interface GameControlsProps {
   currentGame: GameType | null;
   drawnNumbers: number[];
@@ -68,6 +71,40 @@ export const GameControls = ({
   onSetWinning,
   onResumeGame,
 }: GameControlsProps) => {
+  const [prizeList, setPrizeList] = useState<string[]>([]);
+  const [prizeListText, setPrizeListText] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // Load prize list from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("loto-prize-list");
+    if (saved) {
+      try {
+        const list = JSON.parse(saved);
+        setPrizeList(list);
+        setPrizeListText(list.join("\n"));
+      } catch (e) {
+        console.error("Error loading prize list", e);
+      }
+    }
+  }, []);
+
+  const handleSavePrizeList = () => {
+    const list = prizeListText
+      .split("\n")
+      .map(line => line.trim())
+      .filter(line => line.length > 0);
+    
+    setPrizeList(list);
+    localStorage.setItem("loto-prize-list", JSON.stringify(list));
+    setIsDialogOpen(false);
+  };
+
+  const handleOpenDialog = () => {
+    setPrizeListText(prizeList.join("\n"));
+    setIsDialogOpen(true);
+  };
+
   return (
     <Card className="gradient-secondary border-border/50">
       <CardHeader>
@@ -157,10 +194,53 @@ export const GameControls = ({
           {/* Prize Descriptions - Always visible */}
           <div className="space-y-3">
             {!currentGame && (
-              <Label className="text-white font-medium">
-                <Gift className="w-4 h-4 inline mr-2" />
-                Lots à gagner par étape
-              </Label>
+              <div className="flex items-center justify-between mb-2">
+                <Label className="text-white font-bold text-lg">
+                  LOTS
+                </Label>
+                <div className="flex gap-2">
+                  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={handleOpenDialog}
+                        className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                      >
+                        <Plus className="w-4 h-4 mr-1" />
+                        créer liste lots
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="bg-card border-border">
+                      <DialogHeader>
+                        <DialogTitle className="text-foreground">Entrez un lot par ligne</DialogTitle>
+                      </DialogHeader>
+                      <Textarea
+                        value={prizeListText}
+                        onChange={(e) => setPrizeListText(e.target.value)}
+                        placeholder="Exemple:&#10;Panier garni&#10;Bon d'achat 50€&#10;Voyage week-end"
+                        className="min-h-[200px] bg-background text-foreground"
+                      />
+                      <Button onClick={handleSavePrizeList} className="w-full">
+                        Valider
+                      </Button>
+                    </DialogContent>
+                  </Dialog>
+                  
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleOpenDialog}
+                    disabled={prizeList.length === 0}
+                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Edit className="w-4 h-4 mr-1" />
+                    modifier
+                  </Button>
+                </div>
+              </div>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -170,6 +250,7 @@ export const GameControls = ({
                 </Label>
                 <Input
                   id="prize-quine"
+                  list={prizeList.length > 0 ? "prize-list-quine" : undefined}
                   value={prizeDescriptions.quine}
                   onChange={(e) =>
                     onSetPrizeDescriptions({
@@ -180,6 +261,13 @@ export const GameControls = ({
                   placeholder="Ex: Panier..."
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
                 />
+                {prizeList.length > 0 && (
+                  <datalist id="prize-list-quine">
+                    {prizeList.map((prize, idx) => (
+                      <option key={idx} value={prize} />
+                    ))}
+                  </datalist>
+                )}
               </div>
 
               <div>
@@ -188,6 +276,7 @@ export const GameControls = ({
                 </Label>
                 <Input
                   id="prize-double-quine"
+                  list={prizeList.length > 0 ? "prize-list-double" : undefined}
                   value={prizeDescriptions["double-quine"]}
                   onChange={(e) =>
                     onSetPrizeDescriptions({
@@ -198,6 +287,13 @@ export const GameControls = ({
                   placeholder="Ex: Voyage..."
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
                 />
+                {prizeList.length > 0 && (
+                  <datalist id="prize-list-double">
+                    {prizeList.map((prize, idx) => (
+                      <option key={idx} value={prize} />
+                    ))}
+                  </datalist>
+                )}
               </div>
 
               <div>
@@ -206,6 +302,7 @@ export const GameControls = ({
                 </Label>
                 <Input
                   id="prize-carton-plein"
+                  list={prizeList.length > 0 ? "prize-list-carton" : undefined}
                   value={prizeDescriptions["carton-plein"]}
                   onChange={(e) =>
                     onSetPrizeDescriptions({
@@ -216,6 +313,13 @@ export const GameControls = ({
                   placeholder="Ex: Gros lot..."
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 text-sm"
                 />
+                {prizeList.length > 0 && (
+                  <datalist id="prize-list-carton">
+                    {prizeList.map((prize, idx) => (
+                      <option key={idx} value={prize} />
+                    ))}
+                  </datalist>
+                )}
               </div>
             </div>
           </div>
