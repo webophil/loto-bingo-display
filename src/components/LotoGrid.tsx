@@ -23,12 +23,12 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
   if (isBingoMode) {
     return (
       <div 
-        className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0 items-center"
+        className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0 items-center overflow-hidden"
         style={{ 
-          gridTemplateColumns: 'auto repeat(15, 1fr)',
-          columnGap: 'clamp(0.17rem, 0.34vw, 0.56rem)',
+          gridTemplateColumns: 'minmax(0, auto) repeat(15, minmax(0, 1fr))',
+          columnGap: 'clamp(0.1rem, 0.2vw, 0.4rem)',
           rowGap: 'clamp(0.032rem, 0.065vh, 0.097rem)',
-          padding: 'clamp(0.3rem, 0.6vh, 1rem) clamp(0.3rem, 0.6vw, 1rem)',
+          padding: 'clamp(0.3rem, 0.6vh, 1rem)',
           width: '100%',
           height: '100%',
           maxWidth: '100%',
@@ -39,10 +39,12 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
           <>
             <div 
               key={`letter-${rowIndex}`} 
-              className={`flex items-center justify-center font-bold aspect-square rounded-lg ${bingoLetterColors[rowIndex]}`}
+              className={`flex items-center justify-center font-bold rounded-lg flex-shrink-0 ${bingoLetterColors[rowIndex]}`}
               style={{ 
-                fontSize: 'clamp(2rem, 5vmin, 7rem)',
-                marginRight: 'clamp(0.3rem, 0.8vw, 1.5rem)'
+                fontSize: 'clamp(1.5rem, 4vmin, 5rem)',
+                width: 'clamp(2.5rem, 6vmin, 8rem)',
+                height: 'clamp(2.5rem, 6vmin, 8rem)',
+                marginRight: 'clamp(0.2rem, 0.4vw, 0.8rem)'
               }}
             >
               {bingoLetters[rowIndex]}
