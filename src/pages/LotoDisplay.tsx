@@ -239,10 +239,10 @@ const LotoDisplay = () => {
         </div>
       )}
 
-      <header className="text-center flex-shrink-0 w-full">
+      <header className="text-center flex-shrink-0 w-full px-2">
         {displayState.currentGame && (
-          <div className="flex items-center justify-center flex-wrap gap-2">
-            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow text-xs sm:text-sm md:text-base lg:text-lg px-2 py-1 sm:px-3 sm:py-1.5">
+          <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3">
+            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl px-3 py-1.5 sm:px-4 sm:py-2">
               {displayState.currentGame === "quine" && "🎯 QUINE"}
               {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
               {displayState.currentGame === "carton-plein" && "🏆 CARTON PLEIN"}
@@ -250,20 +250,20 @@ const LotoDisplay = () => {
             </Badge>
 
             {currentPrize && (
-              <div className="text-white font-semibold bg-white/8 rounded-full text-xs sm:text-sm md:text-base lg:text-lg px-2 py-1 sm:px-3 sm:py-1.5 max-w-[90%] truncate">
+              <div className="text-white font-semibold bg-white/8 rounded-full text-sm sm:text-base md:text-lg lg:text-xl px-3 py-1.5 sm:px-4 sm:py-2 max-w-[90%] truncate">
                 🎁 {currentPrize}
               </div>
             )}
 
             {!displayState.withDemarque && displayState.currentGame !== "carton-plein" && (
-              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full text-xs sm:text-sm md:text-base lg:text-lg px-2 py-1 sm:px-3 sm:py-1.5">
+              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full text-sm sm:text-base md:text-lg lg:text-xl px-3 py-1.5 sm:px-4 sm:py-2">
                 ⚠️ SANS DEMARQUER ⚠️
               </div>
             )}
 
             {latestNumber && !displayState.isWinning && (
-              <div className="flex items-center gap-2">
-                <div className="flex flex-col items-end font-semibold text-foreground leading-tight text-xs sm:text-sm md:text-base">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="flex flex-col items-end font-semibold text-foreground leading-tight text-sm sm:text-base md:text-lg lg:text-xl">
                   <p>Dernier</p>
                   <p>sorti</p>
                 </div>
@@ -297,12 +297,12 @@ const LotoDisplay = () => {
       )}
 
       {!displayState.isWinning && (
-        <footer className="text-center flex-shrink-0 w-full">
-          <p className="text-muted-foreground text-xs sm:text-sm md:text-base lg:text-lg mb-1">
+        <footer className="text-center flex-shrink-0 w-full px-2">
+          <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-1">
             {displayState.drawnNumbers.length} / {displayState.isBingoMode ? 75 : 90} numéros tirés
           </p>
           {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
-            <p className="text-muted-foreground italic text-xs sm:text-sm md:text-base">En attente du prochain tirage...</p>
+            <p className="text-muted-foreground italic text-sm sm:text-base md:text-lg lg:text-xl">En attente du prochain tirage...</p>
           )}
         </footer>
       )}
