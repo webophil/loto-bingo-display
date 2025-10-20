@@ -218,7 +218,7 @@ const LotoDisplay = () => {
 
   // Render normal Loto mode
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center relative overflow-hidden" style={{ padding: '0.5vh 0.5vw', gap: 'clamp(0.25rem, 0.5vh, 0.75rem)' }}>
+    <div className="h-screen w-screen flex flex-col items-center justify-center relative overflow-hidden" style={{ padding: '0.25vh 0.5vw', gap: 'clamp(0.1rem, 0.2vh, 0.3rem)' }}>
       {/* Winning Banner */}
       {displayState.isWinning && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
@@ -239,10 +239,10 @@ const LotoDisplay = () => {
         </div>
       )}
 
-      <header className="text-center flex-shrink-0" style={{ marginBottom: 'clamp(0.15rem, 0.3vh, 0.4rem)' }}>
+      <header className="text-center flex-shrink-0" style={{ marginBottom: 'clamp(0.1rem, 0.2vh, 0.3rem)' }}>
         {displayState.currentGame && (
-          <div className="flex items-center justify-center flex-wrap" style={{ gap: 'clamp(0.4rem, 1vw, 1.5rem)' }}>
-            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow" style={{ fontSize: 'clamp(0.875rem, calc(1vw + 1vh), 2rem)', padding: 'clamp(0.5rem, 1.5vh, 1rem) clamp(1rem, 3vw, 3rem)' }}>
+          <div className="flex items-center justify-center flex-wrap" style={{ gap: 'clamp(0.3rem, 0.8vw, 1rem)' }}>
+            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow" style={{ fontSize: 'clamp(0.75rem, calc(0.8vw + 0.8vh), 1.5rem)', padding: 'clamp(0.3rem, 1vh, 0.75rem) clamp(0.75rem, 2vw, 2rem)' }}>
               {displayState.currentGame === "quine" && "🎯 QUINE"}
               {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
               {displayState.currentGame === "carton-plein" && "🏆 CARTON PLEIN"}
@@ -250,20 +250,20 @@ const LotoDisplay = () => {
             </Badge>
 
             {currentPrize && (
-              <div className="text-white font-semibold bg-white/8 rounded-full" style={{ fontSize: 'clamp(0.875rem, calc(1vw + 1vh), 2rem)', padding: 'clamp(0.375rem, 1vh, 0.75rem) clamp(0.75rem, 2vw, 2rem)' }}>
+              <div className="text-white font-semibold bg-white/8 rounded-full" style={{ fontSize: 'clamp(0.75rem, calc(0.8vw + 0.8vh), 1.5rem)', padding: 'clamp(0.25rem, 0.8vh, 0.6rem) clamp(0.6rem, 1.5vw, 1.5rem)' }}>
                 🎁 {currentPrize}
               </div>
             )}
 
             {!displayState.withDemarque && displayState.currentGame !== "carton-plein" && (
-              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full" style={{ fontSize: 'clamp(0.875rem, calc(1vw + 1vh), 2rem)', padding: 'clamp(0.375rem, 1vh, 0.75rem) clamp(0.75rem, 2vw, 2rem)' }}>
+              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full" style={{ fontSize: 'clamp(0.75rem, calc(0.8vw + 0.8vh), 1.5rem)', padding: 'clamp(0.25rem, 0.8vh, 0.6rem) clamp(0.6rem, 1.5vw, 1.5rem)' }}>
                 ⚠️ SANS DEMARQUER ⚠️
               </div>
             )}
 
             {latestNumber && !displayState.isWinning && (
-              <div className="flex items-center" style={{ gap: 'clamp(0.5rem, 1.5vw, 2rem)' }}>
-                <div className="flex flex-col items-end font-semibold text-foreground leading-tight" style={{ fontSize: 'clamp(0.75rem, calc(0.8vw + 0.8vh), 1.5rem)' }}>
+              <div className="flex items-center" style={{ gap: 'clamp(0.4rem, 1vw, 1.5rem)' }}>
+                <div className="flex flex-col items-end font-semibold text-foreground leading-tight" style={{ fontSize: 'clamp(0.65rem, calc(0.7vw + 0.7vh), 1.25rem)' }}>
                   <p>Dernier</p>
                   <p>sorti</p>
                 </div>
@@ -272,9 +272,9 @@ const LotoDisplay = () => {
                     latestNumber,
                   )}`}
                   style={{ 
-                    width: 'clamp(4rem, 12vmin, 12rem)', 
-                    height: 'clamp(4rem, 12vmin, 12rem)', 
-                    fontSize: 'clamp(2rem, 8vmin, 8rem)',
+                    width: 'clamp(3.5rem, 10vmin, 10rem)', 
+                    height: 'clamp(3.5rem, 10vmin, 10rem)', 
+                    fontSize: 'clamp(1.75rem, 6vmin, 6rem)',
                     boxShadow: "var(--shadow-glow)" 
                   }}
                 >

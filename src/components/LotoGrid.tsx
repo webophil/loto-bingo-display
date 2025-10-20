@@ -26,13 +26,13 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
         className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0 items-center"
         style={{ 
           gridTemplateColumns: 'auto repeat(15, 1fr)',
-          gap: '0 clamp(0.3rem, 0.6vw, 1rem)',
-          rowGap: 'clamp(0.25rem, 0.5vh, 0.75rem)',
+          gap: '0 clamp(0.21rem, 0.42vw, 0.7rem)',
+          rowGap: 'clamp(0.15rem, 0.3vh, 0.45rem)',
           padding: 'clamp(0.5rem, 1.5vh, 2rem) clamp(0.75rem, 2vw, 3rem)',
           width: '90vw',
           height: '90vh',
           maxWidth: '90vw',
-          maxHeight: '90vh'
+          maxHeight: '100%'
         }}
       >
         {Array.from({ length: 5 }).map((_, rowIndex) => (
@@ -66,12 +66,12 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
       className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0"
       style={{ 
         gridTemplateColumns: 'repeat(15, 1fr)',
-        gap: 'clamp(0.15rem, 0.3vmin, 0.5rem)',
+        gap: 'clamp(0.09rem, 0.18vmin, 0.3rem)',
         padding: 'clamp(0.5rem, 1.5vh, 2rem) clamp(0.75rem, 2vw, 3rem)',
         width: '90vw',
         height: '90vh',
         maxWidth: '90vw',
-        maxHeight: '90vh'
+        maxHeight: '100%'
       }}
     >
       {numbers.map((number) => (
