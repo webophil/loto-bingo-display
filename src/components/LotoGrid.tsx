@@ -27,7 +27,7 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
         style={{ 
           gridTemplateColumns: 'auto repeat(15, 1fr)',
           gap: '0 clamp(0.3rem, 0.6vw, 1rem)',
-          rowGap: 'clamp(0.5rem, 1vh, 1.5rem)',
+          rowGap: 'clamp(0.25rem, 0.5vh, 0.75rem)',
           padding: 'clamp(0.5rem, 1.5vh, 2rem) clamp(0.75rem, 2vw, 3rem)',
           width: '90vw',
           height: '90vh',
@@ -66,7 +66,7 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
       className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0"
       style={{ 
         gridTemplateColumns: 'repeat(15, 1fr)',
-        gap: 'clamp(0.3rem, 0.6vmin, 1rem)',
+        gap: 'clamp(0.15rem, 0.3vmin, 0.5rem)',
         padding: 'clamp(0.5rem, 1.5vh, 2rem) clamp(0.75rem, 2vw, 3rem)',
         width: '90vw',
         height: '90vh',
