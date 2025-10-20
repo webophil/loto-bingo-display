@@ -23,15 +23,16 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
   if (isBingoMode) {
     return (
       <div 
-        className="grid bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50 flex-shrink-0 items-center"
+        className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0 items-center"
         style={{ 
           gridTemplateColumns: 'auto repeat(15, 1fr)',
-          gap: '0 clamp(0.2rem, 0.4vw, 0.6rem)',
-          rowGap: 'clamp(0.4rem, 0.8vh, 1.2rem)',
-          padding: 'clamp(1rem, 2.5vh, 3rem) clamp(1.5rem, 3vw, 4rem)',
-          maxWidth: '95vw',
-          height: 'auto',
-          maxHeight: '100%'
+          gap: '0 clamp(0.3rem, 0.6vw, 1rem)',
+          rowGap: 'clamp(0.5rem, 1vh, 1.5rem)',
+          padding: 'clamp(0.5rem, 1.5vh, 2rem) clamp(0.75rem, 2vw, 3rem)',
+          width: '90vw',
+          height: '90vh',
+          maxWidth: '90vw',
+          maxHeight: '90vh'
         }}
       >
         {Array.from({ length: 5 }).map((_, rowIndex) => (
@@ -40,8 +41,8 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
               key={`letter-${rowIndex}`} 
               className={`flex items-center justify-center font-bold aspect-square rounded-lg ${bingoLetterColors[rowIndex]}`}
               style={{ 
-                fontSize: 'clamp(1.5rem, 4vmin, 4rem)',
-                marginRight: 'clamp(0.25rem, 0.5vw, 1rem)'
+                fontSize: 'clamp(2rem, 5vmin, 7rem)',
+                marginRight: 'clamp(0.3rem, 0.8vw, 1.5rem)'
               }}
             >
               {bingoLetters[rowIndex]}
@@ -62,14 +63,15 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
 
   return (
     <div 
-      className="grid bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50 flex-shrink-0"
+      className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0"
       style={{ 
         gridTemplateColumns: 'repeat(15, 1fr)',
-        gap: 'clamp(0.2rem, 0.4vmin, 0.6rem)',
-        padding: 'clamp(1rem, 2.5vh, 3rem) clamp(1.5rem, 3vw, 4rem)',
-        maxWidth: '95vw',
-        height: 'auto',
-        maxHeight: '100%'
+        gap: 'clamp(0.3rem, 0.6vmin, 1rem)',
+        padding: 'clamp(0.5rem, 1.5vh, 2rem) clamp(0.75rem, 2vw, 3rem)',
+        width: '90vw',
+        height: '90vh',
+        maxWidth: '90vw',
+        maxHeight: '90vh'
       }}
     >
       {numbers.map((number) => (

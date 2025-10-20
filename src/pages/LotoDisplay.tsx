@@ -218,7 +218,7 @@ const LotoDisplay = () => {
 
   // Render normal Loto mode
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center relative overflow-hidden" style={{ padding: '1vh 1vw', gap: 'clamp(0.25rem, 1vh, 1rem)' }}>
+    <div className="h-screen w-screen flex flex-col items-center justify-center relative overflow-hidden" style={{ padding: '0.5vh 0.5vw', gap: 'clamp(0.25rem, 0.5vh, 0.75rem)' }}>
       {/* Winning Banner */}
       {displayState.isWinning && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
@@ -239,9 +239,9 @@ const LotoDisplay = () => {
         </div>
       )}
 
-      <header className="text-center flex-shrink-0" style={{ marginBottom: 'clamp(0.25rem, 0.5vh, 0.5rem)' }}>
+      <header className="text-center flex-shrink-0" style={{ marginBottom: 'clamp(0.15rem, 0.3vh, 0.4rem)' }}>
         {displayState.currentGame && (
-          <div className="flex items-center justify-center flex-wrap" style={{ gap: 'clamp(0.5rem, 1.5vw, 2rem)' }}>
+          <div className="flex items-center justify-center flex-wrap" style={{ gap: 'clamp(0.4rem, 1vw, 1.5rem)' }}>
             <Badge className="gradient-secondary text-white font-bold animate-pulse-glow" style={{ fontSize: 'clamp(0.875rem, calc(1vw + 1vh), 2rem)', padding: 'clamp(0.5rem, 1.5vh, 1rem) clamp(1rem, 3vw, 3rem)' }}>
               {displayState.currentGame === "quine" && "🎯 QUINE"}
               {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
@@ -287,7 +287,7 @@ const LotoDisplay = () => {
       </header>
 
       {!displayState.isWinning && (
-        <div className="flex-1 flex items-center justify-center" style={{ minHeight: 0, maxHeight: '90vh' }}>
+        <div className="flex items-center justify-center" style={{ width: '100%', height: '100%', maxHeight: '95vh' }}>
           <LotoGrid
             drawnNumbers={displayState.drawnNumbers}
             isDrawing={displayState.isDrawing}
