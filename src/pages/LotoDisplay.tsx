@@ -218,7 +218,7 @@ const LotoDisplay = () => {
 
   // Render normal Loto mode
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center relative overflow-hidden" style={{ padding: '0.25vh 0.5vw', gap: 'clamp(0.1rem, 0.2vh, 0.3rem)' }}>
+    <div className="h-screen w-screen flex flex-col items-center justify-between relative overflow-hidden p-2">
       {/* Winning Banner */}
       {displayState.isWinning && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
@@ -239,10 +239,10 @@ const LotoDisplay = () => {
         </div>
       )}
 
-      <header className="text-center flex-shrink-0" style={{ marginBottom: 'clamp(0.1rem, 0.2vh, 0.3rem)' }}>
+      <header className="text-center flex-shrink-0 w-full">
         {displayState.currentGame && (
-          <div className="flex items-center justify-center flex-wrap" style={{ gap: 'clamp(0.3rem, 0.8vw, 1rem)' }}>
-            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow" style={{ fontSize: 'clamp(0.75rem, calc(0.8vw + 0.8vh), 1.5rem)', padding: 'clamp(0.3rem, 1vh, 0.75rem) clamp(0.75rem, 2vw, 2rem)' }}>
+          <div className="flex items-center justify-center flex-wrap gap-2">
+            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow text-xs sm:text-sm md:text-base lg:text-lg px-2 py-1 sm:px-3 sm:py-1.5">
               {displayState.currentGame === "quine" && "🎯 QUINE"}
               {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
               {displayState.currentGame === "carton-plein" && "🏆 CARTON PLEIN"}
@@ -250,20 +250,20 @@ const LotoDisplay = () => {
             </Badge>
 
             {currentPrize && (
-              <div className="text-white font-semibold bg-white/8 rounded-full" style={{ fontSize: 'clamp(0.75rem, calc(0.8vw + 0.8vh), 1.5rem)', padding: 'clamp(0.25rem, 0.8vh, 0.6rem) clamp(0.6rem, 1.5vw, 1.5rem)' }}>
+              <div className="text-white font-semibold bg-white/8 rounded-full text-xs sm:text-sm md:text-base lg:text-lg px-2 py-1 sm:px-3 sm:py-1.5 max-w-[90%] truncate">
                 🎁 {currentPrize}
               </div>
             )}
 
             {!displayState.withDemarque && displayState.currentGame !== "carton-plein" && (
-              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full" style={{ fontSize: 'clamp(0.75rem, calc(0.8vw + 0.8vh), 1.5rem)', padding: 'clamp(0.25rem, 0.8vh, 0.6rem) clamp(0.6rem, 1.5vw, 1.5rem)' }}>
+              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full text-xs sm:text-sm md:text-base lg:text-lg px-2 py-1 sm:px-3 sm:py-1.5">
                 ⚠️ SANS DEMARQUER ⚠️
               </div>
             )}
 
             {latestNumber && !displayState.isWinning && (
-              <div className="flex items-center" style={{ gap: 'clamp(0.4rem, 1vw, 1.5rem)' }}>
-                <div className="flex flex-col items-end font-semibold text-foreground leading-tight" style={{ fontSize: 'clamp(0.65rem, calc(0.7vw + 0.7vh), 1.25rem)' }}>
+              <div className="flex items-center gap-2">
+                <div className="flex flex-col items-end font-semibold text-foreground leading-tight text-xs sm:text-sm md:text-base">
                   <p>Dernier</p>
                   <p>sorti</p>
                 </div>
@@ -272,9 +272,9 @@ const LotoDisplay = () => {
                     latestNumber,
                   )}`}
                   style={{ 
-                    width: 'clamp(3.5rem, 10vmin, 10rem)', 
-                    height: 'clamp(3.5rem, 10vmin, 10rem)', 
-                    fontSize: 'clamp(1.75rem, 6vmin, 6rem)',
+                    width: 'clamp(3rem, 8vmin, 10rem)', 
+                    height: 'clamp(3rem, 8vmin, 10rem)', 
+                    fontSize: 'clamp(1.5rem, 5vmin, 6rem)',
                     boxShadow: "var(--shadow-glow)" 
                   }}
                 >
@@ -287,7 +287,7 @@ const LotoDisplay = () => {
       </header>
 
       {!displayState.isWinning && (
-        <div className="flex items-center justify-center" style={{ width: '100%', height: '100%', maxHeight: '95vh' }}>
+        <div className="flex items-center justify-center flex-1 w-full min-h-0">
           <LotoGrid
             drawnNumbers={displayState.drawnNumbers}
             isDrawing={displayState.isDrawing}
@@ -297,12 +297,12 @@ const LotoDisplay = () => {
       )}
 
       {!displayState.isWinning && (
-        <footer className="text-center">
-          <p className="text-muted-foreground" style={{ fontSize: 'clamp(0.875rem, calc(1vw + 1vh), 1.5rem)', marginBottom: 'clamp(0.25rem, 0.5vh, 0.75rem)' }}>
+        <footer className="text-center flex-shrink-0 w-full">
+          <p className="text-muted-foreground text-xs sm:text-sm md:text-base lg:text-lg mb-1">
             {displayState.drawnNumbers.length} / {displayState.isBingoMode ? 75 : 90} numéros tirés
           </p>
           {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
-            <p className="text-muted-foreground italic" style={{ fontSize: 'clamp(0.75rem, calc(0.8vw + 0.8vh), 1.25rem)' }}>En attente du prochain tirage...</p>
+            <p className="text-muted-foreground italic text-xs sm:text-sm md:text-base">En attente du prochain tirage...</p>
           )}
         </footer>
       )}
