@@ -135,7 +135,7 @@ const Index = () => {
                 <p className="text-muted-foreground text-sm">
                   Quine, Double Quine,
                   <br />
-                  Mode Quine Rapide, Carton Plein
+                  Carton Plein, Mode Rapide
                 </p>
               </div>
               <div className="space-y-2">
