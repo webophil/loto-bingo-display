@@ -27,10 +27,10 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
         style={{ 
           gridTemplateColumns: 'auto repeat(15, 1fr)',
           columnGap: 'clamp(0.17rem, 0.34vw, 0.56rem)',
-          rowGap: 'clamp(0.054rem, 0.108vh, 0.162rem)',
-          padding: 'clamp(0.5rem, 1vh, 1.5rem) clamp(0.5rem, 1vw, 2rem)',
-          width: 'min(90vw, 100%)',
-          height: 'min(90vh, 100%)',
+          rowGap: 'clamp(0.032rem, 0.065vh, 0.097rem)',
+          padding: 'clamp(0.3rem, 0.6vh, 1rem) clamp(0.3rem, 0.6vw, 1rem)',
+          width: '100%',
+          height: '100%',
           maxWidth: '100%',
           maxHeight: '100%'
         }}
@@ -67,10 +67,10 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
       style={{ 
         gridTemplateColumns: 'repeat(15, 1fr)',
         columnGap: 'clamp(0.072rem, 0.144vw, 0.24rem)',
-        rowGap: 'clamp(0.0324rem, 0.0648vh, 0.108rem)',
-        padding: 'clamp(0.5rem, 1vh, 1.5rem) clamp(0.5rem, 1vw, 2rem)',
-        width: 'min(90vw, 100%)',
-        height: 'min(90vh, 100%)',
+        rowGap: 'clamp(0.019rem, 0.039vh, 0.065rem)',
+        padding: 'clamp(0.3rem, 0.6vh, 1rem) clamp(0.3rem, 0.6vw, 1rem)',
+        width: '100%',
+        height: '100%',
         maxWidth: '100%',
         maxHeight: '100%'
       }}

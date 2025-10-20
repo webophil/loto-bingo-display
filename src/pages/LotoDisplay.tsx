@@ -218,7 +218,7 @@ const LotoDisplay = () => {
 
   // Render normal Loto mode
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-between relative overflow-hidden p-2">
+    <div className="h-screen w-screen flex flex-col items-center justify-between relative overflow-hidden p-1 sm:p-2">
       {/* Winning Banner */}
       {displayState.isWinning && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
@@ -239,10 +239,10 @@ const LotoDisplay = () => {
         </div>
       )}
 
-      <header className="text-center flex-shrink-0 w-full px-2">
+      <header className="text-center flex-shrink-0 w-full px-1 sm:px-2">
         {displayState.currentGame && (
-          <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3">
-            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl px-3 py-1.5 sm:px-4 sm:py-2">
+          <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 md:gap-4">
+            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl px-4 py-2 sm:px-6 sm:py-3">
               {displayState.currentGame === "quine" && "🎯 QUINE"}
               {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
               {displayState.currentGame === "carton-plein" && "🏆 CARTON PLEIN"}
@@ -250,20 +250,20 @@ const LotoDisplay = () => {
             </Badge>
 
             {currentPrize && (
-              <div className="text-white font-semibold bg-white/8 rounded-full text-sm sm:text-base md:text-lg lg:text-xl px-3 py-1.5 sm:px-4 sm:py-2 max-w-[90%] truncate">
+              <div className="text-white font-semibold bg-white/8 rounded-full text-lg sm:text-xl md:text-2xl lg:text-3xl px-4 py-2 sm:px-6 sm:py-3 max-w-[90%] truncate">
                 🎁 {currentPrize}
               </div>
             )}
 
             {!displayState.withDemarque && displayState.currentGame !== "carton-plein" && (
-              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full text-sm sm:text-base md:text-lg lg:text-xl px-3 py-1.5 sm:px-4 sm:py-2">
+              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full text-lg sm:text-xl md:text-2xl lg:text-3xl px-4 py-2 sm:px-6 sm:py-3">
                 ⚠️ SANS DEMARQUER ⚠️
               </div>
             )}
 
             {latestNumber && !displayState.isWinning && (
-              <div className="flex items-center gap-2 sm:gap-3">
-                <div className="flex flex-col items-end font-semibold text-foreground leading-tight text-sm sm:text-base md:text-lg lg:text-xl">
+              <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
+                <div className="flex flex-col items-end font-semibold text-foreground leading-tight text-xl sm:text-2xl md:text-3xl lg:text-4xl">
                   <p>Dernier</p>
                   <p>sorti</p>
                 </div>
@@ -272,9 +272,9 @@ const LotoDisplay = () => {
                     latestNumber,
                   )}`}
                   style={{ 
-                    width: 'clamp(3rem, 8vmin, 10rem)', 
-                    height: 'clamp(3rem, 8vmin, 10rem)', 
-                    fontSize: 'clamp(1.5rem, 5vmin, 6rem)',
+                    width: 'clamp(4rem, 12vmin, 16rem)', 
+                    height: 'clamp(4rem, 12vmin, 16rem)', 
+                    fontSize: 'clamp(2rem, 8vmin, 10rem)',
                     boxShadow: "var(--shadow-glow)" 
                   }}
                 >
@@ -287,7 +287,7 @@ const LotoDisplay = () => {
       </header>
 
       {!displayState.isWinning && (
-        <div className="flex items-center justify-center flex-1 w-full min-h-0">
+        <div className="flex items-center justify-center flex-1 w-full min-h-0 overflow-hidden px-1 sm:px-2">
           <LotoGrid
             drawnNumbers={displayState.drawnNumbers}
             isDrawing={displayState.isDrawing}
@@ -297,8 +297,8 @@ const LotoDisplay = () => {
       )}
 
       {!displayState.isWinning && (
-        <footer className="text-center flex-shrink-0 w-full px-2">
-          <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-1">
+        <footer className="text-center flex-shrink-0 w-full px-1 sm:px-2">
+          <p className="text-muted-foreground text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-1 font-bold">
             {displayState.drawnNumbers.length} / {displayState.isBingoMode ? 75 : 90} numéros tirés
           </p>
           {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
