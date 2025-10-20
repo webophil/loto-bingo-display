@@ -132,7 +132,11 @@ const Index = () => {
               <div className="space-y-2">
                 <Trophy className="w-12 h-12 text-loto-yellow mx-auto" />
                 <h3 className="text-xl font-semibold">Types de Jeux</h3>
-                <p className="text-muted-foreground text-sm">Quine, Double Quine, Carton Plein</p>
+                <p className="text-muted-foreground text-sm">
+                  Quine, Double Quine,
+                  <br />
+                  Mode Quine Rapide, Carton Plein
+                </p>
               </div>
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold text-yellow-300">
@@ -157,7 +161,7 @@ const Index = () => {
           </CardContent>
         </Card>
         <div className="text-center">
-          Loto Bingo Display v1.0 - &copy;2025 par Philippe André Pérard - Tous droits réservés
+          Loto Bingo Display v1.0 - &copy;2025 par Philippe André - Tous droits réservés
         </div>
       </div>
     </div>
