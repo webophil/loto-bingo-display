@@ -218,20 +218,20 @@ const LotoDisplay = () => {
 
   // Render normal Loto mode
   return (
-    <div className="h-screen flex flex-col items-center justify-center space-y-6 relative overflow-hidden px-4 py-6">
+    <div className="h-screen w-screen flex flex-col items-center justify-center relative overflow-hidden" style={{ padding: '2vh 2vw', gap: 'clamp(0.5rem, 2vh, 3rem)' }}>
       {/* Winning Banner */}
       {displayState.isWinning && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
-          <div className="bg-white p-12 rounded-3xl shadow-2xl text-center animate-bounce-soft animate-pulse-glow border-8 border-loto-blue">
-            <div className="text-8xl mb-6 text-loto-blue">🏆</div>
-            <h2 className="text-6xl font-bold text-loto-red animate-blink mb-4">C'EST GAGNÉ !!!</h2>
-            <p className="text-2xl text-gray-700 font-semibold">
+          <div className="bg-white rounded-3xl shadow-2xl text-center animate-bounce-soft animate-pulse-glow border-loto-blue" style={{ padding: 'clamp(1rem, 4vh, 6rem)', borderWidth: 'clamp(4px, 1vmin, 12px)' }}>
+            <div style={{ fontSize: 'clamp(3rem, 12vmin, 10rem)', marginBottom: 'clamp(1rem, 3vh, 3rem)' }} className="text-loto-blue">🏆</div>
+            <h2 className="font-bold text-loto-red animate-blink" style={{ fontSize: 'clamp(2rem, 8vmin, 8rem)', marginBottom: 'clamp(0.5rem, 2vh, 2rem)' }}>C'EST GAGNÉ !!!</h2>
+            <p className="text-gray-700 font-semibold" style={{ fontSize: 'clamp(1rem, 4vmin, 3rem)' }}>
               {displayState.currentGame === "quine" && "🎯 QUINE"}
               {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
               {displayState.currentGame === "carton-plein" && "🏆 CARTON PLEIN"}
             </p>
             {currentPrize && (
-              <p className="text-3xl md:text-4xl lg:text-5xl text-gray-700 font-bold mt-4 max-w-full break-words px-4">
+              <p className="text-gray-700 font-bold max-w-full break-words" style={{ fontSize: 'clamp(1.25rem, 5vmin, 4rem)', marginTop: 'clamp(0.5rem, 2vh, 2rem)', paddingInline: 'clamp(0.5rem, 2vw, 2rem)' }}>
                 🎁 {currentPrize}
               </p>
             )}
@@ -239,10 +239,10 @@ const LotoDisplay = () => {
         </div>
       )}
 
-      <header className="text-center space-y-4 flex-shrink-0">
+      <header className="text-center flex-shrink-0" style={{ marginBottom: 'clamp(0.5rem, 2vh, 2rem)' }}>
         {displayState.currentGame && (
-          <div className="flex items-center justify-center gap-8 flex-wrap">
-            <Badge className="gradient-secondary text-white text-2xl px-8 py-3 font-bold animate-pulse-glow">
+          <div className="flex items-center justify-center flex-wrap" style={{ gap: 'clamp(0.5rem, 2vw, 3rem)' }}>
+            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow" style={{ fontSize: 'clamp(0.875rem, calc(1vw + 1vh), 2rem)', padding: 'clamp(0.5rem, 1.5vh, 1rem) clamp(1rem, 3vw, 3rem)' }}>
               {displayState.currentGame === "quine" && "🎯 QUINE"}
               {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
               {displayState.currentGame === "carton-plein" && "🏆 CARTON PLEIN"}
@@ -250,28 +250,33 @@ const LotoDisplay = () => {
             </Badge>
 
             {currentPrize && (
-              <div className="text-2xl text-white font-semibold bg-white/8 px-6 py-2 rounded-full">
+              <div className="text-white font-semibold bg-white/8 rounded-full" style={{ fontSize: 'clamp(0.875rem, calc(1vw + 1vh), 2rem)', padding: 'clamp(0.375rem, 1vh, 0.75rem) clamp(0.75rem, 2vw, 2rem)' }}>
                 🎁 {currentPrize}
               </div>
             )}
 
             {!displayState.withDemarque && displayState.currentGame !== "carton-plein" && (
-              <div className="text-loto-red text-2xl font-bold animate-pulse bg-white/10 px-6 py-2 rounded-full">
+              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full" style={{ fontSize: 'clamp(0.875rem, calc(1vw + 1vh), 2rem)', padding: 'clamp(0.375rem, 1vh, 0.75rem) clamp(0.75rem, 2vw, 2rem)' }}>
                 ⚠️ SANS DEMARQUER ⚠️
               </div>
             )}
 
             {latestNumber && !displayState.isWinning && (
-              <div className="flex items-center gap-4">
-                <div className="flex flex-col items-end text-2xl font-semibold text-foreground leading-tight">
+              <div className="flex items-center" style={{ gap: 'clamp(0.5rem, 1.5vw, 2rem)' }}>
+                <div className="flex flex-col items-end font-semibold text-foreground leading-tight" style={{ fontSize: 'clamp(0.75rem, calc(0.8vw + 0.8vh), 1.5rem)' }}>
                   <p>Dernier</p>
                   <p>sorti</p>
                 </div>
                 <div
-                  className={`w-32 h-32 rounded-full flex items-center justify-center text-8xl font-bold text-white leading-none animate-bounce-soft animate-blink ${getNumberDisplayColor(
+                  className={`rounded-full flex items-center justify-center font-bold text-white leading-none animate-bounce-soft animate-blink ${getNumberDisplayColor(
                     latestNumber,
                   )}`}
-                  style={{ boxShadow: "var(--shadow-glow)" }}
+                  style={{ 
+                    width: 'clamp(4rem, 12vmin, 12rem)', 
+                    height: 'clamp(4rem, 12vmin, 12rem)', 
+                    fontSize: 'clamp(2rem, 8vmin, 8rem)',
+                    boxShadow: "var(--shadow-glow)" 
+                  }}
                 >
                   {latestNumber}
                 </div>
@@ -290,12 +295,12 @@ const LotoDisplay = () => {
       )}
 
       {!displayState.isWinning && (
-        <footer className="text-center space-y-2">
-          <p className="text-xl text-muted-foreground">
+        <footer className="text-center">
+          <p className="text-muted-foreground" style={{ fontSize: 'clamp(0.875rem, calc(1vw + 1vh), 1.5rem)', marginBottom: 'clamp(0.25rem, 0.5vh, 0.75rem)' }}>
             {displayState.drawnNumbers.length} / {displayState.isBingoMode ? 75 : 90} numéros tirés
           </p>
           {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
-            <p className="text-lg text-muted-foreground italic">En attente du prochain tirage...</p>
+            <p className="text-muted-foreground italic" style={{ fontSize: 'clamp(0.75rem, calc(0.8vw + 0.8vh), 1.25rem)' }}>En attente du prochain tirage...</p>
           )}
         </footer>
       )}

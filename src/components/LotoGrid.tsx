@@ -22,10 +22,27 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
 
   if (isBingoMode) {
     return (
-      <div className="grid grid-cols-[auto_repeat(15,1fr)] gap-x-0 gap-y-2 px-16 py-6 bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50 flex-shrink-0 items-center">
+      <div 
+        className="grid bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50 flex-shrink-0 items-center"
+        style={{ 
+          gridTemplateColumns: 'auto repeat(15, 1fr)',
+          gap: '0 clamp(0.125rem, 0.3vw, 0.5rem)',
+          rowGap: 'clamp(0.25rem, 0.5vh, 1rem)',
+          padding: 'clamp(0.75rem, 2vh, 3rem) clamp(1rem, 3vw, 4rem)',
+          maxWidth: '90vw',
+          maxHeight: '80vh'
+        }}
+      >
         {Array.from({ length: 5 }).map((_, rowIndex) => (
           <>
-            <div key={`letter-${rowIndex}`} className={`flex items-center justify-center text-4xl font-bold mr-2 aspect-square rounded-lg ${bingoLetterColors[rowIndex]}`}>
+            <div 
+              key={`letter-${rowIndex}`} 
+              className={`flex items-center justify-center font-bold aspect-square rounded-lg ${bingoLetterColors[rowIndex]}`}
+              style={{ 
+                fontSize: 'clamp(1.5rem, 4vmin, 4rem)',
+                marginRight: 'clamp(0.25rem, 0.5vw, 1rem)'
+              }}
+            >
               {bingoLetters[rowIndex]}
             </div>
             {numbers.slice(rowIndex * 15, (rowIndex + 1) * 15).map((number) => (
@@ -43,7 +60,16 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
   }
 
   return (
-    <div className="grid grid-cols-15 gap-1 px-16 py-6 bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50 flex-shrink-0">
+    <div 
+      className="grid bg-card/20 backdrop-blur-sm rounded-3xl border border-border/50 flex-shrink-0"
+      style={{ 
+        gridTemplateColumns: 'repeat(15, 1fr)',
+        gap: 'clamp(0.125rem, 0.3vmin, 0.5rem)',
+        padding: 'clamp(0.75rem, 2vh, 3rem) clamp(1rem, 3vw, 4rem)',
+        maxWidth: '90vw',
+        maxHeight: '80vh'
+      }}
+    >
       {numbers.map((number) => (
         <NumberBall
           key={number}
