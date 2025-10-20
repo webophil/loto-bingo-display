@@ -75,22 +75,23 @@ const LotoDisplay = () => {
           // Only update if this is newer data
           if (parsedState.timestamp && parsedState.timestamp > lastTimestamp) {
             lastTimestamp = parsedState.timestamp;
-            
+
             // Load images from localStorage
             let localImages = [];
             try {
-              const savedImages = localStorage.getItem('loto-images');
+              const savedImages = localStorage.getItem("loto-images");
               if (savedImages) {
                 localImages = JSON.parse(savedImages);
               }
             } catch (imgError) {
               console.error("❌ Error loading images from localStorage:", imgError);
             }
-            
+
             // Get selected image data URL
-            const selectedImageDataUrl = parsedState.isImageDisplayMode && parsedState.selectedImageId
-              ? localImages.find((img: any) => img.id === parsedState.selectedImageId)?.dataUrl || null
-              : null;
+            const selectedImageDataUrl =
+              parsedState.isImageDisplayMode && parsedState.selectedImageId
+                ? localImages.find((img: any) => img.id === parsedState.selectedImageId)?.dataUrl || null
+                : null;
 
             setDisplayState({
               drawnNumbers: parsedState.drawnNumbers || [],
@@ -124,11 +125,12 @@ const LotoDisplay = () => {
       const newState = event.data;
       if (newState.timestamp && newState.timestamp > lastTimestamp) {
         lastTimestamp = newState.timestamp;
-        
+
         // Get selected image data URL
-        const selectedImageDataUrl = newState.isImageDisplayMode && newState.selectedImageId
-          ? (newState.localImages || []).find((img: any) => img.id === newState.selectedImageId)?.dataUrl || null
-          : null;
+        const selectedImageDataUrl =
+          newState.isImageDisplayMode && newState.selectedImageId
+            ? (newState.localImages || []).find((img: any) => img.id === newState.selectedImageId)?.dataUrl || null
+            : null;
 
         setDisplayState({
           drawnNumbers: newState.drawnNumbers || [],
@@ -162,11 +164,12 @@ const LotoDisplay = () => {
       const newState = event.detail;
       if (newState.timestamp && newState.timestamp > lastTimestamp) {
         lastTimestamp = newState.timestamp;
-        
+
         // Get selected image data URL
-        const selectedImageDataUrl = newState.isImageDisplayMode && newState.selectedImageId
-          ? (newState.localImages || []).find((img: any) => img.id === newState.selectedImageId)?.dataUrl || null
-          : null;
+        const selectedImageDataUrl =
+          newState.isImageDisplayMode && newState.selectedImageId
+            ? (newState.localImages || []).find((img: any) => img.id === newState.selectedImageId)?.dataUrl || null
+            : null;
 
         setDisplayState({
           drawnNumbers: newState.drawnNumbers || [],
@@ -203,10 +206,10 @@ const LotoDisplay = () => {
   // Render Image Display mode
   if (displayState.isImageDisplayMode && displayState.selectedImageDataUrl) {
     return (
-      <div className="h-screen w-screen bg-black flex items-center justify-center overflow-hidden">
-        <img 
-          src={displayState.selectedImageDataUrl} 
-          alt="Image affichée" 
+      <div className="h-screen w-screen bg-green flex items-center justify-center overflow-hidden">
+        <img
+          src={displayState.selectedImageDataUrl}
+          alt="Image affichée"
           className="max-w-[90%] max-h-[90%] object-contain"
         />
       </div>
@@ -227,7 +230,11 @@ const LotoDisplay = () => {
               {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
               {displayState.currentGame === "carton-plein" && "🏆 CARTON PLEIN"}
             </p>
-            {currentPrize && <p className="text-3xl md:text-4xl lg:text-5xl text-gray-700 font-bold mt-4 max-w-full break-words px-4">🎁 {currentPrize}</p>}
+            {currentPrize && (
+              <p className="text-3xl md:text-4xl lg:text-5xl text-gray-700 font-bold mt-4 max-w-full break-words px-4">
+                🎁 {currentPrize}
+              </p>
+            )}
           </div>
         </div>
       )}
@@ -275,12 +282,18 @@ const LotoDisplay = () => {
       </header>
 
       {!displayState.isWinning && (
-        <LotoGrid drawnNumbers={displayState.drawnNumbers} isDrawing={displayState.isDrawing} isBingoMode={displayState.isBingoMode} />
+        <LotoGrid
+          drawnNumbers={displayState.drawnNumbers}
+          isDrawing={displayState.isDrawing}
+          isBingoMode={displayState.isBingoMode}
+        />
       )}
 
       {!displayState.isWinning && (
         <footer className="text-center space-y-2">
-          <p className="text-xl text-muted-foreground">{displayState.drawnNumbers.length} / {displayState.isBingoMode ? 75 : 90} numéros tirés</p>
+          <p className="text-xl text-muted-foreground">
+            {displayState.drawnNumbers.length} / {displayState.isBingoMode ? 75 : 90} numéros tirés
+          </p>
           {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
             <p className="text-lg text-muted-foreground italic">En attente du prochain tirage...</p>
           )}

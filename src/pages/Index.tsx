@@ -157,7 +157,7 @@ const Index = () => {
           </CardContent>
         </Card>
         <div className="text-center">
-          Loto Bingo Display v1.0 - &copy;2025 par Philippe André - Tous droits réservés
+          Loto Bingo Display v1.0 - &copy;2025 par Philippe André Pérard - Tous droits réservés
         </div>
       </div>
     </div>
