@@ -87,15 +87,15 @@ const Index = () => {
                           depuis le tableau de bord).
                         </p>
                         <p>
-                          Déplacez la nouvelle fenêtre sur le second écran, puis appuyez sur <strong>F11</strong> pour
-                          le plein écran.
-                        </p>
-                        <p>
-                          Pour quitter le plein écran : <strong>F11</strong> ou <strong>Échap (Esc)</strong>.
+                          La nouvelle fenêtre s'affiche sur le second écran, réduite. Déplacez votre curseur de souris à
+                          droite de votre écran de contrôle, votre pointeur apparait sur l'écran externe. Cliquez alors
+                          dans la fenêtre puis appuyez sur <strong>F11</strong> pour le plein écran. Vous n'aurez plus
+                          besoin de refaire cette manipulation pendant votre session. Ramenez simplement votre curseur à
+                          la gauche de l'écran extérieur, pour qu'il soit à nouveau dans votre écran de contrôle.
                         </p>
                         <p className="text-muted-foreground">
-                          💡 Si la fenêtre n'apparaît pas, vérifiez le mode "Étendre" ou glissez-la manuellement sur
-                          l'écran externe.
+                          💡 Si la fenêtre n'apparaît pas, vérifiez le mode "Étendre" dans vos paramètres d'affichage.
+                          Rafraîchissez l'application (F5) et réessayez.
                         </p>
                       </div>
                     </DialogContent>
