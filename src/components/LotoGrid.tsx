@@ -54,7 +54,7 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
                 key={number}
                 number={number}
                 isDrawn={drawnNumbers.includes(number)}
-                isLatest={number === latestNumber && isDrawing}
+                isLatest={number === latestNumber && latestNumber !== undefined}
               />
             ))}
           </>
@@ -82,7 +82,7 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
           key={number}
           number={number}
           isDrawn={drawnNumbers.includes(number)}
-          isLatest={number === latestNumber && isDrawing}
+          isLatest={number === latestNumber && latestNumber !== undefined}
         />
       ))}
     </div>
