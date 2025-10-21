@@ -26,9 +26,9 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
         className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0 items-center overflow-hidden"
         style={{ 
           gridTemplateColumns: 'minmax(0, auto) repeat(15, minmax(0, 1fr))',
-          columnGap: 'clamp(0.1rem, 0.2vw, 0.4rem)',
+          columnGap: 'clamp(0.08rem, 0.15vw, 0.3rem)',
           rowGap: 'clamp(0.02rem, 0.04vh, 0.06rem)',
-          padding: 'clamp(0.3rem, 0.6vh, 1rem)',
+          padding: 'clamp(0.25rem, 0.5vh, 0.8rem)',
           width: '100%',
           height: '100%',
           maxWidth: '100%',
