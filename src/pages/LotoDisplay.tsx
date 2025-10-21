@@ -292,6 +292,7 @@ const LotoDisplay = () => {
             drawnNumbers={displayState.drawnNumbers}
             isDrawing={displayState.isDrawing}
             isBingoMode={displayState.isBingoMode}
+            disableLatestAnimation={true}
           />
         </div>
       )}

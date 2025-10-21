@@ -4,12 +4,13 @@ interface LotoGridProps {
   drawnNumbers: number[];
   isDrawing: boolean;
   isBingoMode?: boolean;
+  disableLatestAnimation?: boolean;
 }
 
-export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoGridProps) => {
+export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false, disableLatestAnimation = false }: LotoGridProps) => {
   const maxNumbers = isBingoMode ? 75 : 90;
   const numbers = Array.from({ length: maxNumbers }, (_, i) => i + 1);
-  const latestNumber = drawnNumbers[drawnNumbers.length - 1];
+  const latestNumber = disableLatestAnimation ? undefined : drawnNumbers[drawnNumbers.length - 1];
 
   const bingoLetters = ['B', 'I', 'N', 'G', 'O'];
   const bingoLetterColors = [
