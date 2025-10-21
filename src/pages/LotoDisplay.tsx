@@ -296,16 +296,6 @@ const LotoDisplay = () => {
         </div>
       )}
 
-      {!displayState.isWinning && (
-        <footer className="text-center flex-shrink-0 w-full px-1 sm:px-2 mt-1">
-          <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl mb-1 font-bold">
-            {displayState.drawnNumbers.length} / {displayState.isBingoMode ? 75 : 90} numéros tirés
-          </p>
-          {!displayState.currentGame && displayState.drawnNumbers.length === 0 && (
-            <p className="text-muted-foreground italic text-xs sm:text-sm md:text-base">En attente du prochain tirage...</p>
-          )}
-        </footer>
-      )}
     </div>
   );
 };
