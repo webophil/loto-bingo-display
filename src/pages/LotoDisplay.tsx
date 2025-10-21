@@ -242,7 +242,7 @@ const LotoDisplay = () => {
       <header className="text-center flex-shrink-0 w-full px-1 sm:px-2 mb-2">
         {displayState.currentGame && (
           <div className="flex items-center justify-center flex-wrap gap-3 sm:gap-4 md:gap-5">
-            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl px-5 py-2.5 sm:px-7 sm:py-3.5">
+            <Badge className="gradient-secondary text-white font-bold animate-pulse-glow text-lg sm:text-xl md:text-2xl lg:text-3xl px-4 py-2 sm:px-5 sm:py-2.5">
               {displayState.currentGame === "quine" && "🎯 QUINE"}
               {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
               {displayState.currentGame === "carton-plein" && "🏆 CARTON PLEIN"}
@@ -256,7 +256,7 @@ const LotoDisplay = () => {
             )}
 
             {!displayState.withDemarque && displayState.currentGame !== "carton-plein" && (
-              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full text-xl sm:text-2xl md:text-3xl lg:text-4xl px-5 py-2.5 sm:px-7 sm:py-3.5">
+              <div className="text-loto-red font-bold animate-pulse bg-white/10 rounded-full text-lg sm:text-xl md:text-2xl lg:text-3xl px-4 py-2 sm:px-5 sm:py-2.5">
                 ⚠️ SANS DEMARQUER ⚠️
               </div>
             )}
