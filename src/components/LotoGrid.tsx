@@ -41,10 +41,10 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false }: LotoG
               key={`letter-${rowIndex}`} 
               className={`flex items-center justify-center font-bold rounded-lg flex-shrink-0 ${bingoLetterColors[rowIndex]}`}
               style={{ 
-                fontSize: 'clamp(1.3rem, 3.5vmin, 4.5rem)',
-                width: 'clamp(2rem, 5vmin, 6.5rem)',
-                height: 'clamp(2rem, 5vmin, 6.5rem)',
-                marginRight: 'clamp(0.15rem, 0.3vw, 0.6rem)'
+                fontSize: 'clamp(1.1rem, 3vmin, 4rem)',
+                width: 'clamp(1.6rem, 4vmin, 5.5rem)',
+                height: 'clamp(1.6rem, 4vmin, 5.5rem)',
+                marginRight: 'clamp(0.1rem, 0.25vw, 0.5rem)'
               }}
             >
               {bingoLetters[rowIndex]}
