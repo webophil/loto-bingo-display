@@ -10,19 +10,9 @@ const Index = () => {
     const displayUrl = `${window.location.origin}/display`;
 
     // Paramètres pour maximiser la fenêtre sur l'écran externe
-    const features = [
-      "width=" + screen.availWidth,
-      "height=" + screen.availHeight,
-      "left=" + (screen.availWidth + 100),
-      // Positionner sur l'écran externe
-      "top=0",
-      "scrollbars=no",
-      "toolbar=no",
-      "menubar=no",
-      "status=no",
-      "location=no",
-      "resizable=yes",
-    ].join(",");
+    const features = ["width=" + screen.availWidth, "height=" + screen.availHeight, "left=" + (screen.availWidth + 100),
+    // Positionner sur l'écran externe
+    "top=0", "scrollbars=no", "toolbar=no", "menubar=no", "status=no", "location=no", "resizable=yes"].join(",");
 
     // Ouvrir la fenêtre maximisée
     const newWindow = window.open(displayUrl, "LotoDisplay", features);
@@ -30,8 +20,7 @@ const Index = () => {
       newWindow.focus();
     }
   };
-  return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+  return <div className="min-h-screen flex items-center justify-center p-6">
       <div className="max-w-4xl w-full space-y-8">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           <div className="flex flex-col items-center gap-4 lg:w-1/3">
@@ -53,18 +42,12 @@ const Index = () => {
                   démarque et phase de jeu. Ecrans annonces, sponsors...
                 </p>
                 <div className="flex gap-2">
-                  <Button
-                    onClick={openDisplayOnExternalScreen}
-                    className="flex-1 gradient-primary text-white font-semibold text-lg py-3"
-                  >
+                  <Button onClick={openDisplayOnExternalScreen} className="flex-1 gradient-primary text-white font-semibold text-lg py-3">
                     Afficher
                   </Button>
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="px-3 py-3 bg-white/10 border-white/20 text-white hover:bg-white/20"
-                      >
+                      <Button variant="outline" className="px-3 py-3 bg-white/10 border-white/20 text-white hover:bg-white/20">
                         <HelpCircle className="w-4 h-4 mr-1" />
                         <span className="text-xs">Aide</span>
                       </Button>
@@ -127,7 +110,7 @@ const Index = () => {
         </div>
 
         <Card className="bg-card/20 backdrop-blur-sm border-border/50">
-          <CardContent className="p-8">
+          <CardContent className="p-8 opacity-90">
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold text-yellow-300">Types de Jeux</h3>
@@ -165,7 +148,6 @@ const Index = () => {
           Loto Bingo Display v1.0 - &copy;2025 par Philippe André Pérard - Tous droits réservés
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
 export default Index;
