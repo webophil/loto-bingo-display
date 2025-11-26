@@ -2,10 +2,11 @@ import { useLoto } from "@/hooks/useLoto";
 import { LotoGrid } from "@/components/LotoGrid";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Maximize } from "lucide-react";
 import { GameType } from "@/hooks/useLoto";
 import logoImage from "@/assets/logo.png";
+import { AnimatedBall } from "@/components/AnimatedBall";
 
 interface DisplayState {
   drawnNumbers: number[];
@@ -55,12 +56,23 @@ const LotoDisplay = () => {
   });
 
   const latestNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
+  const [animatingNumber, setAnimatingNumber] = useState<number | null>(null);
+  const previousDrawnCountRef = useRef(0);
 
   const enterFullscreen = () => {
     if (document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen();
     }
   };
+
+  // Detect when a new number is drawn to trigger animation
+  useEffect(() => {
+    if (displayState.drawnNumbers.length > previousDrawnCountRef.current && displayState.drawnNumbers.length > 0) {
+      const newNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
+      setAnimatingNumber(newNumber);
+    }
+    previousDrawnCountRef.current = displayState.drawnNumbers.length;
+  }, [displayState.drawnNumbers]);
 
   // Listen for real-time updates from dashboard
   useEffect(() => {
@@ -219,6 +231,13 @@ const LotoDisplay = () => {
   // Render normal Loto mode
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-between relative overflow-hidden p-1 sm:p-2">
+      {/* Animated Ball Overlay */}
+      {animatingNumber && (
+        <AnimatedBall 
+          number={animatingNumber} 
+          onAnimationComplete={() => setAnimatingNumber(null)} 
+        />
+      )}
       {/* Winning Banner */}
       {displayState.isWinning && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
