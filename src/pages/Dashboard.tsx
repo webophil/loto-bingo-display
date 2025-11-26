@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Monitor, Home, Trophy, RefreshCw, Square, RotateCcw, ImagePlus, Image as ImageIcon, Eye, EyeOff } from 'lucide-react';
+import { Monitor, Home, Trophy, RefreshCw, Square, RotateCcw, ImagePlus, Image as ImageIcon, Eye, EyeOff, Timer } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
 import { useRef } from 'react';
 const Dashboard = () => {
   const loto = useLoto();
@@ -121,6 +122,31 @@ const Dashboard = () => {
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-6">
           <GameControls currentGame={loto.currentGame} drawnNumbers={loto.drawnNumbers} isDrawing={loto.isDrawing} isManualMode={true} isBingoMode={loto.isBingoMode} withDemarque={loto.withDemarque} prizeDescription={loto.prizeDescription} isQuinesDuSudMode={loto.isQuinesDuSudMode} prizeDescriptions={loto.prizeDescriptions} isWinning={loto.isWinning} onStartGame={loto.startGame} onDrawNumber={loto.drawNumber} onDrawManualNumber={loto.drawManualNumber} onEndGame={loto.endGame} onReset={loto.resetAll} onToggleMode={() => {}} onToggleBingoMode={loto.toggleBingoMode} onToggleDemarque={loto.toggleDemarque} onSetPrizeDescription={loto.setPrizeDescription} onToggleQuinesDuSud={loto.toggleQuinesDuSud} onSetPrizeDescriptions={loto.setPrizeDescriptions} onSetWinning={loto.setWinning} onResumeGame={loto.resumeGame} />
+          
+          <Card className="bg-card/20 backdrop-blur-sm border-border/50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <Timer className="w-5 h-5" />
+                Durée animation boule
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Durée: {loto.animationDuration}s</span>
+                  <span className="text-muted-foreground">2s - 10s</span>
+                </div>
+                <Slider
+                  value={[loto.animationDuration]}
+                  onValueChange={(values) => loto.setAnimationDuration(values[0])}
+                  min={2}
+                  max={10}
+                  step={2}
+                  className="w-full"
+                />
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="lg:col-span-2">

@@ -32,6 +32,7 @@ export interface LotoState {
     'carton-plein': string;
   };
   isWinning: boolean;
+  animationDuration: number;
   // Local image display mode
   localImages: Array<{ id: string; name: string; dataUrl: string }>;
   selectedImageId: string | null;
@@ -66,6 +67,7 @@ export const useLoto = () => {
             'carton-plein': '',
           },
           isWinning: parsedState.isWinning ?? false,
+          animationDuration: parsedState.animationDuration ?? 4,
           localImages: Array.isArray(parsedImages) ? parsedImages : [],
           selectedImageId: parsedState.selectedImageId || null,
           isImageDisplayMode: parsedState.isImageDisplayMode ?? false,
@@ -94,6 +96,7 @@ export const useLoto = () => {
         'carton-plein': '',
       },
       isWinning: false,
+      animationDuration: 4,
       localImages: [],
       selectedImageId: null,
       isImageDisplayMode: false,
@@ -393,6 +396,13 @@ export const useLoto = () => {
     }));
   }, []);
 
+  const setAnimationDuration = useCallback((duration: number) => {
+    setState(prev => ({
+      ...prev,
+      animationDuration: duration,
+    }));
+  }, []);
+
   return {
     ...state,
     startGame,
@@ -412,5 +422,6 @@ export const useLoto = () => {
     selectImage,
     deleteAllImages,
     toggleImageDisplay,
+    setAnimationDuration,
   };
 };
