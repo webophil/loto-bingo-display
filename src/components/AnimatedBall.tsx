@@ -40,7 +40,7 @@ export const AnimatedBall = ({ number, duration, onAnimationComplete }: Animated
         style={{
           width: '75vmin',
           height: '75vmin',
-          animation: `ball-zoom-enhanced ${duration}s cubic-bezier(0.68, -0.8, 0.265, 1.8)`,
+          animation: `ball-zoom-enhanced ${duration}s cubic-bezier(0.68, -0.8, 0.265, 1.8) forwards`,
         }}
       >
         <div 
