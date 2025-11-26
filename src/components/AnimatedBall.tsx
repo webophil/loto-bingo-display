@@ -3,30 +3,30 @@ import { cn } from '@/lib/utils';
 
 interface AnimatedBallProps {
   number: number;
+  duration: number;
   onAnimationComplete: () => void;
 }
 
 const getNumberColor = (number: number) => {
-  if (number <= 15) return 'bg-blue-700 border-blue-700';
-  if (number <= 30) return 'bg-red-600 border-red-600';
-  if (number <= 45) return 'bg-gray-600 border-gray-600';
-  if (number <= 60) return 'bg-green-600 border-green-600';
-  if (number <= 75) return 'bg-yellow-400 border-yellow-400 text-black';
-  return 'bg-pink-600 border-pink-600';
+  if (number <= 15) return 'ball-blue';
+  if (number <= 30) return 'ball-red';
+  if (number <= 45) return 'ball-white';
+  if (number <= 60) return 'ball-green';
+  if (number <= 75) return 'ball-yellow';
+  return 'ball-pink';
 };
 
-export const AnimatedBall = ({ number, onAnimationComplete }: AnimatedBallProps) => {
+export const AnimatedBall = ({ number, duration, onAnimationComplete }: AnimatedBallProps) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // After 4 seconds, hide the ball and call completion callback
     const timer = setTimeout(() => {
       setIsVisible(false);
       onAnimationComplete();
-    }, 4000);
+    }, duration * 1000);
 
     return () => clearTimeout(timer);
-  }, [onAnimationComplete]);
+  }, [duration, onAnimationComplete]);
 
   if (!isVisible) return null;
 
@@ -34,17 +34,25 @@ export const AnimatedBall = ({ number, onAnimationComplete }: AnimatedBallProps)
     <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center">
       <div
         className={cn(
-          'rounded-full flex items-center justify-center font-bold text-white border-8 animate-ball-zoom',
+          'number-ball',
           getNumberColor(number)
         )}
         style={{
           width: '75vmin',
           height: '75vmin',
-          fontSize: 'clamp(4rem, 25vmin, 30rem)',
-          boxShadow: '0 0 60px rgba(0, 0, 0, 0.5), 0 0 120px hsl(var(--primary) / 0.6)',
+          animation: `ball-zoom-enhanced ${duration}s cubic-bezier(0.68, -0.8, 0.265, 1.8)`,
         }}
       >
-        {number}
+        <div 
+          className="number-text" 
+          style={{ 
+            width: '53vmin',
+            height: '53vmin',
+            fontSize: 'clamp(4rem, 25vmin, 30rem)',
+          }}
+        >
+          {number}
+        </div>
       </div>
     </div>
   );

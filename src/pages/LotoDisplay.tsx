@@ -22,6 +22,7 @@ interface DisplayState {
     "carton-plein": string;
   };
   isWinning: boolean;
+  animationDuration: number;
   isImageDisplayMode: boolean;
   selectedImageDataUrl: string | null;
 }
@@ -51,6 +52,7 @@ const LotoDisplay = () => {
       "carton-plein": "",
     },
     isWinning: false,
+    animationDuration: 4,
     isImageDisplayMode: false,
     selectedImageDataUrl: null,
   });
@@ -115,6 +117,7 @@ const LotoDisplay = () => {
               isQuinesDuSudMode: parsedState.isQuinesDuSudMode || false,
               prizeDescriptions: parsedState.prizeDescriptions || { quine: "", "double-quine": "", "carton-plein": "" },
               isWinning: parsedState.isWinning || false,
+              animationDuration: parsedState.animationDuration || 4,
               isImageDisplayMode: parsedState.isImageDisplayMode || false,
               selectedImageDataUrl,
             });
@@ -154,6 +157,7 @@ const LotoDisplay = () => {
           isQuinesDuSudMode: newState.isQuinesDuSudMode || false,
           prizeDescriptions: newState.prizeDescriptions || { quine: "", "double-quine": "", "carton-plein": "" },
           isWinning: newState.isWinning || false,
+          animationDuration: newState.animationDuration || 4,
           isImageDisplayMode: newState.isImageDisplayMode || false,
           selectedImageDataUrl,
         });
@@ -193,6 +197,7 @@ const LotoDisplay = () => {
           isQuinesDuSudMode: newState.isQuinesDuSudMode || false,
           prizeDescriptions: newState.prizeDescriptions || { quine: "", "double-quine": "", "carton-plein": "" },
           isWinning: newState.isWinning || false,
+          animationDuration: newState.animationDuration || 4,
           isImageDisplayMode: newState.isImageDisplayMode || false,
           selectedImageDataUrl,
         });
@@ -235,6 +240,7 @@ const LotoDisplay = () => {
       {animatingNumber && (
         <AnimatedBall 
           number={animatingNumber} 
+          duration={displayState.animationDuration}
           onAnimationComplete={() => setAnimatingNumber(null)} 
         />
       )}
