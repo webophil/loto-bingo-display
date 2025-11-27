@@ -18,6 +18,7 @@ const getNumberColor = (number: number) => {
 export const NumberBall = ({ number, isDrawn, isLatest }: NumberBallProps) => {
   return (
     <div
+      data-ball-number={number}
       className={cn(
         'number-ball',
         getNumberColor(number),

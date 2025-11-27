@@ -59,7 +59,10 @@ const LotoDisplay = () => {
 
   const latestNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
   const [animatingNumber, setAnimatingNumber] = useState<number | null>(null);
+  const [animationPositions, setAnimationPositions] = useState<{ start: { x: number; y: number }, end: { x: number; y: number } } | null>(null);
   const previousDrawnCountRef = useRef(0);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const lastNumberRef = useRef<HTMLDivElement>(null);
 
   const enterFullscreen = () => {
     if (document.documentElement.requestFullscreen) {
@@ -71,7 +74,30 @@ const LotoDisplay = () => {
   useEffect(() => {
     if (displayState.drawnNumbers.length > previousDrawnCountRef.current && displayState.drawnNumbers.length > 0) {
       const newNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
-      setAnimatingNumber(newNumber);
+      
+      // Calculate positions
+      setTimeout(() => {
+        const gridElement = document.querySelector(`[data-ball-number="${newNumber}"]`);
+        const lastNumberElement = lastNumberRef.current;
+        
+        if (gridElement && lastNumberElement) {
+          const gridRect = gridElement.getBoundingClientRect();
+          const lastRect = lastNumberElement.getBoundingClientRect();
+          
+          setAnimationPositions({
+            start: {
+              x: gridRect.left + gridRect.width / 2,
+              y: gridRect.top + gridRect.height / 2,
+            },
+            end: {
+              x: lastRect.left + lastRect.width / 2,
+              y: lastRect.top + lastRect.height / 2,
+            }
+          });
+        }
+        
+        setAnimatingNumber(newNumber);
+      }, 50);
     }
     previousDrawnCountRef.current = displayState.drawnNumbers.length;
   }, [displayState.drawnNumbers]);
@@ -237,11 +263,16 @@ const LotoDisplay = () => {
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-between relative overflow-hidden p-1 sm:p-2">
       {/* Animated Ball Overlay */}
-      {animatingNumber && (
+      {animatingNumber && animationPositions && (
         <AnimatedBall 
           number={animatingNumber} 
           duration={displayState.animationDuration}
-          onAnimationComplete={() => setAnimatingNumber(null)} 
+          onAnimationComplete={() => {
+            setAnimatingNumber(null);
+            setAnimationPositions(null);
+          }}
+          startPosition={animationPositions.start}
+          endPosition={animationPositions.end}
         />
       )}
       {/* Winning Banner */}
@@ -293,6 +324,7 @@ const LotoDisplay = () => {
                   <p>sorti</p>
                 </div>
                 <div
+                  ref={lastNumberRef}
                   className={`rounded-full flex items-center justify-center font-bold text-white leading-none animate-bounce-soft animate-blink ${getNumberDisplayColor(
                     latestNumber,
                   )}`}
@@ -312,7 +344,7 @@ const LotoDisplay = () => {
       </header>
 
       {!displayState.isWinning && (
-        <div className="flex items-center justify-center flex-1 w-full min-h-0 overflow-hidden px-1 sm:px-2">
+        <div ref={gridRef} className="flex items-center justify-center flex-1 w-full min-h-0 overflow-hidden px-1 sm:px-2">
           <LotoGrid
             drawnNumbers={displayState.drawnNumbers}
             isDrawing={displayState.isDrawing}
