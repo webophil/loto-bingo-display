@@ -2,7 +2,7 @@ import { useLoto } from "@/hooks/useLoto";
 import { LotoGrid } from "@/components/LotoGrid";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Maximize } from "lucide-react";
 import { GameType } from "@/hooks/useLoto";
 import logoImage from "@/assets/logo.png";
@@ -63,6 +63,7 @@ const LotoDisplay = () => {
   const previousDrawnCountRef = useRef(0);
   const gridRef = useRef<HTMLDivElement>(null);
   const lastNumberRef = useRef<HTMLDivElement>(null);
+  const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const enterFullscreen = () => {
     if (document.documentElement.requestFullscreen) {
@@ -70,13 +71,27 @@ const LotoDisplay = () => {
     }
   };
 
+  const handleAnimationComplete = useCallback(() => {
+    setAnimatingNumber(null);
+    setAnimationPositions(null);
+  }, []);
+
   // Detect when a new number is drawn to trigger animation
   useEffect(() => {
     if (displayState.drawnNumbers.length > previousDrawnCountRef.current && displayState.drawnNumbers.length > 0) {
       const newNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
       
-      // Calculate positions
-      setTimeout(() => {
+      // Clear any existing animation timeout
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+      
+      // Reset animation state immediately
+      setAnimatingNumber(null);
+      setAnimationPositions(null);
+      
+      // Calculate positions with retry logic
+      const tryStartAnimation = (attempts = 0) => {
         const gridElement = document.querySelector(`[data-ball-number="${newNumber}"]`);
         const lastNumberElement = lastNumberRef.current;
         
@@ -96,11 +111,24 @@ const LotoDisplay = () => {
           };
           
           setAnimationPositions(positions);
-          setAnimatingNumber(newNumber);
+          // Start animation after positions are set
+          requestAnimationFrame(() => {
+            setAnimatingNumber(newNumber);
+          });
+        } else if (attempts < 10) {
+          // Retry up to 10 times with exponential backoff
+          animationTimeoutRef.current = setTimeout(() => {
+            tryStartAnimation(attempts + 1);
+          }, 50 * (attempts + 1));
         } else {
-          console.warn(`Animation skipped: gridElement=${!!gridElement}, lastNumberElement=${!!lastNumberElement}`);
+          console.warn(`Animation failed after ${attempts} attempts: gridElement=${!!gridElement}, lastNumberElement=${!!lastNumberElement}`);
         }
-      }, 100);
+      };
+      
+      // Start with a small delay to ensure DOM is updated
+      animationTimeoutRef.current = setTimeout(() => {
+        tryStartAnimation();
+      }, 50);
     }
     previousDrawnCountRef.current = displayState.drawnNumbers.length;
   }, [displayState.drawnNumbers]);
@@ -270,10 +298,7 @@ const LotoDisplay = () => {
         <AnimatedBall 
           number={animatingNumber} 
           duration={displayState.animationDuration}
-          onAnimationComplete={() => {
-            setAnimatingNumber(null);
-            setAnimationPositions(null);
-          }}
+          onAnimationComplete={handleAnimationComplete}
           startPosition={animationPositions.start}
           endPosition={animationPositions.end}
         />
