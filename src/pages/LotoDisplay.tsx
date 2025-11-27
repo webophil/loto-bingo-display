@@ -84,14 +84,15 @@ const LotoDisplay = () => {
       // Clear any existing animation timeout
       if (animationTimeoutRef.current) {
         clearTimeout(animationTimeoutRef.current);
+        animationTimeoutRef.current = null;
       }
       
       // Reset animation state immediately
       setAnimatingNumber(null);
       setAnimationPositions(null);
       
-      // Calculate positions with retry logic
-      const tryStartAnimation = (attempts = 0) => {
+      // Calculate positions and start animation
+      const startAnimation = () => {
         const gridElement = document.querySelector(`[data-ball-number="${newNumber}"]`);
         const lastNumberElement = lastNumberRef.current;
         
@@ -115,22 +116,27 @@ const LotoDisplay = () => {
           requestAnimationFrame(() => {
             setAnimatingNumber(newNumber);
           });
-        } else if (attempts < 10) {
-          // Retry up to 10 times with exponential backoff
-          animationTimeoutRef.current = setTimeout(() => {
-            tryStartAnimation(attempts + 1);
-          }, 50 * (attempts + 1));
         } else {
-          console.warn(`Animation failed after ${attempts} attempts: gridElement=${!!gridElement}, lastNumberElement=${!!lastNumberElement}`);
+          console.warn(`Animation elements not found: gridElement=${!!gridElement}, lastNumberElement=${!!lastNumberElement}`);
         }
       };
       
       // Start with a small delay to ensure DOM is updated
       animationTimeoutRef.current = setTimeout(() => {
-        tryStartAnimation();
-      }, 50);
+        startAnimation();
+        animationTimeoutRef.current = null;
+      }, 100);
     }
+    
     previousDrawnCountRef.current = displayState.drawnNumbers.length;
+    
+    // Cleanup function to clear any pending timeouts
+    return () => {
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+        animationTimeoutRef.current = null;
+      }
+    };
   }, [displayState.drawnNumbers]);
 
   // Listen for real-time updates from dashboard
