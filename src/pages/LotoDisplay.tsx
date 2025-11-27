@@ -84,7 +84,7 @@ const LotoDisplay = () => {
           const gridRect = gridElement.getBoundingClientRect();
           const lastRect = lastNumberElement.getBoundingClientRect();
           
-          setAnimationPositions({
+          const positions = {
             start: {
               x: gridRect.left + gridRect.width / 2,
               y: gridRect.top + gridRect.height / 2,
@@ -93,11 +93,14 @@ const LotoDisplay = () => {
               x: lastRect.left + lastRect.width / 2,
               y: lastRect.top + lastRect.height / 2,
             }
-          });
+          };
+          
+          setAnimationPositions(positions);
+          setAnimatingNumber(newNumber);
+        } else {
+          console.warn(`Animation skipped: gridElement=${!!gridElement}, lastNumberElement=${!!lastNumberElement}`);
         }
-        
-        setAnimatingNumber(newNumber);
-      }, 50);
+      }, 100);
     }
     previousDrawnCountRef.current = displayState.drawnNumbers.length;
   }, [displayState.drawnNumbers]);
