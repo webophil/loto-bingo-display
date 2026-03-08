@@ -63,7 +63,7 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false, disable
 
   return (
     <div 
-      className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0 mx-auto"
+      className="grid bg-white/5 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0 mx-auto"
       style={{ 
         gridTemplateColumns: 'repeat(15, 1fr)',
         gap: 'clamp(0.15rem, 0.4vmin, 0.5rem)',
