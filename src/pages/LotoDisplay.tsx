@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Maximize } from "lucide-react";
 import { GameType } from "@/hooks/useLoto";
+
 import logoImage from "@/assets/logo.png";
 import { AnimatedBall } from "@/components/AnimatedBall";
 
