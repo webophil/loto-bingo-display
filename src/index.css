@@ -151,10 +151,10 @@ All colors MUST be HSL.
   }
   
   .number-ball {
-    width: clamp(4.8rem, 11.2vmin, 19.2rem);
-    height: clamp(4.8rem, 11.2vmin, 19.2rem);
+    width: clamp(1.8rem, min(5.5vw, 13vh), 6rem);
+    height: clamp(1.8rem, min(5.5vw, 13vh), 6rem);
     @apply rounded-full flex items-center justify-center font-black;
-    font-size: clamp(2.4rem, 5.6vmin, 9.6rem);
+    font-size: clamp(0.9rem, min(2.8vw, 6.5vh), 3rem);
     position: relative;
     transition: transform 0.2s ease;
   }
