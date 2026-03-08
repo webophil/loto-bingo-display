@@ -298,7 +298,7 @@ const LotoDisplay = () => {
 
   // Render normal Loto mode
   return (
-    <div className="h-dvh w-dvw flex flex-col items-center relative overflow-hidden" style={{ background: 'var(--gradient-display)', padding: 'clamp(0.5rem, 1.5vmin, 1.5rem)' }}>
+    <div className="h-dvh w-dvw flex flex-col items-center relative overflow-hidden" style={{ background: 'var(--gradient-display)', padding: 'clamp(0.5rem, 1.5vmin, 1.5rem)', paddingTop: 'clamp(0.75rem, 2vmin, 2rem)' }}>
       {/* Animated Ball Overlay */}
       {animatingNumber && animationPositions && (
         <AnimatedBall 
@@ -329,7 +329,7 @@ const LotoDisplay = () => {
         </div>
       )}
 
-      <header className="text-center flex-shrink-0 w-full px-1 sm:px-2 mb-2">
+      <header className="text-center flex-shrink-0 w-full px-1 sm:px-2" style={{ marginBottom: 'clamp(0.25rem, 1vmin, 1rem)' }}>
         {displayState.currentGame && (
           <div className="flex items-center justify-center flex-wrap gap-3 sm:gap-4 md:gap-5">
             <Badge className="gradient-secondary text-white font-bold animate-pulse-glow text-lg sm:text-xl md:text-2xl lg:text-3xl px-4 py-2 sm:px-5 sm:py-2.5">
