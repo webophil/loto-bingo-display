@@ -312,6 +312,16 @@ const LotoDisplay = () => {
   // Render normal Loto mode
   return (
     <div className="h-dvh w-dvw flex flex-col items-center relative overflow-hidden" style={{ background: 'var(--gradient-display)', padding: 'clamp(0.5rem, 1.5vmin, 1.5rem)', paddingTop: 'clamp(1rem, 3vmin, 3rem)' }}>
+      {/* Fullscreen fallback button */}
+      {showFullscreenButton && (
+        <button
+          onClick={enterFullscreen}
+          className="absolute top-2 right-2 z-50 bg-white/20 hover:bg-white/40 text-white px-4 py-2 rounded-lg backdrop-blur-sm flex items-center gap-2 transition-colors"
+        >
+          <Maximize className="w-4 h-4" />
+          Plein écran
+        </button>
+      )}
       {/* Animated Ball Overlay */}
       {animatingNumber && animationPositions && (
         <AnimatedBall 
