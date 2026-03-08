@@ -11,24 +11,24 @@ const Index = () => {
 
     // Paramètres pour maximiser la fenêtre sur l'écran externe
     const features = [
-    "width=" + screen.availWidth,
-    "height=" + screen.availHeight,
-    "left=" + (screen.availWidth + 100),
-    // Positionner sur l'écran externe
-    "top=0",
-    "scrollbars=no",
-    "toolbar=no",
-    "menubar=no",
-    "status=no",
-    "location=no",
-    "resizable=yes"].
-    join(",");
+      "width=" + screen.availWidth,
+      "height=" + screen.availHeight,
+      "left=" + (screen.availWidth + 100),
+      // Positionner sur l'écran externe
+      "top=0",
+      "scrollbars=no",
+      "toolbar=no",
+      "menubar=no",
+      "status=no",
+      "location=no",
+      "resizable=yes",
+    ].join(",");
 
     // Ouvrir la fenêtre maximisée
     const newWindow = window.open(displayUrl, "LotoDisplay", features);
     if (newWindow) {
       newWindow.focus();
-      newWindow.addEventListener('load', () => {
+      newWindow.addEventListener("load", () => {
         newWindow.document.documentElement.requestFullscreen?.().catch(() => {});
       });
     }
@@ -58,16 +58,16 @@ const Index = () => {
                 <div className="flex gap-2">
                   <Button
                     onClick={openDisplayOnExternalScreen}
-                    className="flex-1 gradient-primary text-white font-semibold text-lg py-3">
-                    
+                    className="flex-1 gradient-primary text-white font-semibold text-lg py-3"
+                  >
                     Afficher
                   </Button>
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button
                         variant="outline"
-                        className="px-3 py-3 bg-white/10 border-white/20 text-white hover:bg-white/20">
-                        
+                        className="px-3 py-3 bg-white/10 border-white/20 text-white hover:bg-white/20"
+                      >
                         <HelpCircle className="w-4 h-4 mr-1" />
                         <span className="text-xs">Aide</span>
                       </Button>
@@ -90,10 +90,10 @@ const Index = () => {
                           depuis le tableau de bord).
                         </p>
                         <p>
-                        La fenêtre de l'écran externe passe automatiquement en plein écran.
-                          Si ce n'est pas le cas, un bouton "Plein écran" apparaîtra en haut à droite de la fenêtre —
-                          cliquez dessus. Ramenez simplement votre curseur à
-                          la gauche de l'écran extérieur pour qu'il soit à nouveau dans votre écran de contrôle.
+                          La fenêtre de l'écran externe passe automatiquement en plein écran. Si ce n'est pas le cas, un
+                          bouton "Plein écran" apparaîtra en haut à droite de la fenêtre — cliquez dessus. Ramenez
+                          simplement votre curseur à la gauche de l'écran extérieur pour qu'il soit à nouveau dans votre
+                          écran de contrôle.
                         </p>
                         <p className="text-muted-foreground">
                           💡 Si la fenêtre n'apparaît pas, vérifiez le mode "Étendre" dans vos paramètres d'affichage.
@@ -164,10 +164,14 @@ const Index = () => {
           </CardContent>
         </Card>
         <div className="text-center">
-          Loto Bingo Display v1.2 - ©2025 par PhilDEV.fr - Tous droits réservés
+          Loto Bingo Display 1.2.2 - ©2025 par{" "}
+          <a href="https://phildev.fr" target="_blank">
+            PhilDEV.fr
+          </a>{" "}
+          - Tous droits réservés
         </div>
       </div>
-    </div>);
-
+    </div>
+  );
 };
 export default Index;
