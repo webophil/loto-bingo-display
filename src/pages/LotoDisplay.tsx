@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Maximize } from "lucide-react";
 import { GameType } from "@/hooks/useLoto";
+
 import logoImage from "@/assets/logo.png";
 import { AnimatedBall } from "@/components/AnimatedBall";
 
@@ -65,11 +66,23 @@ const LotoDisplay = () => {
   const lastNumberRef = useRef<HTMLDivElement>(null);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const enterFullscreen = () => {
-    if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen();
+  const [showFullscreenButton, setShowFullscreenButton] = useState(false);
+
+  const enterFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+        setShowFullscreenButton(false);
+      }
+    } catch {
+      setShowFullscreenButton(true);
     }
   };
+
+  // Auto-fullscreen on mount
+  useEffect(() => {
+    enterFullscreen();
+  }, []);
 
   const handleAnimationComplete = useCallback(() => {
     setAnimatingNumber(null);
@@ -299,6 +312,16 @@ const LotoDisplay = () => {
   // Render normal Loto mode
   return (
     <div className="h-dvh w-dvw flex flex-col items-center relative overflow-hidden" style={{ background: 'var(--gradient-display)', padding: 'clamp(0.5rem, 1.5vmin, 1.5rem)', paddingTop: 'clamp(1rem, 3vmin, 3rem)' }}>
+      {/* Fullscreen fallback button */}
+      {showFullscreenButton && (
+        <button
+          onClick={enterFullscreen}
+          className="absolute top-2 right-2 z-50 bg-white/20 hover:bg-white/40 text-white px-4 py-2 rounded-lg backdrop-blur-sm flex items-center gap-2 transition-colors"
+        >
+          <Maximize className="w-4 h-4" />
+          Plein écran
+        </button>
+      )}
       {/* Animated Ball Overlay */}
       {animatingNumber && animationPositions && (
         <AnimatedBall 
