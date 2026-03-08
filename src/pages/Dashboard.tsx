@@ -31,6 +31,9 @@ const Dashboard = () => {
     const newWindow = window.open(displayUrl, "LotoDisplay", features);
     if (newWindow) {
       newWindow.focus();
+      newWindow.addEventListener('load', () => {
+        newWindow.document.documentElement.requestFullscreen?.().catch(() => {});
+      });
     }
   };
 
