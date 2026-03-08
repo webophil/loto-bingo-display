@@ -298,7 +298,7 @@ const LotoDisplay = () => {
 
   // Render normal Loto mode
   return (
-    <div className="h-dvh w-dvw flex flex-col items-center relative overflow-hidden" style={{ background: 'var(--gradient-display)', padding: 'clamp(0.5rem, 1.5vmin, 1.5rem)', paddingTop: 'clamp(0.75rem, 2vmin, 2rem)' }}>
+    <div className="h-dvh w-dvw flex flex-col items-center relative overflow-hidden" style={{ background: 'var(--gradient-display)', padding: 'clamp(0.5rem, 1.5vmin, 1.5rem)', paddingTop: 'clamp(1rem, 3vmin, 3rem)' }}>
       {/* Animated Ball Overlay */}
       {animatingNumber && animationPositions && (
         <AnimatedBall 
