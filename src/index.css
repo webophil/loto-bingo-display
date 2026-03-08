@@ -49,6 +49,7 @@ All colors MUST be HSL.
     --gradient-secondary: linear-gradient(135deg, hsl(var(--loto-blue)), hsl(var(--loto-purple)));
     --gradient-accent: linear-gradient(135deg, hsl(var(--loto-orange)), hsl(var(--loto-yellow)));
     --gradient-background: linear-gradient(135deg, hsl(240 10% 3.9%), hsl(240 8% 6%));
+    --gradient-display: radial-gradient(ellipse at center, hsl(220 30% 12%) 0%, hsl(220 20% 6%) 100%);
 
     /* Animations */
     --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
