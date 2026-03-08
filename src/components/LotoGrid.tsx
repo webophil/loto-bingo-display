@@ -24,7 +24,7 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false, disable
   if (isBingoMode) {
     return (
       <div 
-        className="grid bg-white/5 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0 items-center overflow-hidden mx-auto"
+        className="grid bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 flex-shrink-0 items-center overflow-hidden mx-auto"
         style={{ 
           gridTemplateColumns: 'minmax(0, auto) repeat(15, minmax(0, 1fr))',
           gap: 'clamp(0.15rem, 0.4vmin, 0.5rem)',
