@@ -298,7 +298,7 @@ const LotoDisplay = () => {
 
   // Render normal Loto mode
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-between relative overflow-hidden p-1 sm:p-2">
+    <div className="h-dvh w-dvw flex flex-col items-center relative overflow-hidden" style={{ background: 'var(--gradient-display)', padding: 'clamp(0.5rem, 1.5vmin, 1.5rem)' }}>
       {/* Animated Ball Overlay */}
       {animatingNumber && animationPositions && (
         <AnimatedBall 
@@ -378,7 +378,7 @@ const LotoDisplay = () => {
       </header>
 
       {!displayState.isWinning && (
-        <div ref={gridRef} className="flex items-center justify-center flex-1 w-full min-h-0 overflow-hidden px-1 sm:px-2">
+        <div ref={gridRef} className="flex items-center justify-center flex-1 w-full min-h-0 overflow-hidden" style={{ padding: 'clamp(0.25rem, 0.5vmin, 0.75rem)' }}>
           <LotoGrid
             drawnNumbers={displayState.drawnNumbers}
             isDrawing={displayState.isDrawing}
