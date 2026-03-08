@@ -11,18 +11,18 @@ const Index = () => {
 
     // Paramètres pour maximiser la fenêtre sur l'écran externe
     const features = [
-      "width=" + screen.availWidth,
-      "height=" + screen.availHeight,
-      "left=" + (screen.availWidth + 100),
-      // Positionner sur l'écran externe
-      "top=0",
-      "scrollbars=no",
-      "toolbar=no",
-      "menubar=no",
-      "status=no",
-      "location=no",
-      "resizable=yes",
-    ].join(",");
+    "width=" + screen.availWidth,
+    "height=" + screen.availHeight,
+    "left=" + (screen.availWidth + 100),
+    // Positionner sur l'écran externe
+    "top=0",
+    "scrollbars=no",
+    "toolbar=no",
+    "menubar=no",
+    "status=no",
+    "location=no",
+    "resizable=yes"].
+    join(",");
 
     // Ouvrir la fenêtre maximisée
     const newWindow = window.open(displayUrl, "LotoDisplay", features);
@@ -58,16 +58,16 @@ const Index = () => {
                 <div className="flex gap-2">
                   <Button
                     onClick={openDisplayOnExternalScreen}
-                    className="flex-1 gradient-primary text-white font-semibold text-lg py-3"
-                  >
+                    className="flex-1 gradient-primary text-white font-semibold text-lg py-3">
+                    
                     Afficher
                   </Button>
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button
                         variant="outline"
-                        className="px-3 py-3 bg-white/10 border-white/20 text-white hover:bg-white/20"
-                      >
+                        className="px-3 py-3 bg-white/10 border-white/20 text-white hover:bg-white/20">
+                        
                         <HelpCircle className="w-4 h-4 mr-1" />
                         <span className="text-xs">Aide</span>
                       </Button>
@@ -164,10 +164,10 @@ const Index = () => {
           </CardContent>
         </Card>
         <div className="text-center">
-          Loto Bingo Display v1.2 - &copy;2025 par Philippe André Pérard - Tous droits réservés
+          Loto Bingo Display v1.2 - ©2025 par PhilDEV.fr - Tous droits réservés
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 export default Index;
