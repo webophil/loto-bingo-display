@@ -378,7 +378,7 @@ const LotoDisplay = () => {
       </header>
 
       {!displayState.isWinning && (
-        <div ref={gridRef} className="flex items-center justify-center flex-1 w-full min-h-0 overflow-hidden px-1 sm:px-2">
+        <div ref={gridRef} className="flex items-center justify-center flex-1 w-full min-h-0 overflow-hidden" style={{ padding: 'clamp(0.25rem, 0.5vmin, 0.75rem)' }}>
           <LotoGrid
             drawnNumbers={displayState.drawnNumbers}
             isDrawing={displayState.isDrawing}

@@ -63,16 +63,13 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false, disable
 
   return (
     <div 
-      className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0"
+      className="grid bg-card/20 backdrop-blur-sm rounded-2xl border border-border/50 flex-shrink-0 mx-auto"
       style={{ 
         gridTemplateColumns: 'repeat(15, 1fr)',
-        columnGap: 'clamp(0.072rem, 0.144vw, 0.24rem)',
-        rowGap: 'clamp(0.012rem, 0.024vh, 0.04rem)',
-        padding: 'clamp(0.3rem, 0.6vh, 1rem) clamp(0.3rem, 0.6vw, 1rem)',
-        width: '100%',
-        height: '100%',
-        maxWidth: '100%',
-        maxHeight: '100%'
+        gap: 'clamp(0.15rem, 0.4vmin, 0.5rem)',
+        padding: 'clamp(0.4rem, 1vmin, 1rem)',
+        maxWidth: 'fit-content',
+        maxHeight: '100%',
       }}
     >
       {numbers.map((number) => (
