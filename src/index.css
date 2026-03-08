@@ -177,8 +177,8 @@ All colors MUST be HSL.
   
   .number-ball .number-text {
     @apply relative z-10 bg-white rounded-full flex items-center justify-center text-black;
-    width: clamp(3.2rem, 8vmin, 14.4rem);
-    height: clamp(3.2rem, 8vmin, 14.4rem);
+    width: clamp(1.2rem, min(3.8vw, 9vh), 4.2rem);
+    height: clamp(1.2rem, min(3.8vw, 9vh), 4.2rem);
     box-shadow: inset 0 0.125vmin 0.375vmin rgba(0, 0, 0, 0.2);
   }
   
