@@ -373,7 +373,7 @@ const LotoDisplay = () => {
       {/* Main content: grid left + dernier sorti right */}
       {!displayState.isWinning && (
         <div className="flex-1 min-h-0 flex flex-col">
-          <div ref={gridRef} className="flex-1 min-h-0 grid items-center overflow-hidden" style={{ <div ref={gridRef} className="flex-1 min-h-0 grid items-center overflow-hidden" style={{ gridTemplateColumns: '3fr 2fr', gap: 'clamp(1rem, 3vmin, 3rem)' }}>, gap: 'clamp(1rem, 3vmin, 3rem)' }}>
+          <div ref={gridRef} className="flex-1 min-h-0 grid items-center overflow-hidden" style={{ gridTemplateColumns: '3fr 2fr', gap: 'clamp(1rem, 3vmin, 3rem)' }}>
             {/* Left: number grid */}
             <div className="flex items-center justify-center min-h-0 overflow-hidden">
               <LotoGrid
