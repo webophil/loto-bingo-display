@@ -373,7 +373,7 @@ const LotoDisplay = () => {
       {/* Main content: grid left + dernier sorti right */}
       {!displayState.isWinning && (
         <div className="flex-1 min-h-0 flex flex-col">
-          <div ref={gridRef} className="flex-1 min-h-0 grid items-center overflow-hidden" style={{ gridTemplateColumns: '1fr auto', gap: 'clamp(1rem, 3vmin, 3rem)' }}>
+          <div ref={gridRef} className="flex-1 min-h-0 grid items-center overflow-hidden" style={{ <div ref={gridRef} className="flex-1 min-h-0 grid items-center overflow-hidden" style={{ gridTemplateColumns: '3fr 2fr', gap: 'clamp(1rem, 3vmin, 3rem)' }}>, gap: 'clamp(1rem, 3vmin, 3rem)' }}>
             {/* Left: number grid */}
             <div className="flex items-center justify-center min-h-0 overflow-hidden">
               <LotoGrid
@@ -395,9 +395,9 @@ const LotoDisplay = () => {
                   ref={lastNumberRef}
                   className={`rounded-full flex items-center justify-center font-bold text-white leading-none animate-bounce-soft animate-blink ${getNumberDisplayColor(latestNumber)}`}
                   style={{ 
-                    width: 'clamp(5rem, 15vmin, 20rem)', 
-                    height: 'clamp(5rem, 15vmin, 20rem)', 
-                    fontSize: 'clamp(2.5rem, 10vmin, 12rem)',
+                    width: 'clamp(6rem, 18vmin, 24rem)', 
+                    height: 'clamp(6rem, 18vmin, 24rem)', 
+                    fontSize: 'clamp(3rem, 12vmin, 14rem)',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
                   }}
                 >
