@@ -64,7 +64,7 @@ const LotoDisplay = () => {
   const previousDrawnCountRef = useRef(0);
   const gridRef = useRef<HTMLDivElement>(null);
   const lastNumberRef = useRef<HTMLDivElement>(null);
-  const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [showFullscreenButton, setShowFullscreenButton] = useState(false);
 
