@@ -295,7 +295,7 @@ export const GameControls = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div>
                 <Label htmlFor="prize-quine" className="text-white/80 text-xs mb-1 block">
-                  🎯 Quine
+                  🎯 1 Ligne
                 </Label>
                 <Input
                   id="prize-quine"
@@ -327,7 +327,7 @@ export const GameControls = ({
 
               <div>
                 <Label htmlFor="prize-double-quine" className="text-white/80 text-xs mb-1 block">
-                  🎯🎯 Double Quine
+                  🎯🎯 2 lignes
                 </Label>
                 <Input
                   id="prize-double-quine"
