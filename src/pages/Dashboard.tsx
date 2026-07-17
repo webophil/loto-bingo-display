@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Monitor, Home, Trophy, RefreshCw, Square, RotateCcw, ImagePlus, Image as ImageIcon, Eye, EyeOff, Timer } from 'lucide-react';
+import { Monitor, Home, Trophy, RefreshCw, Square, RotateCcw, ImagePlus, Image as ImageIcon, Eye, EyeOff, Timer, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
@@ -119,6 +119,21 @@ const Dashboard = () => {
               Accueil
             </Button>
           </Link>
+
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => {
+              if (window.confirm("Fermer l'application ?")) {
+                window.close();
+              }
+            }}
+            aria-label="Fermer l'application"
+            title="Fermer l'application"
+            className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-300"
+          >
+            <X className="w-4 h-4" />
+          </Button>
         </div>
       </header>
 
