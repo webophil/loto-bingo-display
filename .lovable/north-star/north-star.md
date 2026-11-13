@@ -6,4 +6,4 @@ Des joueurs qui ne manquent aucun tirage et savent toujours ce qu'ils peuvent ga
 
 ## Indicateur
 
-Parties jouées jusqu'à un gagnant déclaré chaque semaine
+Parties jouées jusqu'à un gagnant déclaré, à chaque événement
