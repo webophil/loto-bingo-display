@@ -9,6 +9,7 @@ interface NumberBallProps {
 const getNumberColor = (number: number) => {
   if (number <= 15) return 'ball-blue';
   if (number <= 30) return 'ball-red';
+  // 31-45 must stay white/very light: the physical rack balls are white (user-confirmed reference)
   if (number <= 45) return 'ball-white';
   if (number <= 60) return 'ball-green';
   if (number <= 75) return 'ball-yellow';
