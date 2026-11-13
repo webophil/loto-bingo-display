@@ -162,7 +162,13 @@ All colors MUST be HSL.
   .display-rack .number-ball {
     width: min(4.1vw, 7.6vh);
     height: min(4.1vw, 7.6vh);
-    font-size: min(1.9vw, 3.5vh);
+    font-size: min(1.7vw, 3.1vh);
+  }
+
+  /* White center scales with the ball so the colored rim stays thick on every screen */
+  .display-rack .number-ball .number-text {
+    width: 68%;
+    height: 68%;
   }
 
   .number-ball::before {
