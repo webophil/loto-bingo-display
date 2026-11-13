@@ -160,9 +160,9 @@ All colors MUST be HSL.
   }
   
   .display-rack .number-ball {
-    width: min(4.4vw, 8vh);
-    height: min(4.4vw, 8vh);
-    font-size: min(2vw, 3.7vh);
+    width: min(4.1vw, 7.6vh);
+    height: min(4.1vw, 7.6vh);
+    font-size: min(1.9vw, 3.5vh);
   }
 
   .number-ball::before {

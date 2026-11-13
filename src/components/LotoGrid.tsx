@@ -27,8 +27,8 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false, disable
         className="grid bg-gray-700 rounded-2xl border border-gray-600 flex-shrink-0 display-rack items-center overflow-hidden mx-auto"
         style={{ 
           gridTemplateColumns: 'minmax(0, auto) repeat(15, minmax(0, 1fr))',
-          gap: 'min(0.9vw, 1.6vh)',
-          padding: 'min(0.9vw, 1.6vh)',
+          gap: 'min(0.7vw, 1.3vh)',
+          padding: 'min(0.7vw, 1.3vh)',
           maxWidth: 'fit-content',
           maxHeight: '100%',
         }}
@@ -66,8 +66,8 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false, disable
       className="grid bg-gray-700 rounded-2xl border border-gray-600 flex-shrink-0 display-rack mx-auto"
       style={{ 
         gridTemplateColumns: 'repeat(15, 1fr)',
-        gap: 'min(0.9vw, 1.6vh)',
-        padding: 'min(0.9vw, 1.6vh)',
+        gap: 'min(0.7vw, 1.3vh)',
+        padding: 'min(0.7vw, 1.3vh)',
         maxWidth: 'fit-content',
         maxHeight: '100%',
       }}
