@@ -209,6 +209,19 @@ All colors MUST be HSL.
   .number-ball.drawn {
     @apply scale-110;
   }
+
+  .number-ball.draw-animation-ball {
+    width: 75vmin;
+    height: 75vmin;
+    transition: none;
+    will-change: transform;
+  }
+
+  .number-ball.draw-animation-ball .number-text {
+    width: 53vmin;
+    height: 53vmin;
+    font-size: 25vmin;
+  }
   
   .number-ball.drawn::before {
     box-shadow:
