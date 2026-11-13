@@ -361,6 +361,7 @@ const LotoDisplay = () => {
                 </div>
                 <div
                   ref={lastNumberRef}
+                  data-last-drawn={announcedNumber}
                   className={`rounded-full flex items-center justify-center font-bold text-white leading-none animate-bounce-soft animate-blink ${getNumberDisplayColor(announcedNumber)}`}
                   style={{ 
                     visibility: activeDraw ? 'hidden' : 'visible',
