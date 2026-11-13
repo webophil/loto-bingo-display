@@ -1,52 +1,30 @@
+# Écran externe (mode jeu) : appliquer la disposition de « écran-désiré »
 
+Proportions identiques sur tous les écrans / vidéoprojecteurs, calculées à partir de la taille de l'écran (pas de tailles fixes). Le fond reste blanc, l'écran « image » (fond noir) ne change pas, l'animation de la boule tirée et le rendu 3D sont conservés. Le mode Bingo garde la même taille de rack que le Loto.
 
-## Refonte du layout de l'ecran externe (mode jeu)
-
-Le layout actuel est un empilement vertical (header centre en haut, grille en dessous, dernier numero dans le header). L'image de reference montre un layout completement different qu'il faut reproduire.
-
-### Layout cible (d'apres l'image)
+## Disposition cible (en % de l'écran)
 
 ```text
-+------------------------------------------------------------------+
-| [QUINE]  [⚠ SANS DEMARQUER ⚠]                                   |
-|                                                                   |
-| +----------------------------------------------+  Dernier        |
-| |  1   2   3   4   5  ...  14  15              |  sorti          |
-| | 16  17  18  19  20  ...  29  30              |                  |
-| | 31  32  33  ...             45              |   (68)           |
-| | 46  47  ...                 60              |   gros           |
-| | 61  62  ...                 75              |   cercle         |
-| | 76  77  ...                 90              |                  |
-| +----------------------------------------------+                  |
-|                                                                   |
-| 🎁 Un voyage dans les Iles pour 2 personnes                      |
-+------------------------------------------------------------------+
++--------------------------------------------------------------+
+| marge ~2%                                                    |
+| [QUINE] [SANS DEMARQUER]          (hauteur ~11%)             |
+| +------------------------------------+   Dernier             |
+| |  rack 15 x 6                        |   sorti  (texte ~8%)  |
+| |  largeur ~79%, hauteur ~58%         |   ( 48 ) boule ~25%   |
+| +------------------------------------+   de la hauteur       |
+| [ lot surprise ]   bandeau pleine largeur, hauteur ~16%      |
+| marge ~2%                                                    |
++--------------------------------------------------------------+
 ```
 
-### Changements
+## Changements
+1. **Marges** : marge uniforme ~2% en haut, bas, gauche, droite (comme sur la capture).
+2. **En-tête** (Quine, Sans démarquer) : moins d'espace au-dessus et en dessous ; taille des badges légèrement réduite et proportionnelle à l'écran.
+3. **Rack** : boules un peu plus petites avec plus d'air entre elles, rack occupant ~79% de la largeur ; les boules déjà sorties restent agrandies comme aujourd'hui.
+4. **Dernier sorti** : texte nettement plus grand, boule environ 1,2x plus grande qu'aujourd'hui, centrée verticalement à côté du rack.
+5. **Bandeau du lot** : plus haut (~16% de l'écran), texte plus grand, plus proche du rack (écart réduit).
 
-**Fichier : `src/pages/LotoDisplay.tsx`** -- refonte du JSX du mode jeu
-
-1. **Fond blanc** au lieu du degrade sombre : `bg-white` sur le conteneur principal
-2. **Layout en grille CSS** : le corps principal utilise un grid `grid-cols-[1fr_auto]` avec la grille a gauche et le bloc "Dernier sorti" a droite
-3. **Header aligne a gauche** : les badges QUINE et SANS DEMARQUER sont en `flex justify-start` en haut, pas centres
-4. **Bloc "Dernier sorti"** deplace du header vers la colonne droite du grid, centree verticalement. Le texte "Dernier sorti" au-dessus, le gros cercle en dessous
-5. **Banniere du lot en bas** : `currentPrize` affiche en bas, pleine largeur, avec un fond colore (similaire au bleu/violet de l'image), texte blanc, aligne a gauche
-6. **Padding/marges** : un padding genereux sur le conteneur principal (environ `3vmin`) pour creer la marge de securite visible dans l'image
-7. Tous les textes passent en sombre (`text-gray-900`) sauf dans la banniere du lot (texte blanc)
-8. Le fond du rack de la grille reste sombre (gris fonce comme dans l'image) -- la grille garde son `bg-gray-700` ou similaire avec les boules colorees dessus
-
-**Fichier : `src/components/LotoGrid.tsx`**
-
-9. Remplacer `bg-white/10 border-white/20` par `bg-gray-700 border-gray-600` pour le fond sombre du rack visible dans l'image (s'applique aux deux modes loto et bingo, meme taille de rack)
-10. Retirer `backdrop-blur-sm` (inutile sur fond opaque)
-
-### Ce qui ne change PAS
-
-- Le mode image (fond noir) reste identique
-- Le mode bingo garde la meme taille de rack que le loto
-- L'animation de sortie du numero est conservee
-- Le banner "C'EST GAGNE" reste identique
-- Le mecanisme fullscreen automatique reste identique
-- Toute la logique de synchronisation localStorage/BroadcastChannel reste identique
-
+## Détails techniques
+- `src/pages/LotoDisplay.tsx` : padding `2vmin`/`2vw`, lignes en `vh` (header ~11vh, zone centrale flex-1, bandeau ~16vh), colonne droite ~18vw, boule « Dernier sorti » `min(25vh, 14vw)`, polices en `vmin`.
+- `src/components/LotoGrid.tsx` : taille de boule `min(4.6vw, 8.4vh)`, gaps proportionnels, même calcul pour Bingo (colonne lettres incluse).
+- Vérification par captures Playwright en 1920x1080, 1280x720, 1366x768, 1024x768 (aucun débordement).
