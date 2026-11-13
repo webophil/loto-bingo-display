@@ -1,13 +1,12 @@
-import { useLoto } from "@/hooks/useLoto";
 import { LotoGrid } from "@/components/LotoGrid";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, useLayoutEffect } from "react";
 import { Maximize } from "lucide-react";
 import { GameType } from "@/hooks/useLoto";
 
-import logoImage from "@/assets/logo.png";
 import { AnimatedBall } from "@/components/AnimatedBall";
+import { getAddedDraws } from "@/lib/drawAnimation";
 
 interface DisplayState {
   drawnNumbers: number[];
@@ -59,12 +58,14 @@ const LotoDisplay = () => {
   });
 
   const latestNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
-  const [animatingNumber, setAnimatingNumber] = useState<number | null>(null);
-  const [animationPositions, setAnimationPositions] = useState<{ start: { x: number; y: number }, end: { x: number; y: number } } | null>(null);
-  const previousDrawnCountRef = useRef(0);
+  const [drawQueue, setDrawQueue] = useState<Array<{ id: number; number: number; duration: number }>>([]);
+  const [animationPositions, setAnimationPositions] = useState<{ start: { x: number; y: number; size: number }, end: { x: number; y: number; size: number } } | null>(null);
+  const previousDrawsRef = useRef<number[]>([]);
+  const nextDrawIdRef = useRef(0);
   const gridRef = useRef<HTMLDivElement>(null);
   const lastNumberRef = useRef<HTMLDivElement>(null);
-  const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const activeDraw = drawQueue[0];
+  const announcedNumber = activeDraw?.number ?? latestNumber;
 
   const [showFullscreenButton, setShowFullscreenButton] = useState(false);
 
@@ -85,76 +86,42 @@ const LotoDisplay = () => {
   }, []);
 
   const handleAnimationComplete = useCallback(() => {
-    setAnimatingNumber(null);
     setAnimationPositions(null);
+    setDrawQueue(queue => queue.slice(1));
   }, []);
 
-  // Detect when a new number is drawn to trigger animation
-  useEffect(() => {
-    if (displayState.drawnNumbers.length > previousDrawnCountRef.current && displayState.drawnNumbers.length > 0) {
-      const newNumber = displayState.drawnNumbers[displayState.drawnNumbers.length - 1];
-      
-      // Clear any existing animation timeout
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-        animationTimeoutRef.current = null;
-      }
-      
-      // Reset animation state immediately
-      setAnimatingNumber(null);
-      setAnimationPositions(null);
-      
-      // Calculate positions and start animation
-      const startAnimation = () => {
-        const gridElement = document.querySelector(`[data-ball-number="${newNumber}"]`);
-        const lastNumberElement = lastNumberRef.current;
-        
-        if (gridElement && lastNumberElement) {
-          const gridRect = gridElement.getBoundingClientRect();
-          const lastRect = lastNumberElement.getBoundingClientRect();
-          
-          const positions = {
-            start: {
-              x: gridRect.left + gridRect.width / 2,
-              y: gridRect.top + gridRect.height / 2,
-            },
-            end: {
-              x: lastRect.left + lastRect.width / 2,
-              y: lastRect.top + lastRect.height / 2,
-            }
-          };
-          
-          setAnimationPositions(positions);
-          // Start animation after positions are set
-          requestAnimationFrame(() => {
-            setAnimatingNumber(newNumber);
-          });
-        } else {
-          console.warn(`Animation elements not found: gridElement=${!!gridElement}, lastNumberElement=${!!lastNumberElement}`);
-        }
-      };
-      
-      // Start with a small delay to ensure DOM is updated
-      animationTimeoutRef.current = setTimeout(() => {
-        startAnimation();
-        animationTimeoutRef.current = null;
-      }, 100);
-    }
-    
-    previousDrawnCountRef.current = displayState.drawnNumbers.length;
-    
-    // Cleanup function to clear any pending timeouts
-    return () => {
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-        animationTimeoutRef.current = null;
-      }
-    };
-  }, [displayState.drawnNumbers]);
+  // Measure after React has committed both the lit rack ball and its destination.
+  // Incoming state updates must not cancel an in-progress animation.
+  useLayoutEffect(() => {
+    if (!activeDraw || displayState.isWinning || displayState.isImageDisplayMode) return;
+    const source = gridRef.current?.querySelector(`[data-ball-number="${activeDraw.number}"]`);
+    const destination = lastNumberRef.current;
+    if (!source || !destination) return;
+    const start = source.getBoundingClientRect();
+    const end = destination.getBoundingClientRect();
+    setAnimationPositions({
+      start: { x: start.left + start.width / 2, y: start.top + start.height / 2, size: start.width },
+      end: { x: end.left + end.width / 2, y: end.top + end.height / 2, size: end.width },
+    });
+  }, [activeDraw, displayState.isWinning, displayState.isImageDisplayMode]);
 
   // Listen for real-time updates from dashboard
   useEffect(() => {
     let lastTimestamp = 0;
+    let initialized = false;
+    const applyDisplayState = (next: DisplayState) => {
+      const additions = initialized ? getAddedDraws(previousDrawsRef.current, next.drawnNumbers) : [];
+      initialized = true;
+      previousDrawsRef.current = [...next.drawnNumbers];
+      if (!next.drawnNumbers.length || next.isWinning || next.isImageDisplayMode) {
+        setDrawQueue([]);
+        setAnimationPositions(null);
+      } else if (additions.length) {
+        const draws = additions.map(number => ({ id: ++nextDrawIdRef.current, number, duration: next.animationDuration }));
+        setDrawQueue(queue => [...queue, ...draws]);
+      }
+      setDisplayState(next);
+    };
 
     const loadStateFromStorage = () => {
       const savedState = localStorage.getItem("loto-state");
@@ -183,7 +150,7 @@ const LotoDisplay = () => {
                 ? localImages.find((img: any) => img.id === parsedState.selectedImageId)?.dataUrl || null
                 : null;
 
-            setDisplayState({
+            applyDisplayState({
               drawnNumbers: parsedState.drawnNumbers || [],
               currentGame: parsedState.currentGame || null,
               isDrawing: parsedState.isDrawing || false,
@@ -223,7 +190,7 @@ const LotoDisplay = () => {
             ? (newState.localImages || []).find((img: any) => img.id === newState.selectedImageId)?.dataUrl || null
             : null;
 
-        setDisplayState({
+        applyDisplayState({
           drawnNumbers: newState.drawnNumbers || [],
           currentGame: newState.currentGame || null,
           isDrawing: newState.isDrawing || false,
@@ -263,7 +230,7 @@ const LotoDisplay = () => {
             ? (newState.localImages || []).find((img: any) => img.id === newState.selectedImageId)?.dataUrl || null
             : null;
 
-        setDisplayState({
+        applyDisplayState({
           drawnNumbers: newState.drawnNumbers || [],
           currentGame: newState.currentGame || null,
           isDrawing: newState.isDrawing || false,
@@ -323,10 +290,11 @@ const LotoDisplay = () => {
         </button>
       )}
       {/* Animated Ball Overlay */}
-      {animatingNumber && animationPositions && (
+      {activeDraw && animationPositions && (
         <AnimatedBall 
-          number={animatingNumber} 
-          duration={displayState.animationDuration}
+          key={activeDraw.id}
+          number={activeDraw.number} 
+          duration={activeDraw.duration}
           onAnimationComplete={handleAnimationComplete}
           startPosition={animationPositions.start}
           endPosition={animationPositions.end}
@@ -385,7 +353,7 @@ const LotoDisplay = () => {
             </div>
 
             {/* Right: dernier sorti */}
-            {latestNumber && (
+            {announcedNumber && (
               <div className="flex flex-col items-center justify-center gap-3">
                 <div className="text-gray-900 font-semibold text-center leading-tight" style={{ fontSize: 'clamp(1.5rem, 4vmin, 4rem)' }}>
                   <p>Dernier</p>
@@ -393,15 +361,17 @@ const LotoDisplay = () => {
                 </div>
                 <div
                   ref={lastNumberRef}
-                  className={`rounded-full flex items-center justify-center font-bold text-white leading-none animate-bounce-soft animate-blink ${getNumberDisplayColor(latestNumber)}`}
+                  data-last-drawn={announcedNumber}
+                  className={`rounded-full flex items-center justify-center font-bold text-white leading-none animate-bounce-soft animate-blink ${getNumberDisplayColor(announcedNumber)}`}
                   style={{ 
+                    visibility: activeDraw ? 'hidden' : 'visible',
                     width: 'clamp(5rem, 15vmin, 20rem)', 
                     height: 'clamp(5rem, 15vmin, 20rem)', 
                     fontSize: 'clamp(2.5rem, 10vmin, 12rem)',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
                   }}
                 >
-                  {latestNumber}
+                  {announcedNumber}
                 </div>
               </div>
             )}

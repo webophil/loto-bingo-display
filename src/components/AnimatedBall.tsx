@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { getDrawTiming } from '@/lib/drawAnimation';
 
 interface AnimatedBallProps {
   number: number;
   duration: number;
   onAnimationComplete: () => void;
-  startPosition: { x: number; y: number };
-  endPosition: { x: number; y: number };
+  startPosition: { x: number; y: number; size: number };
+  endPosition: { x: number; y: number; size: number };
 }
 
 const getNumberColor = (number: number) => {
@@ -19,74 +20,57 @@ const getNumberColor = (number: number) => {
 };
 
 export const AnimatedBall = ({ number, duration, onAnimationComplete, startPosition, endPosition }: AnimatedBallProps) => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-      onAnimationComplete();
-    }, duration * 1000);
-
-    return () => clearTimeout(timer);
-  }, [duration, onAnimationComplete]);
-
-  if (!isVisible) return null;
-
-  // Calculate center of screen
-  const centerX = window.innerWidth / 2;
-  const centerY = window.innerHeight / 2;
-
-  // Calculate translations
-  const startTranslateX = startPosition.x - centerX;
-  const startTranslateY = startPosition.y - centerY;
-  const endTranslateX = endPosition.x - centerX;
-  const endTranslateY = endPosition.y - centerY;
+  const ballRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const ball = ballRef.current;
+    if (!ball) return;
+    const timing = getDrawTiming(duration, window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    let animation: Animation | undefined;
+    const animate = () => {
+      const elapsed = Number(animation?.currentTime ?? 0);
+      if (animation) {
+        animation.onfinish = null;
+        animation.cancel();
+      }
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const size = Math.min(window.innerWidth, window.innerHeight) * 0.75;
+      const rack = document.querySelector(`[data-ball-number="${number}"]`)?.getBoundingClientRect();
+      const target = document.querySelector('[data-last-drawn]')?.getBoundingClientRect();
+      const start = rack ? { x: rack.left + rack.width / 2, y: rack.top + rack.height / 2, size: rack.width } : startPosition;
+      const end = target ? { x: target.left + target.width / 2, y: target.top + target.height / 2, size: target.width } : endPosition;
+      const transform = (position: typeof start) => `translate3d(${position.x - centerX}px, ${position.y - centerY}px, 0) scale(${position.size / size})`;
+      animation = ball.animate([
+        { transform: transform(start), offset: 0, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+        { transform: 'translate3d(0, 0, 0) scale(1)', offset: timing.holdStart },
+        { transform: 'translate3d(0, 0, 0) scale(1)', offset: timing.holdEnd, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' },
+        { transform: transform(end), offset: 1 },
+      ], { duration: timing.totalMs, fill: 'forwards' });
+      animation.currentTime = elapsed;
+      animation.onfinish = onAnimationComplete;
+    };
+    animate();
+    window.addEventListener('resize', animate);
+    return () => {
+      window.removeEventListener('resize', animate);
+      if (animation) {
+        animation.onfinish = null;
+        animation.cancel();
+      }
+    };
+  }, [number, duration, startPosition, endPosition, onAnimationComplete]);
 
   return (
     <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center">
-      <style>
-        {`
-          @keyframes ball-zoom-dynamic {
-            0% {
-              transform: translate(${startTranslateX}px, ${startTranslateY}px) scale(0);
-              opacity: 0;
-            }
-            10% {
-              opacity: 1;
-            }
-            50% {
-              transform: translate(0, 0) scale(1.1);
-              opacity: 1;
-            }
-            90% {
-              opacity: 1;
-            }
-            100% {
-              transform: translate(${endTranslateX}px, ${endTranslateY}px) scale(0);
-              opacity: 0;
-            }
-          }
-        `}
-      </style>
       <div
+        ref={ballRef}
+        data-animated-ball={number}
         className={cn(
-          'number-ball',
+          'number-ball draw-animation-ball',
           getNumberColor(number)
         )}
-        style={{
-          width: '75vmin',
-          height: '75vmin',
-          animation: `ball-zoom-dynamic ${duration}s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards`,
-        }}
       >
-        <div 
-          className="number-text" 
-          style={{ 
-            width: '53vmin',
-            height: '53vmin',
-            fontSize: 'clamp(4rem, 25vmin, 30rem)',
-          }}
-        >
+        <div className="number-text">
           {number}
         </div>
       </div>
