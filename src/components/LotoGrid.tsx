@@ -24,11 +24,11 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false, disable
   if (isBingoMode) {
     return (
       <div 
-        className="grid bg-gray-700 rounded-2xl border border-gray-600 flex-shrink-0 items-center overflow-hidden mx-auto"
+        className="grid bg-gray-700 rounded-2xl border border-gray-600 flex-shrink-0 display-rack items-center overflow-hidden mx-auto"
         style={{ 
           gridTemplateColumns: 'minmax(0, auto) repeat(15, minmax(0, 1fr))',
-          gap: 'clamp(0.15rem, 0.4vmin, 0.5rem)',
-          padding: 'clamp(0.4rem, 1vmin, 1rem)',
+          gap: 'min(0.9vw, 1.6vh)',
+          padding: 'min(0.9vw, 1.6vh)',
           maxWidth: 'fit-content',
           maxHeight: '100%',
         }}
@@ -39,9 +39,9 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false, disable
               key={`letter-${rowIndex}`} 
               className={`flex items-center justify-center font-bold rounded-lg flex-shrink-0 ${bingoLetterColors[rowIndex]}`}
               style={{ 
-                fontSize: 'clamp(1.1rem, 3vmin, 4rem)',
-                width: 'clamp(1.6rem, 4vmin, 5.5rem)',
-                height: 'clamp(1.6rem, 4vmin, 5.5rem)',
+                fontSize: 'min(2.4vw, 4.4vh)',
+                width: 'min(3.6vw, 6.6vh)',
+                height: 'min(3.6vw, 6.6vh)',
                 marginRight: 'clamp(0.1rem, 0.25vw, 0.5rem)'
               }}
             >
@@ -63,11 +63,11 @@ export const LotoGrid = ({ drawnNumbers, isDrawing, isBingoMode = false, disable
 
   return (
     <div 
-      className="grid bg-gray-700 rounded-2xl border border-gray-600 flex-shrink-0 mx-auto"
+      className="grid bg-gray-700 rounded-2xl border border-gray-600 flex-shrink-0 display-rack mx-auto"
       style={{ 
         gridTemplateColumns: 'repeat(15, 1fr)',
-        gap: 'clamp(0.15rem, 0.4vmin, 0.5rem)',
-        padding: 'clamp(0.4rem, 1vmin, 1rem)',
+        gap: 'min(0.9vw, 1.6vh)',
+        padding: 'min(0.9vw, 1.6vh)',
         maxWidth: 'fit-content',
         maxHeight: '100%',
       }}

@@ -159,6 +159,12 @@ All colors MUST be HSL.
     transition: transform 0.2s ease;
   }
   
+  .display-rack .number-ball {
+    width: min(4.4vw, 8vh);
+    height: min(4.4vw, 8vh);
+    font-size: min(2vw, 3.7vh);
+  }
+
   .number-ball::before {
     content: '';
     position: absolute;

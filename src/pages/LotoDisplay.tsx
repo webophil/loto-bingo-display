@@ -278,7 +278,7 @@ const LotoDisplay = () => {
 
   // Render normal Loto mode
   return (
-    <div className="h-dvh w-dvw flex flex-col relative overflow-hidden bg-white" style={{ padding: 'clamp(1rem, 3vmin, 3rem)' }}>
+    <div className="h-dvh w-dvw flex flex-col relative overflow-hidden bg-white" style={{ padding: '2vh 1.8vw', gap: '2vh' }}>
       {/* Fullscreen fallback button */}
       {showFullscreenButton && (
         <button
@@ -322,8 +322,8 @@ const LotoDisplay = () => {
 
       {/* Header: badges aligned left */}
       {displayState.currentGame && (
-        <header className="flex items-center justify-start flex-wrap gap-3 flex-shrink-0" style={{ marginBottom: 'clamp(0.5rem, 1.5vmin, 1.5rem)' }}>
-          <Badge className="gradient-secondary text-white font-bold animate-pulse-glow text-lg sm:text-xl md:text-2xl lg:text-3xl px-4 py-2 sm:px-5 sm:py-2.5">
+        <header className="flex items-center justify-start flex-wrap flex-shrink-0" style={{ gap: '1vw', height: '11vh' }}>
+          <Badge className="gradient-secondary text-white font-bold animate-pulse-glow h-full rounded-[2.5vh]" style={{ fontSize: 'min(3vw, 5vh)', padding: '0 1.5vw' }}>
             {displayState.currentGame === "quine" && "🎯 QUINE"}
             {displayState.currentGame === "double-quine" && "🎯🎯 DOUBLE QUINE"}
             {displayState.currentGame === "carton-plein" && "🏆 CARTON PLEIN"}
@@ -331,7 +331,7 @@ const LotoDisplay = () => {
           </Badge>
 
           {!displayState.withDemarque && displayState.currentGame !== "carton-plein" && (
-            <div className="text-red-600 font-bold animate-pulse bg-red-50 border border-red-200 rounded-full text-lg sm:text-xl md:text-2xl lg:text-3xl px-4 py-2 sm:px-5 sm:py-2.5">
+            <div className="text-red-600 font-bold animate-pulse bg-red-50 border border-red-200 rounded-[2.5vh] h-full flex items-center" style={{ fontSize: 'min(3vw, 5vh)', padding: '0 1.5vw' }}>
               ⚠️ SANS DEMARQUER ⚠️
             </div>
           )}
@@ -341,9 +341,9 @@ const LotoDisplay = () => {
       {/* Main content: grid left + dernier sorti right */}
       {!displayState.isWinning && (
         <div className="flex-1 min-h-0 flex flex-col">
-          <div ref={gridRef} className="flex-1 min-h-0 grid items-center overflow-hidden" style={{ gridTemplateColumns: '1fr auto', gap: 'clamp(1rem, 3vmin, 3rem)' }}>
+          <div ref={gridRef} className="flex-1 min-h-0 grid items-center overflow-hidden" style={{ gridTemplateColumns: '1fr 17vw', gap: '1.5vw' }}>
             {/* Left: number grid */}
-            <div className="flex items-center justify-center min-h-0 overflow-hidden">
+            <div className="flex items-center justify-start min-h-0 overflow-hidden">
               <LotoGrid
                 drawnNumbers={displayState.drawnNumbers}
                 isDrawing={displayState.isDrawing}
@@ -354,8 +354,8 @@ const LotoDisplay = () => {
 
             {/* Right: dernier sorti */}
             {announcedNumber && (
-              <div className="flex flex-col items-center justify-center gap-3">
-                <div className="text-gray-900 font-semibold text-center leading-tight" style={{ fontSize: 'clamp(1.5rem, 4vmin, 4rem)' }}>
+              <div className="flex flex-col items-center justify-center" style={{ gap: '3vh' }}>
+                <div className="text-gray-900 font-semibold text-center leading-tight" style={{ fontSize: 'min(3.8vw, 7vh)' }}>
                   <p>Dernier</p>
                   <p>sorti</p>
                 </div>
@@ -365,9 +365,9 @@ const LotoDisplay = () => {
                   className={`rounded-full flex items-center justify-center font-bold text-white leading-none animate-bounce-soft animate-blink ${getNumberDisplayColor(announcedNumber)}`}
                   style={{ 
                     visibility: activeDraw ? 'hidden' : 'visible',
-                    width: 'clamp(5rem, 15vmin, 20rem)', 
-                    height: 'clamp(5rem, 15vmin, 20rem)', 
-                    fontSize: 'clamp(2.5rem, 10vmin, 12rem)',
+                    width: 'min(14vw, 25vh)', 
+                    height: 'min(14vw, 25vh)', 
+                    fontSize: 'min(8.5vw, 15vh)',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
                   }}
                 >
@@ -383,9 +383,10 @@ const LotoDisplay = () => {
               className="flex-shrink-0 rounded-xl text-white font-bold flex items-center"
               style={{
                 background: 'linear-gradient(135deg, hsl(230 60% 45%), hsl(260 50% 50%))',
-                padding: 'clamp(0.75rem, 2vmin, 2rem) clamp(1rem, 3vmin, 3rem)',
-                fontSize: 'clamp(1.25rem, 4vmin, 3.5rem)',
-                marginTop: 'clamp(0.5rem, 1.5vmin, 1.5rem)',
+                height: '16vh',
+                padding: '0 3vw',
+                fontSize: 'min(4vw, 7vh)',
+                marginTop: '2vh',
               }}
             >
               🎁 {currentPrize}
