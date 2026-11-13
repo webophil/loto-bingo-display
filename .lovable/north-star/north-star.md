@@ -2,7 +2,7 @@
 
 # Cap
 
-Des soirées loto et bingo où chaque joueur suit chaque tirage et où les gagnants sont fêtés
+Des joueurs qui ne manquent aucun tirage et savent toujours ce qu'ils peuvent gagner
 
 ## Indicateur
 
